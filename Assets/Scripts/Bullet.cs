@@ -32,6 +32,8 @@ public class Bullet : MonoBehaviour
         {
             EnemyTemplate enemy = other.gameObject.GetComponent<EnemyTemplate>();
             PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
+            ShieldHP shield = other.gameObject.GetComponent<ShieldHP>();
+
             if (enemy != null)
             {
                 enemy.Takedmg(damage);
@@ -53,6 +55,13 @@ public class Bullet : MonoBehaviour
                     ScreenShakeController.instance.StartShake(.2f, .1f);
                     Destroy(gameObject);
                 }
+            }
+            else if (shield != null)
+            {
+                shield.TakeDmg(damage);
+                Instantiate(hitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
+                ScreenShakeController.instance.StartShake(.2f, .1f);
+                Destroy(gameObject);
             }
             else
             {

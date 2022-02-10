@@ -29,27 +29,20 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (fireratecounter >= 0)
+        if (FullAuto == true)
         {
-            fireratecounter -= Time.deltaTime;
-        }
-        if (FullAuto == false)
-        {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0) && Time.time >= fireratecounter)
             {
+                fireratecounter = Time.time + 1f / firerate;
                 Shoot();
             }
         }
-        else if (FullAuto == true)
+        else if (FullAuto == false)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonDown(0) && Time.time >= fireratecounter)
             {
-                isShootingfullauto = false;
-            }
-            if (Input.GetMouseButton(0) && isShootingfullauto == false && fireratecounter <= 0)
-            {
-                isShootingfullauto = true;
-                ShootFullAuto();
+                fireratecounter = Time.time + 1f / firerate;
+                Shoot();
             }
         }
     }
@@ -59,7 +52,6 @@ public class Weapon : MonoBehaviour
     }
     void Shoot()
     {
-
         if (Ammo > 0)
         {
             ShootlightAnim.Play(nameofanim);
@@ -76,14 +68,11 @@ public class Weapon : MonoBehaviour
     }
     void ShootFullAuto()
     {
-
-
         if (isShootingfullauto == true)
         {
             if (Ammo > 0)
             {
                 ShootlightAnim.Play(nameofanim);
-
                 Ammo -= 1;
                 float randomspread = Random.Range(minSpreadY, maxSpreadY);
                 GameObject thebullet = Instantiate(bullet, firePoint.position, firePoint.rotation);

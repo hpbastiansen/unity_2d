@@ -12,14 +12,14 @@ GameObject:
   - component: {fileID: 7497937993958865017}
   - component: {fileID: 7497937993958865020}
   - component: {fileID: 7497937993958865023}
-  - component: {fileID: 7497937993958865016}
+  - component: {fileID: 1196354660}
   m_Layer: 0
   m_Name: VCam_Follow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7497937993958865022
 Transform:
   m_ObjectHideFlags: 0
@@ -77,13 +77,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7497937993958865019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ChannelMask: -1
-  m_Gain: 1
+  m_Gain: 0
   m_Use2DDistance: 0
 --- !u!114 &7497937993958865023
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
---- !u!114 &7497937993958865016
+--- !u!114 &1196354660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7497937995035189180}
   - component: {fileID: 7497937995035189171}
-  - component: {fileID: 7497937995035189181}
+  - component: {fileID: 619895891}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7497937995035189181
+--- !u!114 &619895891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,22 +195,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 1
-  m_LookaheadSmoothing: 13.2
-  m_LookaheadIgnoreY: 0
-  m_XDamping: 1
+  m_LookaheadTime: 0.88
+  m_LookaheadSmoothing: 8.9
+  m_LookaheadIgnoreY: 1
+  m_XDamping: 0
   m_YDamping: 1
-  m_ZDamping: 1
+  m_ZDamping: 0
   m_TargetMovementOnly: 0
   m_ScreenX: 0.5
-  m_ScreenY: 0.5
+  m_ScreenY: 0.59
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0.2
+  m_DeadZoneWidth: 0.08
   m_DeadZoneHeight: 0.21
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.56
+  m_SoftZoneWidth: 0.73
+  m_SoftZoneHeight: 0.42
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1

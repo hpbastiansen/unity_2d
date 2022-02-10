@@ -20,8 +20,8 @@ TagManager:
   - Player
   - Enemy
   - Shield
-  - 
-  - 
+  - NormalGround
+  - Foreground
   - 
   - 
   - 
@@ -59,4 +59,10 @@ TagManager:
     locked: 0
   - name: VFX
     uniqueID: 4223598083
+    locked: 0
+  - name: Foreground
+    uniqueID: 1648033373
+    locked: 0
+  - name: NORMALGROUND
+    uniqueID: 1362824945
     locked: 0

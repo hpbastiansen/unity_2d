@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WeaponController : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class WeaponController : MonoBehaviour
     public GameObject currentGun;
     public bool usingShield;
     public GameObject shield;
+
+    public float shieldRechargeTimer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +38,11 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Scene currentscene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentscene.name);
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             //next Weapon
@@ -57,7 +66,7 @@ public class WeaponController : MonoBehaviour
                 currentGun = guns[currentWeaponIndex];
             }
         }
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(2) && shieldRechargeTimer <= 0)
         {
             usingShield = !usingShield;
         }
@@ -70,6 +79,12 @@ public class WeaponController : MonoBehaviour
         {
             shield.SetActive(false);
             weaponHolder.SetActive(true);
+        }
+        if (shieldRechargeTimer > 0)
+        {
+            shieldRechargeTimer -= Time.deltaTime;
+            shield.GetComponent<ShieldHP>().HP = shield.GetComponent<ShieldHP>().maxHP;
+
         }
     }
 }
