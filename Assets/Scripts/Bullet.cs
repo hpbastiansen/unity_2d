@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     public float speed = 20f;
     public Rigidbody2D rb;
-    public int damage = 10;
+    public float damage = 10;
     public GameObject hitEffect;
     public GameObject blockEffect;
 
@@ -20,10 +20,16 @@ public class Bullet : MonoBehaviour
 
     public bool enemyBullet;
 
+    [Header("Lifesteal settings")]
+    public float lifeSteal = 0;
+    public PlayerHealth playerHP;
+
+
     void Start()
     {
         rb.velocity = transform.right * speed;
         StartCoroutine(kill());
+        playerHP = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -39,6 +45,7 @@ public class Bullet : MonoBehaviour
                 enemy.Takedmg(damage);
                 Instantiate(hitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 ScreenShakeController.instance.StartShake(.05f, .03f);
+                playerHP.HP += lifeSteal;
                 Destroy(gameObject);
             }
             else if (player != null)

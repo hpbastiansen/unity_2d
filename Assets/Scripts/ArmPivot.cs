@@ -21,6 +21,8 @@ public class ArmPivot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //http://answers.unity.com/answers/130142/view.html
         mouse_pos = Input.mousePosition;
         mouse_pos.z = 5.23f; //The distance between the camera and object
         object_pos = Camera.main.WorldToScreenPoint(target.position);

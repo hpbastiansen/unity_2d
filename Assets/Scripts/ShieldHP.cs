@@ -8,11 +8,15 @@ public class ShieldHP : MonoBehaviour
     public float maxHP;
     public float rechargeTimer;
     public WeaponController wc;
+    public PlayerHealth playerHP;
+    public float lifeSteal;
+
     // Start is called before the first frame update
     void Start()
     {
         HP = maxHP;
         wc = GameObject.Find("Main_Character").GetComponent<WeaponController>();
+        playerHP = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
@@ -21,7 +25,7 @@ public class ShieldHP : MonoBehaviour
 
     }
 
-    public void TakeDmg(int x)
+    public void TakeDmg(float x)
     {
         HP -= x;
         if (HP <= 0)
@@ -30,6 +34,11 @@ public class ShieldHP : MonoBehaviour
             wc.usingShield = !wc.usingShield;
             wc.shieldRechargeTimer = rechargeTimer;
         }
+        LifeSteal(x, lifeSteal);
 
+    }
+    public void LifeSteal(float x, float y)
+    {
+        playerHP.HP += x / y;
     }
 }

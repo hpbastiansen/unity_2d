@@ -27,10 +27,3 @@ public class CheckForGround : MonoBehaviour
         }
     }
 }
-
-/*
-Nytt skytesystem.
-Enemy som skyter
-block
-shield
-*/
