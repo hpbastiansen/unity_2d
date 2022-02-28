@@ -11,6 +11,7 @@ public class SetCursor : MonoBehaviour
     // You must set the cursor in the inspector.
     public Texture2D crosshair;
 
+
     void Start()
     {
 
@@ -20,5 +21,8 @@ public class SetCursor : MonoBehaviour
         //Sets the cursor to the Crosshair sprite with given offset 
         //and automatic switching to hardware default if necessary
         Cursor.SetCursor(crosshair, cursorOffset, CursorMode.Auto);
+
+
     }
+
 }

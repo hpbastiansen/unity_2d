@@ -66,3 +66,6 @@ TagManager:
   - name: NORMALGROUND
     uniqueID: 1362824945
     locked: 0
+  - name: cursor
+    uniqueID: 2976990365
+    locked: 0

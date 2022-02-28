@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     public GameObject arm;
     private Vector2 armpos;
     private Vector2 newarmpos;
+    private grapplinghook gph;
     [Header("GroundCheck")]
 
     public Transform groundCheck;
@@ -32,8 +33,7 @@ public class Movement : MonoBehaviour
     private float dashCounter;
     private float dashCooldownCounter;
     public GameObject DashAnimation;
-
-
+    public SetImprovedCursor sic;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +43,8 @@ public class Movement : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         armpos = new Vector2(arm.transform.position.x, arm.transform.position.y);
         newarmpos = new Vector2(arm.transform.position.x + 1, arm.transform.position.y + 1);
+        gph = GetComponent<grapplinghook>();
+        DashAnimation.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,18 +56,59 @@ public class Movement : MonoBehaviour
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float x = Input.GetAxisRaw("Horizontal");
-        //https://www.youtube.com/watch?v=xHargJbONls&ab_channel=Antarsoft
-        anim.SetBool("Jump", !isTouchingGround);
-        anim.SetFloat("yVelocity", rb.velocity.y);
-        if (isDashing == false)
+        if (gph.isHooked == false)
         {
             rb.velocity = new Vector2(x * activeMoveSpeed, rb.velocity.y);
         }
         else
         {
-            rb.velocity = rb.velocity;
+            if (Input.GetKey(KeyCode.D))
+            {
+                if (isTouchingGround == false)
+                {
+                    rb.AddForce(Vector2.right * activeMoveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(x * activeMoveSpeed, rb.velocity.y);
+                }
+                if (facingRight && isTouchingGround == false)
+                {
+                    DashAnimation.SetActive(true);
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                rb.velocity = new Vector2(x * 0, rb.velocity.y);
+                DashAnimation.SetActive(false);
+            }
 
+            if (Input.GetKey(KeyCode.A))
+            {
+                if (isTouchingGround == false)
+                {
+                    rb.AddForce(Vector2.left * activeMoveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(x * activeMoveSpeed, rb.velocity.y);
+                }
+                if (!facingRight && isTouchingGround == false)
+                {
+                    DashAnimation.SetActive(true);
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                rb.velocity = new Vector2(x * 0, rb.velocity.y);
+                DashAnimation.SetActive(false);
+            }
         }
+
+        //https://www.youtube.com/watch?v=xHargJbONls&ab_channel=Antarsoft
+        anim.SetBool("Jump", !isTouchingGround);
+        anim.SetFloat("yVelocity", rb.velocity.y);
+
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) && isTouchingGround == true && isDashing == false)
         {
@@ -76,8 +119,8 @@ public class Movement : MonoBehaviour
         {
             arm.transform.localPosition = new Vector2(-0.125f, -0.09375f);
             anim.SetBool("Running", false);
-
         }
+
 
         if (mousePos.x < transform.position.x && facingRight)
         {
@@ -88,7 +131,7 @@ public class Movement : MonoBehaviour
             flip();
         }
 
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) && gph.isHooked == false)
         {
             if (isTouchingGround)
             {
@@ -129,11 +172,10 @@ public class Movement : MonoBehaviour
                 anim.SetBool("Running", false);
             }
         }
-        else
-        {
-            DashAnimation.SetActive(false);
 
-        }
+
+
+
         if (isDashing)
         {
             /////////////////////////////////////////////////////
@@ -141,6 +183,7 @@ public class Movement : MonoBehaviour
             /////////////////////////////////////////////////////
 
             var targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //var targetPos = sic.transform.position;
             targetPos.z = transform.position.z;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, activeMoveSpeed * Time.deltaTime);
         }
@@ -153,15 +196,19 @@ public class Movement : MonoBehaviour
     }
     IEnumerator Dash()
     {
+        rb.constraints = RigidbodyConstraints2D.FreezePositionY; rb.constraints = RigidbodyConstraints2D.None; rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.gravityScale = 0;
         dashCooldownCounter = dashcoolDown;
         float tempspeed = speed;
         activeMoveSpeed = dashSpeed;
         isDashing = true;
         yield return new WaitForSeconds(dashLength);
         activeMoveSpeed = tempspeed;
+        rb.gravityScale = normalgravity;
         isDashing = false;
         arm.transform.localPosition = new Vector2(-0.125f, -0.09375f);
         anim.SetBool("Running", false);
+        DashAnimation.SetActive(false);
         yield return new WaitForSeconds(dashcoolDown);
         dashCooldownCounter = 0;
     }
@@ -169,4 +216,6 @@ public class Movement : MonoBehaviour
     {
         isTouchingGround = !isTouchingGround;
     }
+
+
 }

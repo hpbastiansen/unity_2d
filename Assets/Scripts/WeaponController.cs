@@ -38,34 +38,35 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* 
-        NOT IN USE AT THE TIME. SOURCE IF NEEDED FOR FUTURE.
-        ////////////////////////////////////////////////////////////////
-        https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
-        ////////////////////////////////////////////////////////////////
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    //next Weapon
-                    if (currentWeaponIndex < totalWeapons - 1)
-                    {
-                        guns[currentWeaponIndex].SetActive(false);
-                        currentWeaponIndex += 1;
-                        guns[currentWeaponIndex].SetActive(true);
-                        currentGun = guns[currentWeaponIndex];
-                    }
-                }
 
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    //previous Weapon
-                    if (currentWeaponIndex > 0)
-                    {
-                        guns[currentWeaponIndex].SetActive(false);
-                        currentWeaponIndex -= 1;
-                        guns[currentWeaponIndex].SetActive(true);
-                        currentGun = guns[currentWeaponIndex];
-                    }
-                }*/
+
+        ////////////////////////////////////////////////////////////////
+        // https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
+        ////////////////////////////////////////////////////////////////
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //next Weapon
+            if (currentWeaponIndex < totalWeapons - 1)
+            {
+                guns[currentWeaponIndex].SetActive(false);
+                currentWeaponIndex += 1;
+                guns[currentWeaponIndex].SetActive(true);
+                currentGun = guns[currentWeaponIndex];
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //previous Weapon
+            if (currentWeaponIndex > 0)
+            {
+                guns[currentWeaponIndex].SetActive(false);
+                currentWeaponIndex -= 1;
+                guns[currentWeaponIndex].SetActive(true);
+                currentGun = guns[currentWeaponIndex];
+            }
+        }
+
         if (Input.GetMouseButtonDown(2) && shieldRechargeTimer <= 0)
         {
             usingShield = !usingShield;
