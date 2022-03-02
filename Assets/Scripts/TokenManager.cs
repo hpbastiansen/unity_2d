@@ -145,7 +145,7 @@ public class TokenManager : MonoBehaviour
         gunLifeSteal = 0;
 
         DashSpeed = 20;
-        DashDuration = 0.5f;
+        DashDuration = 0.2f;
         movement.dashLength = DashDuration;
         movement.dashSpeed = DashSpeed;
 
@@ -177,8 +177,8 @@ public class TokenManager : MonoBehaviour
 
         gunLifeSteal = 0.2f;
 
-        DashSpeed = 15;
-        DashDuration = 1f;
+        DashSpeed = 14;
+        DashDuration = 0.6f;
         movement.dashLength = DashDuration;
         movement.dashSpeed = DashSpeed;
 

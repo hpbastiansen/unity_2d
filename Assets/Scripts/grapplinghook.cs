@@ -41,10 +41,21 @@ public class grapplinghook : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 joint.distance -= step;
+                if (targetPos.x > rb.transform.position.x)
+                {
+                    rb.AddForce(Vector3.left * forces / 1000, ForceMode2D.Impulse);
+
+                }
+                else
+                {
+                    rb.AddForce(Vector3.right * forces / 1000, ForceMode2D.Impulse);
+
+                }
             }
             if (Input.GetKey(KeyCode.S))
             {
                 joint.distance += step;
+
             }
             //mv.enabled = false;
         }
@@ -53,7 +64,7 @@ public class grapplinghook : MonoBehaviour
         {
             if (isHooked == true)
             {
-                rb.AddForce(Vector3.up * forces * Time.deltaTime, ForceMode2D.Impulse);
+                rb.AddForce(Vector3.up * forces, ForceMode2D.Impulse);
                 isHooked = false;
                 gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
             }
@@ -63,7 +74,7 @@ public class grapplinghook : MonoBehaviour
         }
 
 
-        if ((Input.GetMouseButtonDown(0) && isHooked == true && usingthisgun == true) || (isHooked && usingthisgun == false && Input.GetKeyDown(KeyCode.H)))
+        if ((Input.GetMouseButtonDown(0) && isHooked == true && usingthisgun == true) || (isHooked && usingthisgun == false && Input.GetKeyDown(KeyCode.G)))
         {
             isHooked = false;
             joint.enabled = false;
@@ -73,11 +84,11 @@ public class grapplinghook : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && usingthisgun == true)
         {
+
             targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPos.z = 0;
 
             hit = Physics2D.Raycast(transform.position, targetPos - transform.position, distance, mask);
-
             if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
 
             {
