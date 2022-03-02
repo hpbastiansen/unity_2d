@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
@@ -29,11 +30,17 @@ public class Weapon : MonoBehaviour
 
     public float lifeSteal = 0;
 
+    public Sprite img;
+    private Image imgUI;
+    private Text ammotxt;
+
     // Update is called once per frame
     void Start()
     {
         tm = GameObject.Find("GameManager").GetComponent<TokenManager>();
         lifeSteal = tm.gunLifeSteal;
+        ammotxt = GameObject.Find("AmmoTextUI").GetComponent<Text>();
+
     }
     void LateUpdate()
     {
@@ -54,11 +61,17 @@ public class Weapon : MonoBehaviour
             }
         }
 
+
+        ammotxt.text = Ammo.ToString();
+
     }
     private void OnEnable()
     {
+        imgUI = GameObject.Find("currentWepImg").GetComponent<Image>();
         isShootingfullauto = false;
-
+        imgUI.sprite = img;
+        ammotxt = GameObject.Find("AmmoTextUI").GetComponent<Text>();
+        ammotxt.text = Ammo.ToString();
         //lifeSteal = tm.gunLifeSteal;
 
     }

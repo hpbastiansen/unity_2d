@@ -33,6 +33,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
+        float dist = Vector3.Distance(playerHP.transform.position, transform.position);
 
         if ((whattohit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) //http://answers.unity.com/answers/1394106/view.html
         {
@@ -44,7 +45,9 @@ public class Bullet : MonoBehaviour
             {
                 enemy.Takedmg(damage);
                 Instantiate(hitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
+
                 ScreenShakeController.instance.StartShake(.05f, .03f);
+
                 playerHP.HP += lifeSteal;
                 Destroy(gameObject);
             }
@@ -59,7 +62,10 @@ public class Bullet : MonoBehaviour
                 else
                 {
                     Instantiate(hitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-                    ScreenShakeController.instance.StartShake(.2f, .1f);
+                    if (dist < 10)
+                    {
+                        ScreenShakeController.instance.StartShake(.2f, .1f);
+                    }
                     Destroy(gameObject);
                 }
             }
@@ -67,13 +73,19 @@ public class Bullet : MonoBehaviour
             {
                 shield.TakeDmg(damage);
                 Instantiate(hitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-                ScreenShakeController.instance.StartShake(.2f, .1f);
+                if (dist < 10)
+                {
+                    ScreenShakeController.instance.StartShake(.2f, .1f);
+                }
                 Destroy(gameObject);
             }
             else
             {
+                if (dist < 10)
+                {
+                    ScreenShakeController.instance.StartShake(.05f, .03f);
+                }
                 Instantiate(hitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-                ScreenShakeController.instance.StartShake(.05f, .03f);
                 Destroy(gameObject);
             }
 

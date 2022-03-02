@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Movement : MonoBehaviour
 {
     [Header("Movement")]
@@ -18,6 +17,11 @@ public class Movement : MonoBehaviour
     private Vector2 armpos;
     private Vector2 newarmpos;
     private grapplinghook gph;
+
+    public bool goingup;
+    public bool goingdown;
+    public bool goingleft;
+    public bool goingright;
     [Header("GroundCheck")]
 
     public Transform groundCheck;
@@ -104,6 +108,24 @@ public class Movement : MonoBehaviour
                 DashAnimation.SetActive(false);
             }
         }
+
+        if (rb.velocity.x > 0)
+        {
+            goingright = true;
+            goingleft = false;
+        }
+        else if (rb.velocity.x < 0)
+        {
+            goingright = false;
+            goingleft = true;
+        }
+        else
+        {
+            goingright = false;
+            goingleft = false;
+        }
+
+        StartCoroutine(calcMovement());
 
         //https://www.youtube.com/watch?v=xHargJbONls&ab_channel=Antarsoft
         anim.SetBool("Jump", !isTouchingGround);
@@ -217,5 +239,43 @@ public class Movement : MonoBehaviour
         isTouchingGround = !isTouchingGround;
     }
 
+    IEnumerator calcMovement()
+    {
+        Vector3 prevPos = gameObject.transform.position;
+        yield return new WaitForSeconds(0.2f);
+        Vector3 actualPos = gameObject.transform.position;
 
+        if (prevPos.y < actualPos.y && (actualPos.y - prevPos.y > 0.1))
+        {
+            goingup = true;
+            goingdown = false;
+        }
+        else if (prevPos.y > actualPos.y && (prevPos.y - actualPos.y > 0.1))
+        {
+            goingup = false;
+            goingdown = true;
+        }
+        else
+        {
+            goingup = false;
+            goingdown = false;
+        }
+
+        if (prevPos.x < actualPos.x && (actualPos.x - prevPos.x > 0.1))
+        {
+            goingright = true;
+            goingleft = false;
+        }
+        else if (prevPos.x > actualPos.x && (prevPos.x - actualPos.x > 0.1))
+        {
+            goingright = false;
+            goingleft = true;
+        }
+        else
+        {
+            goingright = false;
+            goingleft = false;
+        }
+
+    }
 }
