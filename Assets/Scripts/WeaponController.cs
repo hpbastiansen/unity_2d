@@ -43,7 +43,7 @@ public class WeaponController : MonoBehaviour
         ////////////////////////////////////////////////////////////////
         // https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
         ////////////////////////////////////////////////////////////////
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             //next Weapon
             if (currentWeaponIndex < totalWeapons - 1)
@@ -55,7 +55,7 @@ public class WeaponController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //previous Weapon
             if (currentWeaponIndex > 0)

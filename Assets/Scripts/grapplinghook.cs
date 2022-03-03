@@ -20,6 +20,7 @@ public class grapplinghook : MonoBehaviour
     public LayerMask mask;
     public float step = 0.02f;
     public bool usingthisgun;
+    public DialogueManager dm;
 
     // Use this for initialization
     void Start()
@@ -29,13 +30,12 @@ public class grapplinghook : MonoBehaviour
         line.enabled = false;
         mv = gameObject.GetComponent<Movement>();
         usingthisgun = false;
+        dm = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         if (joint.distance > .05f && isHooked == true)
         {
             if (Input.GetKey(KeyCode.W))
@@ -44,22 +44,17 @@ public class grapplinghook : MonoBehaviour
                 if (targetPos.x > rb.transform.position.x)
                 {
                     rb.AddForce(Vector3.left * forces / 1000, ForceMode2D.Impulse);
-
                 }
                 else
                 {
                     rb.AddForce(Vector3.right * forces / 1000, ForceMode2D.Impulse);
-
                 }
             }
             if (Input.GetKey(KeyCode.S))
             {
                 joint.distance += step;
-
             }
-            //mv.enabled = false;
         }
-
         else
         {
             if (isHooked == true)
@@ -72,8 +67,6 @@ public class grapplinghook : MonoBehaviour
             joint.enabled = false;
             //mv.enabled = true;
         }
-
-
         if ((Input.GetMouseButtonDown(0) && isHooked == true && usingthisgun == true) || (isHooked && usingthisgun == false && Input.GetKeyDown(KeyCode.G)))
         {
             isHooked = false;
@@ -82,7 +75,7 @@ public class grapplinghook : MonoBehaviour
             gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
 
         }
-        if (Input.GetMouseButtonDown(0) && usingthisgun == true)
+        if (Input.GetMouseButtonDown(0) && usingthisgun == true && dm.inDialogue == false)
         {
 
             targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

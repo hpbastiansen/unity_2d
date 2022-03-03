@@ -33,6 +33,7 @@ public class Weapon : MonoBehaviour
     public Sprite img;
     private Image imgUI;
     private Text ammotxt;
+    public DialogueManager dm;
 
     // Update is called once per frame
     void Start()
@@ -40,13 +41,13 @@ public class Weapon : MonoBehaviour
         tm = GameObject.Find("GameManager").GetComponent<TokenManager>();
         lifeSteal = tm.gunLifeSteal;
         ammotxt = GameObject.Find("AmmoTextUI").GetComponent<Text>();
-
+        dm = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
     }
     void LateUpdate()
     {
         if (FullAuto == true)
         {
-            if (Input.GetMouseButton(0) && Time.time >= fireratecounter && tm.usingTokenMenu == false)
+            if (Input.GetMouseButton(0) && Time.time >= fireratecounter && tm.usingTokenMenu == false && dm.inDialogue == false)
             {
                 fireratecounter = Time.time + 1f / firerate;
                 Shoot();
@@ -54,16 +55,13 @@ public class Weapon : MonoBehaviour
         }
         else if (FullAuto == false)
         {
-            if (Input.GetMouseButtonDown(0) && Time.time >= fireratecounter && tm.usingTokenMenu == false)
+            if (Input.GetMouseButtonDown(0) && Time.time >= fireratecounter && tm.usingTokenMenu == false && dm.inDialogue == false)
             {
                 fireratecounter = Time.time + 1f / firerate;
                 Shoot();
             }
         }
-
-
         ammotxt.text = Ammo.ToString();
-
     }
     private void OnEnable()
     {
@@ -92,9 +90,6 @@ public class Weapon : MonoBehaviour
             thebullet.GetComponent<Bullet>().whattohit = whattohit;
             thebullet.GetComponent<Bullet>().speed = speedofbullet;
             thebullet.GetComponent<Bullet>().damage = damage;
-
-
-
         }
     }
     void ShootFullAuto()
@@ -117,8 +112,6 @@ public class Weapon : MonoBehaviour
                 thebullet.GetComponent<Bullet>().speed = speedofbullet;
                 thebullet.GetComponent<Bullet>().lifeSteal = lifeSteal;
                 thebullet.GetComponent<Bullet>().damage = damage;
-
-
             }
             StartCoroutine(FullAutoCooldown());
         }
