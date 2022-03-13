@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shield
+  - Worm
+  - WormSpawn
   layers:
   - Default
   - TransparentFX
