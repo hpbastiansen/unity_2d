@@ -122538,7 +122538,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.44
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -122585,6 +122585,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &534782439838681748 stripped
@@ -122613,7 +122618,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.43
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -122660,6 +122665,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &2302911088581761465 stripped
@@ -122688,7 +122698,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.45
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -122735,6 +122745,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &1181847392040772665 stripped
@@ -122763,7 +122778,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.45
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -122810,6 +122825,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &4338101671342120615 stripped
@@ -122833,12 +122853,12 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 39.73
+      value: 39.69
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.44
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -122885,6 +122905,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &5689132804565513091 stripped
@@ -122913,7 +122938,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.44
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -122960,6 +122985,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &5758179621259565916 stripped
@@ -122988,7 +123018,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.46
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -123035,6 +123065,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &5265305983540335828 stripped
@@ -123063,7 +123098,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.44
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -123110,6 +123145,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &4685863533708853628 stripped
@@ -123133,12 +123173,12 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.72
+      value: 29.98
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.45
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -123185,6 +123225,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wormpoint (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
 --- !u!4 &6799800256867436087 stripped
@@ -123213,7 +123258,7 @@ PrefabInstance:
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.44
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 931748110207083863, guid: 8f90defafcac132459e63fbc7026ef6c,
         type: 3}
@@ -123259,6 +123304,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wormpoint (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300710409554269200, guid: 8f90defafcac132459e63fbc7026ef6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f90defafcac132459e63fbc7026ef6c, type: 3}
