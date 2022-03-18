@@ -21,8 +21,7 @@ public class EnemyWorm : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(0, 0, direction == "right" ? transform.eulerAngles.z - speed : transform.eulerAngles.z + speed);
         
-        //if(transform.childCount < 1 || enemy.transform.position.y < initialHeight - 1)
-        if (transform.childCount < 1)
+        if(transform.childCount < 1 || enemy.transform.position.y < initialHeight - 1)
         {
             Destroy(gameObject);
         }
