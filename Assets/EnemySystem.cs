@@ -57,17 +57,17 @@ public class EnemySystem : MonoBehaviour
         // check if a worm is able to be spawned and if it is - spawn it.
         if (Random.value < spawnChance || timeSinceSpawn > spawnTimeMax)
         {
-            List<GameObject> selectedPoints = SelectPoints();
+            List<Vector2> selectedPoints = SelectPoints();
             SpawnWorm(selectedPoints);
         }
     }
 
     // Returns a list of two points for the worm to travel to and from, one on the left side of the player, one on the right side.
-    List<GameObject> SelectPoints()
+    List<Vector2> SelectPoints()
     {
-        List<GameObject> chosenPoints = new List<GameObject>();
-        List<GameObject> leftPoints = new List<GameObject>();
-        List<GameObject> rightPoints = new List<GameObject>();
+        List<Vector2> chosenPoints = new List<Vector2>();
+        List<Vector2> leftPoints = new List<Vector2>();
+        List<Vector2> rightPoints = new List<Vector2>();
 
         foreach (GameObject point in wormPoints)
         {
@@ -76,39 +76,49 @@ public class EnemySystem : MonoBehaviour
             {
                 if (point.transform.position.x < player.transform.position.x)
                 {
-                    leftPoints.Add(point);
+                    leftPoints.Add(point.transform.position);
                 }
                 else
                 {
-                    rightPoints.Add(point);
+                    rightPoints.Add(point.transform.position);
                 }
             }
         }
 
-        chosenPoints.Add(leftPoints[(int)Mathf.Floor(Random.Range(0f, leftPoints.Count))]);
-        chosenPoints.Add(rightPoints[(int)Mathf.Floor(Random.Range(0f, rightPoints.Count))]);
+        Vector2 leftPoint = leftPoints[(int)Mathf.Floor(Random.Range(0f, leftPoints.Count))];
+        Vector2 rightPoint = rightPoints[(int)Mathf.Floor(Random.Range(0f, rightPoints.Count))];
+        Vector2 playerPoint = new Vector2(player.transform.position.x, player.transform.position.y + 0.2f);
+
+        if(Vector2.Distance(leftPoint, playerPoint) > Vector2.Distance(rightPoint, playerPoint))
+        {
+            chosenPoints.Add(leftPoint);
+            chosenPoints.Add(playerPoint);
+            chosenPoints.Add(rightPoint);
+        } else
+        {
+            chosenPoints.Add(rightPoint);
+            chosenPoints.Add(playerPoint);
+            chosenPoints.Add(leftPoint);
+        }
 
         return chosenPoints;
     }
 
-    void SpawnWorm(List<GameObject> points)
+    void SpawnWorm(List<Vector2> points)
     {
         timeSinceSpawn = 0f;
-        string direction = (int)Mathf.Round(Random.Range(0f, 1f)) == 0 ? "left" : "right";
 
-        Vector3 playerPoint = new Vector3(player.transform.position.x, player.transform.position.y + 0.2f, player.transform.position.z);
-        Vector3 center = FindCircleCenter(points[0].transform.position, points[1].transform.position, playerPoint);
-        
-        GameObject spawnedWorm = Instantiate(worm, center, Quaternion.Euler(0, 0, 0));
-        Transform wormTransform = spawnedWorm.transform.Find("Worm");
-
-        wormTransform.position = direction == "left" ? points[1].transform.position : points[0].transform.position;
-        wormTransform.LookAt(wormTransform.position + new Vector3(0, 0, 1), playerPoint);
-        spawnedWorm.GetComponent<EnemyWorm>().direction = direction;
+        // Instantiate worm and set path points.
+        GameObject spawnedWorm = Instantiate(worm, points[0], Quaternion.Euler(0, 0, 0));
+        WormPath path = spawnedWorm.GetComponent<WormPath>();
+        path.startPoint = points[0];
+        path.playerPoint = points[1];
+        path.endPoint = points[2];
+        path.Init();
     }
 
     // Finds the center of a circle given three points a, b, and c. Returns (0, 0, 0) if points are colinear.
-    Vector3 FindCircleCenter(Vector3 a, Vector3 b, Vector3 c)
+/*    Vector3 FindCircleCenter(Vector3 a, Vector3 b, Vector3 c)
     {
         // Get perpendicular bisector of (x1, y1) and (x2, y2)
         float x1 = (b.x + a.x) / 2;
@@ -140,5 +150,5 @@ public class EnemySystem : MonoBehaviour
         float t2 = ((p3.x - p1.x) * dy12 + (p1.y - p3.y) * dx12) / -denominator;
 
         return new Vector3(p1.x + dx12 * t1, p1.y + dy12 * t1, 0);
-    }
+    }*/
 }
