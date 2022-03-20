@@ -21,6 +21,7 @@ public class Parallax : MonoBehaviour
     public void Start()
     {
         _startPosition = transform.position;
+        MainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     ///Update is called every frame.

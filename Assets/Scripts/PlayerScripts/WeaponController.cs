@@ -16,6 +16,7 @@ public class WeaponController : MonoBehaviour
     public bool UsingShield;
     public GameObject ShieldObject;
     public float ShieldRechargeTimer;
+    private TokenManager _tokenManager;
 
 
     /// Start methods run once when enabled.
@@ -38,6 +39,11 @@ public class WeaponController : MonoBehaviour
         Weapons[0].SetActive(true);
         CurrentGun = Weapons[0];
         CurrentWeaponIndex = 0;
+
+        _tokenManager = Object.FindObjectOfType<TokenManager>();
+        _tokenManager.CurrentWeapon = CurrentGun.GetComponent<Weapon>();
+
+
     }
 
     ///Update is called every frame.

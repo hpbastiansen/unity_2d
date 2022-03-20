@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     public Movement PlayerMovement;
-    public float HP = 100;
+    public float MaxHP = 100;
+    public float CurrentHP;
     public bool IsBlocking;
     [Tooltip("How long the block is active for.")]
     public float BlockActiveTime;
@@ -24,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         PlayerMovement = GameObject.Find("Main_Character").GetComponent<Movement>();
+        CurrentHP = MaxHP;
     }
 
     ///Update is called every frame.
@@ -43,8 +45,10 @@ This means that is a game run on higher frames per second the update function wi
             _tempBlockTimer = BlockCooldownTime;
             StartCoroutine(BlockCoolDown());
         }
-
-
+        if (CurrentHP > MaxHP)
+        {
+            CurrentHP = MaxHP;
+        }
     }
 
     ///The TakeDamage function allows any object in the game to take damage on the player and decrease the health.
@@ -55,18 +59,20 @@ This means that is a game run on higher frames per second the update function wi
     {
         if (IsBlocking == true)
         {
-            HP += (x / BlockLifeSteal) * 1;
+            CurrentHP += BlockLifeSteal;
             _tempBlockTimer = BlockCooldownTime;
         }
         else
         {
-            HP -= x;
+            CurrentHP -= x;
             _tempBlockTimer = BlockCooldownTime;
         }
-        if (HP <= 0)
+        if (Mathf.Round(CurrentHP) * 1 <= 0)
         {
-            Debug.Log("Player died");
-            SceneManager.LoadScene("BOXSCNENE");
+            CurrentHP = MaxHP;
+            SetPlayerPositionAndStageInfo _startInfo = GameObject.Find("StartPosition").GetComponent<SetPlayerPositionAndStageInfo>();
+            SceneManager.LoadScene("The_Hub");
+            _startInfo.SetInfo();
         }
     }
     ///Starts a timer for the block cool down.

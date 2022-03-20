@@ -61,6 +61,9 @@ GameObject:
   - component: {fileID: 7556668262444771458}
   - component: {fileID: 7556668262444771457}
   - component: {fileID: 382890650}
+  - component: {fileID: 261743654}
+  - component: {fileID: 261743655}
+  - component: {fileID: 585062320}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -95,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18eebd52203da6940a85431b79281c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHPText: {fileID: 0}
-  HP: {fileID: 0}
+  HealthBar: {fileID: 0}
+  HPText: {fileID: 0}
+  PlayerHealthScript: {fileID: 0}
 --- !u!114 &382890650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,24 +114,90 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TokenUI: {fileID: 0}
-  TokenChange: {fileID: 4869399743905875116, guid: b0746bbd94af67c4aae52e9f15453fe4,
-    type: 3}
-  TokenChangeInstantiatePosition: {fileID: 0}
   DefaultToken: {fileID: 0}
   DefaultTokenActive: 1
   BatToken: {fileID: 0}
   BatTokenActive: 0
-  ThornToken: {fileID: 0}
-  ThornTokenActive: 0
-  WormToken: {fileID: 0}
-  WormTokenActive: 0
+  TokenUIactive: 0
   TokensOwned: []
   TokensActive: 
+  ShortInfo: 
+  DashInfo: 
+  ShieldInfo: 
+  BulletInfo: 
+  CounterInfo: 
+  MovementInfo: 
+  ShortInfoText: {fileID: 0}
+  DashInfoText: {fileID: 0}
+  ShieldInfoText: {fileID: 0}
+  BulletInfoText: {fileID: 0}
+  CounterInfoText: {fileID: 0}
+  MovementInfoText: {fileID: 0}
   CustomPlayerMoveSpeed: 0
+  CustomPlayerJumpHeight: 0
   GunLifeStealAmount: 0
+  CurrentWeapon: {fileID: 0}
   CustomDashSpeed: 0
   CustomDashDuration: 0
   CustomBlockLifeSteal: 0
+  CustomBlockLifeStealCooldown: 0
+  CustomBlockLifeStealActiveTime: 0
   ShieldLifeSteal: 0
   TokenIndex: 0
   UsingTokenMenu: 0
+--- !u!114 &261743654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556668262444771459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0323578b9949f5d41b42a2f17f155eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &261743655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556668262444771459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b8c0cab11033bf4bbd0c8d4116fb405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TokenMangerScript: {fileID: 382890650}
+  DialogueManagerScript: {fileID: 1671044710}
+  TheAnimator: {fileID: 0}
+  TokenObject: {fileID: 0}
+  IsToken: 1
+  DialogueObject: {fileID: 0}
+  IsDialogue: 1
+--- !u!114 &585062320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556668262444771459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa97d900158b894193a5afc7749f853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  W1C1: 0
+  W1C1Scenename: LEVEL1
+  W1C2: 0
+  W1C2Scenename: BOXSCENE
+  W1C3: 0
+  W1C3Scenename: 
+  W1C4: 0
+  W1C4Scenename: 
+  W1C5: 0
+  W1C5Scenename: 
+  W1C6: 0
+  W1C6Scenename: 
+  W1Scenes: []

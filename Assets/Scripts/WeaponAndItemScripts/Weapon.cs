@@ -13,7 +13,8 @@ public class Weapon : MonoBehaviour
     public float BulletSpeed = 1f;
     public float MinVerticalSpread = 0f;
     public float MaxVerticalSpread = 0f;
-
+    public float BulletWeight = 1;
+    public string WeaponType = "Rifle";
     public int Ammo = 1;
     public bool FullAuto;
     public bool IsShootingFullAuto;
@@ -32,6 +33,7 @@ public class Weapon : MonoBehaviour
     private Image ImageUI;
     private Text AmmoText;
     public DialogueManager DialogueManagerScript;
+    private UITest _checkUI;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -42,17 +44,19 @@ public class Weapon : MonoBehaviour
         LifeSteal = TokenManagerScript.GunLifeStealAmount;
         AmmoText = GameObject.Find("AmmoTextUI").GetComponent<Text>();
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
+        _checkUI = Object.FindObjectOfType<UITest>();
+
     }
 
     /// LateUpdate is called every frame
     /** LateUpdate is called after all Update functions have been called. This is useful to order script execution.*/
     /*! The Late Update allows for shooting in both FullAuto and SemiAutomatic. 
     The Late Update also makes sure to update the Ammo UI text at the end.*/
-    void LateUpdate()
+    async void LateUpdate()
     {
         if (FullAuto == true)
         {
-            if (Input.GetMouseButton(0) && Time.time >= FirerateCounter && TokenManagerScript.UsingTokenMenu == false && DialogueManagerScript.InDialogue == false)
+            if (Input.GetMouseButton(0) && Time.time >= FirerateCounter && _checkUI.IsPointerOverUIElement() == false)
             {
                 FirerateCounter = Time.time + 1f / Firerate;
                 Shoot();
@@ -60,7 +64,7 @@ public class Weapon : MonoBehaviour
         }
         else if (FullAuto == false)
         {
-            if (Input.GetMouseButtonDown(0) && Time.time >= FirerateCounter && TokenManagerScript.UsingTokenMenu == false && DialogueManagerScript.InDialogue == false)
+            if (Input.GetMouseButtonDown(0) && Time.time >= FirerateCounter && _checkUI.IsPointerOverUIElement() == false)
             {
                 FirerateCounter = Time.time + 1f / Firerate;
                 Shoot();
@@ -132,6 +136,8 @@ public class Weapon : MonoBehaviour
                 thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
                 thebullet.GetComponent<Bullet>().LifeSteal = LifeSteal;
                 thebullet.GetComponent<Bullet>().Damage = Damage;
+                thebullet.GetComponent<Rigidbody2D>().mass = BulletWeight;
+
             }
             StartCoroutine(FullAutoCooldown());
         }

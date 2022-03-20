@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Color: {r: 0.9843137, g: 0.9607843, b: 0.9372549, a: 1}
   m_Intensity: 0.09
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 000000005f7b0cb183293819fd7e21e061ee716d03febefb
+  m_ApplyToSortingLayers: 000000005f7b0cb183293819fd7e21e061ee716d03febefb6978ba24
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -5003,7 +5003,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -71369213
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 20
   m_RenderMode: 5
   m_SortMode: 0
@@ -5198,7 +5198,7 @@ PrefabInstance:
     - target: {fileID: 6392321111158243827, guid: 9651677d45ebd1c4083772c7127ee824,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6392321111158243827, guid: 9651677d45ebd1c4083772c7127ee824,
         type: 3}
