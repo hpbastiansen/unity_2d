@@ -212,9 +212,9 @@ This means that is a game run on higher frames per second the update function wi
         //Makes the player dash move towards the mouse position.
         if (IsDashing)
         {
-            /////////////////////////////////////////////////////
-            /*http://answers.unity.com/answers/633909/view.html*/
-            /////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////
+            /*http://answers.unity.com/answers/633909/view.html */
+            //////////////////////////////////////////////////////
             var targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPos.z = transform.position.z;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, ActiveMoveSpeed * Time.deltaTime);
