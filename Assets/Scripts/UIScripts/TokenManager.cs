@@ -10,8 +10,8 @@ public class TokenManager : MonoBehaviour
     public GameObject TokenUI;
     public GameObject DefaultToken;
     public bool DefaultTokenActive;
-    public GameObject BatToken;
-    public bool BatTokenActive;
+    public GameObject CactusToken;
+    public bool CactusTokenActive;
     public bool TokenUIactive;
     public List<GameObject> TokensOwned;
     public List<bool> TokensActive;
@@ -54,6 +54,11 @@ public class TokenManager : MonoBehaviour
     private string _spacechar = " __ ";
     private UITest _checkUI;
 
+
+    [Header("CactusToken")]
+    public GameObject CactusProjectileObject;
+    public Sprite ProjectileImage;
+
     ///Awake is called when the script instance is being loaded.
     /**Awake is called either when an active GameObject that contains the script is initialized when a Scene loads, 
     or when a previously inactive GameObject is set to active, or after a GameObject created with Object.
@@ -76,13 +81,10 @@ public class TokenManager : MonoBehaviour
     {
 
         _checkUI = Object.FindObjectOfType<UITest>();
-
         TokenUI = GameObject.Find("TokenUI");
-        //TokenUI.SetActive(false);
         TokenUIactive = false;
-
         TokensOwned.Add(DefaultToken);
-        TokensOwned.Add(BatToken);
+        TokensOwned.Add(CactusToken);
 
         foreach (GameObject tokens in TokensOwned)
         {
@@ -140,6 +142,12 @@ This means that is a game run on higher frames per second the update function wi
         MovementInfoText.text = MovementInfo.ToString();
 
         ShortInfoText.text = ShortInfo.ToString();
+
+
+        if (CactusTokenActive == true)
+        {
+
+        }
     }
 
 
@@ -180,6 +188,28 @@ This means that is a game run on higher frames per second the update function wi
         TokensOwned[TokenIndex].SetActive(true);
     }
 
+    public IEnumerator CactusTokenDash()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (PlayerMovement.IsDashing == true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                float _randomSpread = Random.Range(-1, 1);
+                GameObject thebullet = Instantiate(CactusProjectileObject, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
+                thebullet.transform.Rotate(0, 0, _randomSpread);
+                thebullet.GetComponent<Bullet>().CameraShakeStrength = 0;
+                thebullet.GetComponent<Bullet>().LifeSteal = 0;
+                thebullet.GetComponent<Bullet>().TimeToLive = 1f;
+                thebullet.GetComponent<Bullet>().WhatToHit = CurrentWeapon.WhatToHit;
+                thebullet.GetComponent<Bullet>().BulletSpeed = CustomDashSpeed * 1.5f;
+                thebullet.GetComponent<Bullet>().Damage = 5;
+                thebullet.GetComponentInChildren<SpriteRenderer>().sprite = ProjectileImage;
+                GameObject _pssystem = thebullet.transform.Find("ParticleSystem").gameObject;
+                _pssystem.SetActive(false);
+            }
+        }
+    }
 
 
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/
@@ -188,7 +218,7 @@ This means that is a game run on higher frames per second the update function wi
     public void ActivateDefaultToken()
     {
         DefaultTokenActive = true;
-        BatTokenActive = false;
+        CactusTokenActive = false;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
         ShortInfo = "Default token is obtained at the start of the game for free. The values in the token is the default values for all the variables. Other tokens can however change these.";
@@ -201,6 +231,8 @@ This means that is a game run on higher frames per second the update function wi
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
         GunLifeStealAmount = 0;
+        CurrentWeapon.BulletTimeToLive = 1f;
+
 
         CustomDashSpeed = 40;
         CustomDashDuration = 0.2f;
@@ -219,20 +251,22 @@ This means that is a game run on higher frames per second the update function wi
 
         _weaponAccuracy = "decent";
     }
-    ///The ActivateBatToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
-    public void ActivateBatToken()
+    ///The ActivateCactusToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
+    public void ActivateCactusToken()
     {
         DefaultTokenActive = false;
-        BatTokenActive = true;
+        CactusTokenActive = true;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
-        ShortInfo = "This is another token!";
+        ShortInfo = "When dashing projectiles shoot out in the direction of the momentum. Bullets split into 8 after traveling the maximum distance. When blocking succesfully it shoots out 3 thorns, which homes to the nearest enemy. " +
+        "Shield gives the player touch damage.";
 
         CustomPlayerMoveSpeed = 10;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
         GunLifeStealAmount = 0.2f;
+        CurrentWeapon.BulletTimeToLive = .2f;
 
         CustomDashSpeed = 20;
         CustomDashDuration = 0.6f;
@@ -252,5 +286,4 @@ This means that is a game run on higher frames per second the update function wi
         _weaponAccuracy = "decent";
 
     }
-
 }

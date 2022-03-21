@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ActivateCurrentToken : MonoBehaviour
 {
-    private TokenManager TokenManagerScript;
+    private TokenManager _tokenManager;
     public string TokenActivate;
     private void Awake()
     {
-        TokenManagerScript = Object.FindObjectOfType<TokenManager>();
+        _tokenManager = Object.FindObjectOfType<TokenManager>();
     }
     private void OnEnable()
     {
-        TokenManagerScript.Invoke(TokenActivate, 0f);
+        _tokenManager.Invoke(TokenActivate, 0f);
     }
 }

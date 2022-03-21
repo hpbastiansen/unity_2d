@@ -13,8 +13,11 @@ public class Bullet : MonoBehaviour
     public GameObject BlockEffect;
     public LayerMask WhatToHit;
     public float CameraShakeStrength = 0;
-
+    public float TimeToLive = 1f;
     public bool IsEnemyBullet;
+    public bool UsingCactusToken = false;
+
+    public GameObject CactusSplinters;
 
     [Header("Lifesteal settings")]
     public float LifeSteal = 0;
@@ -29,6 +32,7 @@ public class Bullet : MonoBehaviour
         BulletRigidbody.velocity = transform.right * BulletSpeed;
         StartCoroutine(DestoryBullet());
         PlayerHealthScript = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
+        UsingCactusToken = Object.FindObjectOfType<TokenManager>().CactusTokenActive;
     }
 
     ///Function will run when an incoming collider makes contact with this object's collider.
@@ -98,10 +102,35 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    ///An independent IEnumerator that is called in the Start function to only allow bullet to live for 3 seconds.
+    ///An independent IEnumerator that is called in the Start function to destorys the gameobject after x seconds.
     IEnumerator DestoryBullet()
     {
-        yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
+        yield return new WaitForSeconds(TimeToLive);
+        for (; ; )
+        {
+            if (UsingCactusToken == true && IsEnemyBullet == false)
+            {
+                BulletRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY; BulletRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX; BulletRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                GameObject thesplinters = Instantiate(CactusSplinters, gameObject.transform.position, gameObject.transform.rotation);
+                Component[] thesplintersbullet;
+                thesplintersbullet = GetComponentsInChildren<Bullet>();
+                foreach (Bullet splinter in thesplintersbullet)
+                {
+                    UsingCactusToken = false;
+                }
+
+                Destroy(gameObject);
+            }
+            else if (UsingCactusToken == false)
+            {
+                Debug.Log("SHEEEDar");
+                Destroy(gameObject);
+            }
+            yield return null;
+        }
+    }
+    private void SpawnCactusSplinters()
+    {
+
     }
 }

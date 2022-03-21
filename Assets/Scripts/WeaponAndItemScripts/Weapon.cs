@@ -20,7 +20,7 @@ public class Weapon : MonoBehaviour
     public bool IsShootingFullAuto;
     public float Firerate;
     public float FirerateCounter = 0;
-
+    public float BulletTimeToLive = 1;
     public float CameraShakeStrength = 1;
     public Animator MuzzleFlashAnimator;
     public string MuzzleFlashAnimationName;
@@ -103,6 +103,7 @@ public class Weapon : MonoBehaviour
             GameObject thebullet = Instantiate(BulletObject, FirePoint.position, FirePoint.rotation);
             thebullet.transform.Rotate(0, 0, _randomSpread);
             thebullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
+            thebullet.GetComponent<Bullet>().TimeToLive = BulletTimeToLive;
             thebullet.GetComponent<Bullet>().LifeSteal = LifeSteal;
             thebullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
             thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
@@ -133,6 +134,7 @@ public class Weapon : MonoBehaviour
                 thebullet.transform.Rotate(0, 0, _randomSpread);
                 thebullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
                 thebullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
+                thebullet.GetComponent<Bullet>().TimeToLive = 1f;
                 thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
                 thebullet.GetComponent<Bullet>().LifeSteal = LifeSteal;
                 thebullet.GetComponent<Bullet>().Damage = Damage;

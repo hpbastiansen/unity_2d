@@ -35,8 +35,9 @@ public class Movement : MonoBehaviour
     public float DashSpeed;
 
     public float DashLength = .5f, DashCooldown = 1f;
-    private float _dashCooldownCounter;
+    public float DashCooldownCounter;
     public GameObject DashAnimation;
+    private TokenManager _tokenManager;
 
 
 
@@ -52,6 +53,7 @@ public class Movement : MonoBehaviour
         _grapplingHookController = GetComponent<GrapplingHookController>();
         DashAnimation.SetActive(false);
         CanWalk = true;
+        _tokenManager = Object.FindObjectOfType<TokenManager>();
         DontDestroyOnLoad(gameObject);
 
     }
@@ -197,7 +199,7 @@ public class Movement : MonoBehaviour
         //Start Dash if Left Shift is pressed.
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (_dashCooldownCounter <= 0)
+            if (DashCooldownCounter <= 0)
             {
                 StartCoroutine(Dash());
             }
@@ -230,7 +232,6 @@ public class Movement : MonoBehaviour
             targetPos.z = transform.position.z;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, ActiveMoveSpeed * Time.deltaTime);
         }
-
     }
 
     ///Flips the player
@@ -248,11 +249,12 @@ public class Movement : MonoBehaviour
     {
         PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY; PlayerRigidbody.constraints = RigidbodyConstraints2D.None; PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         PlayerRigidbody.gravityScale = 0;
-        _dashCooldownCounter = DashCooldown;
+        DashCooldownCounter = DashCooldown;
         float tempspeed = MoveSpeed;
         ActiveMoveSpeed = DashSpeed;
         IsDashing = true;
         CanWalk = false;
+        if (_tokenManager.CactusTokenActive) { StartCoroutine(_tokenManager.CactusTokenDash()); }
         yield return new WaitForSeconds(DashLength);
         ActiveMoveSpeed = tempspeed;
         CanWalk = true;
@@ -262,7 +264,7 @@ public class Movement : MonoBehaviour
         PlayerAnimator.SetBool("Running", false);
         DashAnimation.SetActive(false);
         yield return new WaitForSeconds(DashCooldown);
-        _dashCooldownCounter = 0;
+        DashCooldownCounter = 0;
     }
 
     ///Calculate when the player is moving to see which direction player is moving.
