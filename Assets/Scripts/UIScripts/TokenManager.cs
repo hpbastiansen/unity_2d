@@ -210,6 +210,28 @@ This means that is a game run on higher frames per second the update function wi
             }
         }
     }
+    public IEnumerator CactusTokenCounter()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (_playerHealth.IsBlocking == true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                float _randomSpread = Random.Range(-1, 1);
+                GameObject thebullet = Instantiate(CactusProjectileObject, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
+                thebullet.transform.Rotate(0, 0, _randomSpread);
+                thebullet.GetComponent<Bullet>().CameraShakeStrength = 0;
+                thebullet.GetComponent<Bullet>().LifeSteal = 0;
+                thebullet.GetComponent<Bullet>().TimeToLive = 1f;
+                thebullet.GetComponent<Bullet>().WhatToHit = CurrentWeapon.WhatToHit;
+                thebullet.GetComponent<Bullet>().BulletSpeed = CustomDashSpeed * 1.5f;
+                thebullet.GetComponent<Bullet>().Damage = 5;
+                thebullet.GetComponentInChildren<SpriteRenderer>().sprite = ProjectileImage;
+                GameObject _pssystem = thebullet.transform.Find("ParticleSystem").gameObject;
+                _pssystem.SetActive(false);
+            }
+        }
+    }
 
 
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/
@@ -232,6 +254,8 @@ This means that is a game run on higher frames per second the update function wi
 
         GunLifeStealAmount = 0;
         CurrentWeapon.BulletTimeToLive = 1f;
+        CurrentWeapon.Firerate = 10;
+
 
 
         CustomDashSpeed = 40;
@@ -267,6 +291,8 @@ This means that is a game run on higher frames per second the update function wi
 
         GunLifeStealAmount = 0.2f;
         CurrentWeapon.BulletTimeToLive = .2f;
+        CurrentWeapon.Firerate = 3;
+
 
         CustomDashSpeed = 20;
         CustomDashDuration = 0.6f;

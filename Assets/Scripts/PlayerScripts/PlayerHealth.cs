@@ -17,6 +17,8 @@ public class PlayerHealth : MonoBehaviour
     public int BlockLifeSteal;
     public float BlockCooldownTime;
     private float _tempBlockTimer;
+    public bool UsingCactusToken;
+    private TokenManager _tokenManager;
 
 
     /// Start methods run once when enabled.
@@ -26,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
     {
         PlayerMovement = GameObject.Find("Main_Character").GetComponent<Movement>();
         CurrentHP = MaxHP;
+        _tokenManager = Object.FindObjectOfType<TokenManager>();
     }
 
     ///Update is called every frame.
@@ -35,6 +38,7 @@ This means that is a game run on higher frames per second the update function wi
     set the IsBlocking to true and starts the coroutine "BlockCoolDown()".*/
     void Update()
     {
+        UsingCactusToken = _tokenManager.CactusTokenActive;
         if (_tempBlockTimer > 0)
         {
             _tempBlockTimer -= Time.deltaTime;
@@ -44,6 +48,10 @@ This means that is a game run on higher frames per second the update function wi
             IsBlocking = true;
             _tempBlockTimer = BlockCooldownTime;
             StartCoroutine(BlockCoolDown());
+            if (UsingCactusToken = true)
+            {
+                StartCoroutine(_tokenManager.CactusTokenCounter());
+            }
         }
         if (CurrentHP > MaxHP)
         {

@@ -123,14 +123,9 @@ public class Bullet : MonoBehaviour
             }
             else if (UsingCactusToken == false)
             {
-                Debug.Log("SHEEEDar");
                 Destroy(gameObject);
             }
             yield return null;
         }
-    }
-    private void SpawnCactusSplinters()
-    {
-
     }
 }
