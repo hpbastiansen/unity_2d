@@ -14,7 +14,7 @@ public class WormSpawner : MonoBehaviour
     [SerializeField] private float _spawnTimeMax = 10f;
 
     [Header("Objects")]
-    [SerializeField] private GameObject _player;
+    private GameObject _player;
     [SerializeField] private GameObject _worm;
 
     private float _timeSinceSpawn = 0f;
@@ -27,6 +27,7 @@ public class WormSpawner : MonoBehaviour
     private void Start()
     {
         _wormPoints = GameObject.FindGameObjectsWithTag("WormSpawn");
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     ///Update is called every frame
