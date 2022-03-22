@@ -102,4 +102,18 @@ This means that is a game run on higher frames per second the update function wi
 
         }
     }
+
+    ///Function to disable all guns and enable the first one.
+    public void SetDefaultGun()
+    {
+        for (int i = 0; i < _totalWeapons; i++)
+        {
+            Weapons[i] = WeaponHolderObject.transform.GetChild(i).gameObject;
+            Weapons[i].SetActive(false);
+        }
+
+        Weapons[0].SetActive(true);
+        CurrentGun = Weapons[0];
+        CurrentWeaponIndex = 0;
+    }
 }

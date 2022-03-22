@@ -10,6 +10,8 @@ public class SetPlayerPositionAndStageInfo : MonoBehaviour
     ///Function to be called whenever we want to set the player position equal to the scene's start position.
     public void SetInfo()
     {
+        WeaponController _weaponController = Object.FindObjectOfType<WeaponController>();
+        _weaponController.SetDefaultGun();
         Weapon _currentWeapon = Object.FindObjectOfType<WeaponController>().CurrentGun.GetComponent<Weapon>();
         PlayerHealth _playerHealth = Object.FindObjectOfType<PlayerHealth>();
         GameObject _player = GameObject.Find("Main_Character");

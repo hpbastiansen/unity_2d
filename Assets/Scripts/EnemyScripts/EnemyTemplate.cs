@@ -15,6 +15,7 @@ public class EnemyTemplate : MonoBehaviour
     /*!In the Start function the healthbar is given its health value.*/
     void Start()
     {
+        Healthbar = transform.Find("Canvas").transform.Find("HealthBar").GetComponent<Slider>();
         Healthbar.maxValue = HP;
     }
 
