@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     private Vector2 _armPositionRunning;
     private GrapplingHookController _grapplingHookController;
     public float ActiveMoveSpeed;
+    public bool CanWalk;
 
     public bool GoingUp;
     public bool GoingDown;
@@ -27,6 +28,7 @@ public class Movement : MonoBehaviour
     public Transform GroundCheckObject;
     public float GroundCheckRadius;
     public bool IsTouchingGround;
+    private bool _tryingToJump;
 
     [Header("Dash")]
     public bool IsDashing = false;
@@ -35,6 +37,8 @@ public class Movement : MonoBehaviour
     public float DashLength = .5f, DashCooldown = 1f;
     private float _dashCooldownCounter;
     public GameObject DashAnimation;
+
+
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -47,15 +51,18 @@ public class Movement : MonoBehaviour
         _armPositionRunning = new Vector2(ArmPivotGameObject.transform.position.x + 1, ArmPivotGameObject.transform.position.y + 1);
         _grapplingHookController = GetComponent<GrapplingHookController>();
         DashAnimation.SetActive(false);
+        CanWalk = true;
+        DontDestroyOnLoad(gameObject);
+
     }
 
-    ///Update is called every frame.
-    /**The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
-This means that is a game run on higher frames per second the update function will also be called more often.*/
-    /*! Note: This update fuction is fairly long, and more documentation will be written "inline" in the code itself.*/
-    /*! The Update function controls the overall movements that the player can do. This includes Walking/Running, Dashing, Jumping, Checking when to flip the player, and Animations related to this.*/
-    void Update()
+    ///Fixed Update is called based on a fixed frame rate.
+    /**FixedUpdate has the frequency of the physics system; it is called every fixed frame-rate frame. Compute Physics system calculations after FixedUpdate. 0.02 seconds (50 calls per second) is the default time between calls.*/
+    /*! Note: This FixedUpdate fuction is fairly long, and more documentation will be written "inline" in the code itself.*/
+    /*! The FixedUpdate function controls the overall movements that the player can do. This includes Walking/Running, Dashing, Jumping, Checking when to flip the player, and Animations related to this.*/
+    void FixedUpdate()
     {
+
         //Get the mouse position to screen position.
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Find and assign the axis for walk movement.
@@ -63,7 +70,14 @@ This means that is a game run on higher frames per second the update function wi
         //Only allow walking if player is not hooked with grapplinghook.
         if (_grapplingHookController.IsHooked == false)
         {
-            PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+            if (CanWalk)
+            {
+                PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+            }
+            else
+            {
+                PlayerRigidbody.velocity = new Vector2(x * 0, PlayerRigidbody.velocity.y);
+            }
         }
         //Everything in this else scope will check for the following respectively: If player is not touching ground and is hooked give player a small boost boost as a Force.
         //If the player is touching ground and is hooked, the player can walk like normal.
@@ -164,14 +178,11 @@ This means that is a game run on higher frames per second the update function wi
         //Allow player to jump if player is not hooked, and is touching the ground.
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) && _grapplingHookController.IsHooked == false)
         {
-            if (IsTouchingGround)
-            {
-                PlayerAnimator.SetBool("Jump", true);
-                //Important, because when jumping while player already got an acting force in the Y-axis they will combine to give the player super jump. This prevents it.
-                PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY; PlayerRigidbody.constraints = RigidbodyConstraints2D.None; PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-                PlayerRigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Force);
-
-            }
+            Jump();
+        }
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space))
+        {
+            _tryingToJump = false;
         }
         //Allow player to increase the falling speed if key "S" is pressed.
         if (Input.GetKeyDown(KeyCode.S))
@@ -241,8 +252,10 @@ This means that is a game run on higher frames per second the update function wi
         float tempspeed = MoveSpeed;
         ActiveMoveSpeed = DashSpeed;
         IsDashing = true;
+        CanWalk = false;
         yield return new WaitForSeconds(DashLength);
         ActiveMoveSpeed = tempspeed;
+        CanWalk = true;
         PlayerRigidbody.gravityScale = NormalGravity;
         IsDashing = false;
         ArmPivotGameObject.transform.localPosition = new Vector2(-0.125f, -0.09375f);
@@ -293,5 +306,17 @@ This means that is a game run on higher frames per second the update function wi
             GoingLeft = false;
         }
 
+    }
+
+    ///Allows the player to jump
+    void Jump()
+    {
+        if (IsTouchingGround && CanWalk)
+        {
+            PlayerAnimator.SetBool("Jump", true);
+            //Important, because when jumping while player already got an acting force in the Y-axis they will combine to give the player super jump. This prevents it.
+            PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY; PlayerRigidbody.constraints = RigidbodyConstraints2D.None; PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            PlayerRigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Force);
+        }
     }
 }

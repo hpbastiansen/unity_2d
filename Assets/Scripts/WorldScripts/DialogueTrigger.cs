@@ -8,9 +8,11 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue Dialogues;
     public bool AutoOpen;
-    public GameObject EInteract;
+    private GameObject _EInteract;
     public bool CanStartDialogue;
-    public DialogueManager DialogueManagerScript;
+    private DialogueManager _dialogueManagerScript;
+    public bool GoToWorldObject;
+    public GoToWorld GoToWorldScript;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -19,10 +21,18 @@ public class DialogueTrigger : MonoBehaviour
     private void Start()
     {
         CanStartDialogue = false;
-        DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
+        _dialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
+        _EInteract = GameObject.Find("EInteract");
+        if (gameObject.GetComponent<GoToWorld>() == true)
+        {
+            GoToWorldObject = true;
+            GoToWorldScript = gameObject.GetComponent<GoToWorld>();
+        }
+        else
+        {
+            GoToWorldObject = false;
+        }
     }
-
-
 
     ///Update is called every frame.
     /**The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
@@ -36,14 +46,20 @@ This means that is a game run on higher frames per second the update function wi
             {
                 TriggerDialogue();
             }
-
         }
     }
 
     ///TriggerDialogue finds the DialogueManager script and calls StartDialogue.
     public void TriggerDialogue()
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(Dialogues);
+        if (GoToWorldObject == true && GoToWorldScript.Hub == false)
+        {
+            FindObjectOfType<DialogueManager>().StartDialogue(GoToWorldScript.Dialogues);
+        }
+        else
+        {
+            FindObjectOfType<DialogueManager>().StartDialogue(Dialogues);
+        }
 
     }
 
@@ -51,7 +67,6 @@ This means that is a game run on higher frames per second the update function wi
     public void EndDialogue()
     {
         FindObjectOfType<DialogueManager>().EndDialogue();
-
     }
 
     ///Sent each frame where another object is within a trigger collider attached to this object 
@@ -63,7 +78,7 @@ This means that is a game run on higher frames per second the update function wi
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                DialogueManagerScript.ShowInteractButton = true;
+                _dialogueManagerScript.ShowInteractButton = true;
                 CanStartDialogue = true;
             }
         }
@@ -85,7 +100,7 @@ This means that is a game run on higher frames per second the update function wi
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                DialogueManagerScript.ShowInteractButton = true;
+                _dialogueManagerScript.ShowInteractButton = true;
                 CanStartDialogue = true;
             }
         }
@@ -99,7 +114,7 @@ This means that is a game run on higher frames per second the update function wi
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             EndDialogue();
-            DialogueManagerScript.ShowInteractButton = false;
+            _dialogueManagerScript.ShowInteractButton = false;
             CanStartDialogue = false;
         }
     }

@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-///The DialogueManager script a script that only exist once in a scene. This script lets other scripts start a new dialogue, display next sentences, and end a dialogue.
+///The DialogueManager script is a script that only exist once in a scene. This script lets other scripts start a new dialogue, display next sentences, and end a dialogue.
 public class DialogueManager : MonoBehaviour
 {
-
     public Text NameText;
     public Text DialogueText;
     public Image ImageOfSpeaker;
@@ -16,6 +15,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject EInteract;
     private Queue<string> Sentences;
     public bool InDialogue;
+    private UIManager _myUIManager;
+
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -24,7 +25,9 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         Sentences = new Queue<string>();
-        DialogueAnimator.SetBool("IsOpen", false);
+        //DialogueAnimator.SetBool("IsOpen", false);
+        _myUIManager = GameObject.FindObjectOfType<UIManager>();
+
 
     }
     ///Update is called every frame.
@@ -33,7 +36,7 @@ This means that is a game run on higher frames per second the update function wi
     /*! The Update function allows the player to display the next sentences and shows the interaction button if the ShowInteractButtom boolean is true, and vice versa.*/
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(1) && _myUIManager.IsDialogue)
         {
             DisplayNextSentence();
         }
@@ -45,6 +48,14 @@ This means that is a game run on higher frames per second the update function wi
         {
             EInteract.SetActive(false);
         }
+        if (InDialogue)
+        {
+            _myUIManager.IsDialogue = true;
+        }
+        else
+        {
+            _myUIManager.IsDialogue = false;
+        }
     }
 
     ///The StartDialogue function allows other scripts to start a new dialogue whenever conditions are met.
@@ -52,7 +63,7 @@ This means that is a game run on higher frames per second the update function wi
     The Animator component will show the dialogue, and change the variable values to whatever he dialogue specified.*/
     public void StartDialogue(Dialogue dialogue)
     {
-        DialogueAnimator.SetBool("IsOpen", true);
+        //DialogueAnimator.SetBool("IsOpen", true);
         InDialogue = true;
 
         NameText.text = dialogue.NameOfSpeaker;

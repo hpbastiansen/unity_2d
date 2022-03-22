@@ -54,7 +54,7 @@ public class Bullet : MonoBehaviour
 
                 ScreenShakeController.Instance.StartShake(.05f, .03f);
 
-                PlayerHealthScript.HP += LifeSteal;
+                PlayerHealthScript.CurrentHP += LifeSteal;
                 Destroy(gameObject);
             }
             else if (_playerHealth != null)

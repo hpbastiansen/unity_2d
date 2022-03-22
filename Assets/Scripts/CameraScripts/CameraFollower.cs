@@ -12,6 +12,8 @@ public class CameraFollower : MonoBehaviour
     public Vector3 Offset;
     public Movement PlayerMovement;
 
+
+
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
     /*! In the start function the player movement script is found and assigned to a variable, and a desired offset value for the camera is set. */

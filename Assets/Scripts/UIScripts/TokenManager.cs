@@ -8,48 +8,64 @@ using System.Linq;
 public class TokenManager : MonoBehaviour
 {
     public GameObject TokenUI;
-    public GameObject TokenChange;
-    public Transform TokenChangeInstantiatePosition;
-
     public GameObject DefaultToken;
     public bool DefaultTokenActive;
     public GameObject BatToken;
     public bool BatTokenActive;
-    public GameObject ThornToken;
-    public bool ThornTokenActive;
-    public GameObject WormToken;
-    public bool WormTokenActive;
-    private bool _tokenUIactive;
+    public bool TokenUIactive;
     public List<GameObject> TokensOwned;
     public List<bool> TokensActive;
+    private UIManager _myUIManager;
+    public string ShortInfo;
+    public string DashInfo;
+    public string ShieldInfo;
+    public string BulletInfo;
+    public string CounterInfo;
+    public string MovementInfo;
+
+    public Text ShortInfoText;
+    public Text DashInfoText;
+    public Text ShieldInfoText;
+    public Text BulletInfoText;
+    public Text CounterInfoText;
+    public Text MovementInfoText;
 
 
     [Header("Changeable values")]
     public float CustomPlayerMoveSpeed;
+    public float CustomPlayerJumpHeight;
     private Movement PlayerMovement;
     public float GunLifeStealAmount;
-    private Weapon _currentWeapon;
+    public Weapon CurrentWeapon;
     public float CustomDashSpeed;
     public float CustomDashDuration;
     public int CustomBlockLifeSteal;
+    public int CustomBlockLifeStealCooldown;
+    public int CustomBlockLifeStealActiveTime;
     private PlayerHealth _playerHealth;
     public float ShieldLifeSteal;
     private ShieldHP _shieldHP;
 
+    private string _weaponAccuracy;
+
     [Header("IGNORE")]
     public int TokenIndex;
     public bool UsingTokenMenu;
+    private string _spacechar = " __ ";
+    private UITest _checkUI;
 
     ///Awake is called when the script instance is being loaded.
     /**Awake is called either when an active GameObject that contains the script is initialized when a Scene loads, 
     or when a previously inactive GameObject is set to active, or after a GameObject created with Object.
     Instantiate is initialized. Use Awake to initialize variables or states before the application starts.*/
-    /*! In this Awake we find and assign the player Movement script, PlayerHealth script and ShieldHP script.*/
+    /*! In this Awake we find and assign the necessary sctipt in the scene.*/
     private void Awake()
     {
         PlayerMovement = Object.FindObjectOfType<Movement>();
         _playerHealth = Object.FindObjectOfType<PlayerHealth>();
         _shieldHP = Object.FindObjectOfType<ShieldHP>();
+        _myUIManager = GameObject.FindObjectOfType<UIManager>();
+
     }
 
     /// Start methods run once when enabled.
@@ -58,11 +74,14 @@ public class TokenManager : MonoBehaviour
     We then add all the tokens that the player owns into a list. And then deactivates all of them and activates the default one.*/
     void Start()
     {
-        TokenUI.SetActive(false);
-        _tokenUIactive = false;
+
+        _checkUI = Object.FindObjectOfType<UITest>();
+
+        TokenUI = GameObject.Find("TokenUI");
+        //TokenUI.SetActive(false);
+        TokenUIactive = false;
 
         TokensOwned.Add(DefaultToken);
-
         TokensOwned.Add(BatToken);
 
         foreach (GameObject tokens in TokensOwned)
@@ -75,6 +94,7 @@ public class TokenManager : MonoBehaviour
     }
 
 
+
     ///Update is called every frame.
     /**The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
 This means that is a game run on higher frames per second the update function will also be called more often.*/
@@ -82,22 +102,44 @@ This means that is a game run on higher frames per second the update function wi
     If the TokenUI is enables the ingame timescale is set to 0, meaning everything is frozen in time. While if the TokenUI is disables everything goes back to normal time scale.*/
     void Update()
     {
-        if (_tokenUIactive)
+        if (TokenUIactive)
         {
-            TokenUI.SetActive(true);
-            Time.timeScale = 0f;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (_checkUI.IsPointerOverUIElement() == false)
+                {
+                    TokenUIactive = !TokenUIactive;
+                }
+            }
         }
         else
         {
-            TokenUI.SetActive(false);
-            Time.timeScale = 1f;
             UsingTokenMenu = false;
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            _tokenUIactive = !_tokenUIactive;
+            TokenUIactive = !TokenUIactive;
             UsingTokenMenu = true;
         }
+
+        DashInfo = "Speed: " + CustomDashSpeed + _spacechar + "Duration: " + CustomDashDuration + "s";
+        DashInfoText.text = DashInfo.ToString();
+
+        ShieldInfo = "Lifesteal: " + ShieldLifeSteal + _spacechar + "Health: " + _shieldHP.MaxHP + _spacechar + "Cooldown: " + _shieldHP.RechargeTimer + "s";
+        ShieldInfoText.text = ShieldInfo.ToString();
+
+        BulletInfo = "                    Damage: " + CurrentWeapon.Damage + _spacechar + "Lifesteal: " + CurrentWeapon.LifeSteal + _spacechar + "Speed: " +
+        CurrentWeapon.BulletSpeed + _spacechar + "Accuracy: " + _weaponAccuracy + _spacechar + "Firerate: " + CurrentWeapon.Firerate + _spacechar + "FullAuto: " + CurrentWeapon.FullAuto + _spacechar
+        + "Knockback: " + CurrentWeapon.BulletWeight + _spacechar + "Type: " + CurrentWeapon.WeaponType;
+        BulletInfoText.text = BulletInfo.ToString();
+
+        CounterInfo = "Lifesteal: " + CustomBlockLifeSteal + _spacechar + "Cooldown: " + CustomBlockLifeStealCooldown + "s" + _spacechar + "Activetime: " + CustomBlockLifeStealActiveTime + "s";
+        CounterInfoText.text = CounterInfo.ToString();
+
+        MovementInfo = "Runspeed: " + CustomPlayerMoveSpeed + _spacechar + "Jump height: " + CustomPlayerJumpHeight / 1000;
+        MovementInfoText.text = MovementInfo.ToString();
+
+        ShortInfoText.text = ShortInfo.ToString();
     }
 
 
@@ -140,7 +182,6 @@ This means that is a game run on higher frames per second the update function wi
 
 
 
-
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/
 
     ///The ActivateDefaultToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
@@ -148,79 +189,68 @@ This means that is a game run on higher frames per second the update function wi
     {
         DefaultTokenActive = true;
         BatTokenActive = false;
-        ThornTokenActive = false;
-        WormTokenActive = false;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        ShortInfo = "Default token is obtained at the start of the game for free. The values in the token is the default values for all the variables. Other tokens can however change these.";
+
         CustomPlayerMoveSpeed = 10;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
+        CustomPlayerJumpHeight = 10000;
+        PlayerMovement.JumpForce = CustomPlayerJumpHeight;
+
         GunLifeStealAmount = 0;
 
-        CustomDashSpeed = 20;
+        CustomDashSpeed = 40;
         CustomDashDuration = 0.2f;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
 
-        CustomBlockLifeSteal = 99999999;
+        CustomBlockLifeSteal = 0;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
+        CustomBlockLifeStealCooldown = 3;
+        _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
+        CustomBlockLifeStealActiveTime = 1;
+        _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
 
-        ShieldLifeSteal = 9999999;
+        ShieldLifeSteal = 0;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
 
-        GameObject tokenchangeobj = Instantiate(TokenChange, TokenChangeInstantiatePosition.position, TokenChangeInstantiatePosition.rotation) as GameObject;
-        tokenchangeobj.transform.SetParent(TokenChangeInstantiatePosition, true);
-        tokenchangeobj.GetComponent<TokenChange>().txt.text = "Default Token Active";
-
+        _weaponAccuracy = "decent";
     }
     ///The ActivateBatToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
     public void ActivateBatToken()
     {
-        _currentWeapon = Object.FindObjectOfType<WeaponController>().CurrentGun.GetComponent<Weapon>();
-
         DefaultTokenActive = false;
         BatTokenActive = true;
-        ThornTokenActive = false;
-        WormTokenActive = false;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        ShortInfo = "This is another token!";
+
         CustomPlayerMoveSpeed = 10;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
         GunLifeStealAmount = 0.2f;
 
-        CustomDashSpeed = 14;
+        CustomDashSpeed = 20;
         CustomDashDuration = 0.6f;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
 
-        CustomBlockLifeSteal = 10;
+        CustomBlockLifeSteal = 3;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
+        CustomBlockLifeStealCooldown = 2;
+        _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
+        CustomBlockLifeStealActiveTime = 1;
+        _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
 
-        ShieldLifeSteal = 20;
+
+        ShieldLifeSteal = 1;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
+        _weaponAccuracy = "decent";
 
-        GameObject tokenchangeobj = Instantiate(TokenChange, TokenChangeInstantiatePosition.position, TokenChangeInstantiatePosition.rotation);
-        tokenchangeobj.transform.SetParent(TokenChangeInstantiatePosition, true);
-        tokenchangeobj.GetComponent<TokenChange>().txt.text = "Bat Token Active";
     }
 
-    ///The ActivateThornToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait. NOT YET IMPLEMENTED
-    public void ActivateThornToken()
-    {
-        DefaultTokenActive = false;
-        BatTokenActive = false;
-        ThornTokenActive = true;
-        WormTokenActive = false;
-    }
-    ///The ActivateWormToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait. NOT YET IMPLEMENTED
-    public void ActivateWormToken()
-    {
-        DefaultTokenActive = false;
-        BatTokenActive = false;
-        ThornTokenActive = false;
-        WormTokenActive = true;
-    }
 }

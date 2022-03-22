@@ -21,6 +21,7 @@ public class SetCursor : MonoBehaviour
     {
         Vector2 _cursorOffset = new Vector2(Crosshair.width / 2, Crosshair.height / 2);
         Cursor.SetCursor(Crosshair, _cursorOffset, CursorMode.Auto);
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
 }

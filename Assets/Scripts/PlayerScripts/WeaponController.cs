@@ -16,6 +16,7 @@ public class WeaponController : MonoBehaviour
     public bool UsingShield;
     public GameObject ShieldObject;
     public float ShieldRechargeTimer;
+    private TokenManager _tokenManager;
 
 
     /// Start methods run once when enabled.
@@ -38,6 +39,11 @@ public class WeaponController : MonoBehaviour
         Weapons[0].SetActive(true);
         CurrentGun = Weapons[0];
         CurrentWeaponIndex = 0;
+
+        _tokenManager = Object.FindObjectOfType<TokenManager>();
+        _tokenManager.CurrentWeapon = CurrentGun.GetComponent<Weapon>();
+
+
     }
 
     ///Update is called every frame.
@@ -95,5 +101,19 @@ This means that is a game run on higher frames per second the update function wi
             ShieldObject.GetComponent<ShieldHP>().HP = ShieldObject.GetComponent<ShieldHP>().MaxHP;
 
         }
+    }
+
+    ///Function to disable all guns and enable the first one.
+    public void SetDefaultGun()
+    {
+        for (int i = 0; i < _totalWeapons; i++)
+        {
+            Weapons[i] = WeaponHolderObject.transform.GetChild(i).gameObject;
+            Weapons[i].SetActive(false);
+        }
+
+        Weapons[0].SetActive(true);
+        CurrentGun = Weapons[0];
+        CurrentWeaponIndex = 0;
     }
 }

@@ -12,7 +12,7 @@ public class EnemyTemplate : MonoBehaviour
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*!In the Start function the healthbar is located, and given its health value.*/
+    /*!In the Start function the healthbar is given its health value.*/
     void Start()
     {
         Healthbar = transform.Find("Canvas").transform.Find("HealthBar").GetComponent<Slider>();

@@ -36,14 +36,13 @@ public class ShieldHP : MonoBehaviour
             WeaponController.UsingShield = !WeaponController.UsingShield;
             WeaponController.ShieldRechargeTimer = RechargeTimer;
         }
-        LifeSteal(_damage, LifeStealAmount);
+        LifeSteal(LifeStealAmount);
     }
 
     ///The LifeSteal function allows the shield to absorb some of the damge taken and give it to the players health.
-    /**The amount of HP given to the player is calculated by taking the input damage and divide it by the _lifeStealAmount.
-    Meaning the higher value is, the lower amounts of HP is given to the player.*/
-    public void LifeSteal(float _damage, float _lifeStealAmount)
+    /**The amount of HP given to the player is a fixed float of HP.*/
+    public void LifeSteal(float _lifeStealAmount)
     {
-        PlayerHealth.HP += _damage / _lifeStealAmount;
+        PlayerHealth.CurrentHP += _lifeStealAmount;
     }
 }
