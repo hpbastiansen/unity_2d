@@ -20,6 +20,10 @@ public class WormPath : MonoBehaviour
     [SerializeField] private float _speed = 8f;
     [SerializeField] private float _nextPointDistance = 1f;
 
+    [Header("Gizmos")]
+    [SerializeField] private bool _drawPath = true;
+    [SerializeField] private bool _drawControlPoints = true;
+
     private Rigidbody2D _rb;
 
     /// Start methods run once when enabled.
@@ -32,15 +36,21 @@ public class WormPath : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        foreach(Vector2 _point in _points)
+        if(_drawPath)
         {
-            Gizmos.DrawWireSphere(_point, 0.1f);
+            Gizmos.color = Color.green;
+            foreach (Vector2 _point in _points)
+            {
+                Gizmos.DrawWireSphere(_point, 0.1f);
+            }
         }
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(StartPoint, 0.2f);
-        Gizmos.DrawSphere(_bestMiddlePoint, 0.2f);
-        Gizmos.DrawSphere(EndPoint, 0.2f);
+        if(_drawControlPoints)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(StartPoint, 0.2f);
+            Gizmos.DrawSphere(_bestMiddlePoint, 0.2f);
+            Gizmos.DrawSphere(EndPoint, 0.2f);
+        }
     }
 
     ///The Init method sets the worm's path.
