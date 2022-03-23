@@ -8,6 +8,9 @@ using UnityEngine;
 
 public class WormBody : MonoBehaviour
 {
+    private WormCollision _wormCollision;
+    private LineRenderer _lineRend;
+
     [Header("Body Length")]
     [SerializeField] private int _minLength = 4;
     [SerializeField] private int _maxLength = 8;
@@ -27,16 +30,13 @@ public class WormBody : MonoBehaviour
     private Vector3[] _segmentPoses;
     private Vector3[] _segmentV;
 
-    private LineRenderer _lineRend;
-    private PolygonCollider2D _polygonCollider;
-
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
     /*! In the Start function we find the necessary components, choose the worm's length and prepare the Line Renderer.*/
     private void Start()
     {
+        _wormCollision = transform.root.GetComponent<WormCollision>();
         _lineRend = GetComponent<LineRenderer>();
-        _polygonCollider = GetComponent<PolygonCollider2D>();
         _length = (int)Mathf.Floor(Random.Range(_minLength, _maxLength));
         _lineRend.positionCount = _length;
         _segmentPoses = new Vector3[_length];
@@ -61,24 +61,9 @@ public class WormBody : MonoBehaviour
         for(int _i = 1; _i < _segmentPoses.Length; _i++)
         {
             _segmentPoses[_i] = Vector3.SmoothDamp(_segmentPoses[_i], _segmentPoses[_i - 1] + _targetDir.right * _targetDist, ref _segmentV[_i], _smoothSpeed + _i / _trailSpeed);
-            //Vector3 _targetPos = _segmentPoses[_i - 1] + (_segmentPoses[_i] - _segmentPoses[_i - 1]).normalized * _targetDist;
-            //_segmentPoses[_i] = Vector3.SmoothDamp(_segmentPoses[_i], _targetPos, ref _segmentV[_i], _smoothSpeed);
         }
         _lineRend.SetPositions(_segmentPoses);
-
-        // Set up the Polygon Collider with the positions of the body segments.
-        _polygonCollider.pathCount = _length-1;
-        for(int _i = 0; _i < _length-1; _i++)
-        {
-            List<Vector2> _currentPositions = new List<Vector2>
-            {
-                _segmentPoses[_i],
-                _segmentPoses[_i+1]
-            };
-
-            List<Vector2> _currentColliderPoints = CalculateColliderPoints(_currentPositions);
-            _polygonCollider.SetPath(_i, _currentColliderPoints.ConvertAll(_p => (Vector2)transform.InverseTransformPoint(_p)));
-        }
+        _wormCollision.SetCollision(_segmentPoses, _length, _lineRend.startWidth);
     }
 
     ///Resets the positions of the Line Renderer so they do not start at (0, 0, 0) in world space. Used only at instantiation.
@@ -90,30 +75,5 @@ public class WormBody : MonoBehaviour
             _segmentPoses[_i] = _segmentPoses[_i - 1] + _targetDir.right * _targetDist;
         }
         _lineRend.SetPositions(_segmentPoses);
-    }
-
-    ///Calculates the points for the Polygon Collider given the start and end of the body segment.
-    /** Given a line and the line renderer's width, calculates the bounding rectangle for the collider. */
-    private List<Vector2> CalculateColliderPoints(List<Vector2> _positions)
-    {
-        float _width = _lineRend.startWidth;
-
-        float _m = (_positions[1].y - _positions[0].y) / (_positions[1].x - _positions[0].x);
-        float _deltaX = (_width / 2f) * (_m / Mathf.Pow(_m * _m + 1, 0.5f));
-        float _deltaY = (_width / 2f) * (1 / Mathf.Pow(1 + _m * _m, 0.5f));
-
-        Vector2[] _offsets = new Vector2[2];
-        _offsets[0] = new Vector2(-_deltaX, _deltaY);
-        _offsets[1] = new Vector2(_deltaX, -_deltaY);
-
-        List<Vector2> _colliderPositions = new List<Vector2>
-        {
-            _positions[0] + _offsets[0],
-            _positions[1] + _offsets[0],
-            _positions[1] + _offsets[1],
-            _positions[0] + _offsets[1]
-        };
-
-        return _colliderPositions;
     }
 }

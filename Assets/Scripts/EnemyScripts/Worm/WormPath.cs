@@ -8,12 +8,12 @@ using UnityEngine;
 
 public class WormPath : MonoBehaviour
 {
-    public Vector2 StartPoint;
-    public Vector2 PlayerPoint;
-    public Vector2 EndPoint;
+    [HideInInspector] public Vector2 StartPoint;
+    [HideInInspector] public Vector2 PlayerPoint;
+    [HideInInspector] public Vector2 EndPoint;
     private Vector2 _bestMiddlePoint;
 
-    [SerializeField] private int _pointsAmt = 20;
+    [SerializeField] private int _pathSamples = 20;
     private List<Vector2> _points;
     private int _currentPoint = 0;
     private bool _pathSet = false;
@@ -126,9 +126,9 @@ public class WormPath : MonoBehaviour
     private List<Vector2> CalculateRoute()
     {
         List<Vector2> _route = new List<Vector2>();
-        for(int _i = 0; _i < _pointsAmt-1; _i++)
+        for(int _i = 0; _i < _pathSamples-1; _i++)
         {
-            float _t = (float)_i / _pointsAmt;
+            float _t = (float)_i / _pathSamples;
             _route.Add(CalculateQuadraticBezierPoint(_t, StartPoint, _bestMiddlePoint, EndPoint));
         }
         _route.Add(CalculateQuadraticBezierPoint(1, StartPoint, _bestMiddlePoint, EndPoint));
