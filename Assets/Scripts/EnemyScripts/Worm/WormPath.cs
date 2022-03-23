@@ -30,6 +30,19 @@ public class WormPath : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        foreach(Vector2 _point in _points)
+        {
+            Gizmos.DrawWireSphere(_point, 0.1f);
+        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(StartPoint, 0.2f);
+        Gizmos.DrawSphere(_bestMiddlePoint, 0.2f);
+        Gizmos.DrawSphere(EndPoint, 0.2f);
+    }
+
     ///The Init method sets the worm's path.
     /**This method is called by the Worm Spawner gameobject. Once path has been found the worm can start moving through it. */
     public void Init()
@@ -103,11 +116,12 @@ public class WormPath : MonoBehaviour
     private List<Vector2> CalculateRoute()
     {
         List<Vector2> _route = new List<Vector2>();
-        for(int _i = 0; _i < _pointsAmt; _i++)
+        for(int _i = 0; _i < _pointsAmt-1; _i++)
         {
             float _t = (float)_i / _pointsAmt;
             _route.Add(CalculateQuadraticBezierPoint(_t, StartPoint, _bestMiddlePoint, EndPoint));
         }
+        _route.Add(CalculateQuadraticBezierPoint(1, StartPoint, _bestMiddlePoint, EndPoint));
         return _route;
     }
 

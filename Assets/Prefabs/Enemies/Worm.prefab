@@ -82,7 +82,7 @@ MonoBehaviour:
   - {x: -0.098303795, y: 0.25050592, z: 0}
   m_ShapePathHash: 2144903029
   m_Mesh: {fileID: 0}
-  m_InstanceId: 48972
+  m_InstanceId: 37882
 --- !u!114 &3769172236211256347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   StartPoint: {x: 0, y: 0}
   PlayerPoint: {x: 0, y: 0}
   EndPoint: {x: 0, y: 0}
-  _pointsAmt: 20
+  _pointsAmt: 50
   _speed: 8
   _nextPointDistance: 0.1
 --- !u!1 &5548227530419961946
