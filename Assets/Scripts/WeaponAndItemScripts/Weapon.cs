@@ -45,6 +45,7 @@ public class Weapon : MonoBehaviour
         AmmoText = GameObject.Find("AmmoTextUI").GetComponent<Text>();
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
         _checkUI = Object.FindObjectOfType<UITest>();
+        
 
     }
 

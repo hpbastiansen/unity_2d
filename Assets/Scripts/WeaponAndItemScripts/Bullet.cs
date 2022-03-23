@@ -41,10 +41,9 @@ public class Bullet : MonoBehaviour
     Either way the script instantiate (spawns/creates) a new hiteffect (explotion animation) as a gameobject based on a prefab. 
     Then the StartShake function on the ScreenShakeController script is called to make the screen shake depending on what it hit (only if the player is in x distance, see _distance variable). 
     Lastly we destroy the bullet, aka the gameObject that has this script attached to it.*/
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         float _distance = Vector3.Distance(PlayerHealthScript.transform.position, transform.position);
-
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) //http://answers.unity.com/answers/1394106/view.html
         {
             EnemyTemplate _enemyTemplate = other.gameObject.GetComponent<EnemyTemplate>();
@@ -55,9 +54,7 @@ public class Bullet : MonoBehaviour
             {
                 _enemyTemplate.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-
                 ScreenShakeController.Instance.StartShake(.05f, .03f);
-
                 PlayerHealthScript.CurrentHP += LifeSteal;
                 Destroy(gameObject);
             }
@@ -98,7 +95,6 @@ public class Bullet : MonoBehaviour
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 Destroy(gameObject);
             }
-
         }
     }
 

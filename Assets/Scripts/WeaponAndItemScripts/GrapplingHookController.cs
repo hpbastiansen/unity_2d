@@ -21,6 +21,7 @@ public class GrapplingHookController : MonoBehaviour
     public float UpDownSpeed = 0.02f;
     public bool IsUsingGrapplingHookGun;
     public DialogueManager DialogueManagerScript;
+    public Rigidbody2D TempJoint;
 
 
     /// Start methods run once when enabled.
@@ -89,12 +90,17 @@ This means that is a game run on higher frames per second the update function wi
     When the hook is deattached, the line will be removed.*/
     void Update()
     {
+        if (!_joint.connectedBody)
+        {
+            _joint.connectedBody = TempJoint;
+        }
         if ((Input.GetMouseButtonDown(0) && IsHooked == true && IsUsingGrapplingHookGun == true) || (IsHooked && IsUsingGrapplingHookGun == false && Input.GetKeyDown(KeyCode.G)))
         {
             IsHooked = false;
             _joint.enabled = false;
             LineObject.enabled = false;
             gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
+            _joint.connectedBody = TempJoint;
 
         }
         if (Input.GetMouseButtonDown(0) && IsUsingGrapplingHookGun == true && DialogueManagerScript.InDialogue == false)
@@ -104,7 +110,6 @@ This means that is a game run on higher frames per second the update function wi
 
             _hit = Physics2D.Raycast(transform.position, _targetPosition - transform.position, Distance, WhatToHit);
             if (_hit.collider != null && _hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
-
             {
                 IsHooked = true;
                 _joint.enabled = true;
@@ -130,5 +135,11 @@ This means that is a game run on higher frames per second the update function wi
             LineObject.SetPosition(0, transform.position);
         }
 
+    }
+
+    ///If the gameObject is disabled we make sure we set the connected distance joint to be a object we know always will exist in the scene.
+    private void OnDisable()
+    {
+        _joint.connectedBody = TempJoint;
     }
 }

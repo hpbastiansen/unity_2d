@@ -12,6 +12,7 @@ public class ShieldHP : MonoBehaviour
     public WeaponController WeaponController;
     public PlayerHealth PlayerHealth;
     public float LifeStealAmount;
+    private ShieldTouchDamage _shieldTouchDamage;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -21,6 +22,7 @@ public class ShieldHP : MonoBehaviour
         HP = MaxHP;
         WeaponController = GameObject.Find("Main_Character").GetComponent<WeaponController>();
         PlayerHealth = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
+        _shieldTouchDamage = GetComponent<ShieldTouchDamage>();
     }
 
     ///The TakeDamage function allows any object in the game to take damage on the shield and decrease the health.
@@ -33,6 +35,7 @@ public class ShieldHP : MonoBehaviour
         if (HP <= 0)
         {
             Debug.Log("SHIELD DOWN!");
+            _shieldTouchDamage.ShieldTouchDamageCooldownTimer = 0;
             WeaponController.UsingShield = !WeaponController.UsingShield;
             WeaponController.ShieldRechargeTimer = RechargeTimer;
         }

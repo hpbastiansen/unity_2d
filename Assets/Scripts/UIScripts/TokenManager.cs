@@ -56,8 +56,8 @@ public class TokenManager : MonoBehaviour
 
 
     [Header("CactusToken")]
-    public GameObject CactusProjectileObject;
-    public Sprite ProjectileImage;
+    public GameObject CactusSplinter;
+    public WeaponController WeaponControllerScript;
 
     ///Awake is called when the script instance is being loaded.
     /**Awake is called either when an active GameObject that contains the script is initialized when a Scene loads, 
@@ -70,6 +70,8 @@ public class TokenManager : MonoBehaviour
         _playerHealth = Object.FindObjectOfType<PlayerHealth>();
         _shieldHP = Object.FindObjectOfType<ShieldHP>();
         _myUIManager = GameObject.FindObjectOfType<UIManager>();
+        WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
+
 
     }
 
@@ -196,41 +198,39 @@ This means that is a game run on higher frames per second the update function wi
             {
                 yield return new WaitForSeconds(0.1f);
                 float _randomSpread = Random.Range(-1, 1);
-                GameObject thebullet = Instantiate(CactusProjectileObject, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
+                GameObject thebullet = Instantiate(CactusSplinter, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
                 thebullet.transform.Rotate(0, 0, _randomSpread);
-                thebullet.GetComponent<Bullet>().CameraShakeStrength = 0;
-                thebullet.GetComponent<Bullet>().LifeSteal = 0;
-                thebullet.GetComponent<Bullet>().TimeToLive = 1f;
-                thebullet.GetComponent<Bullet>().WhatToHit = CurrentWeapon.WhatToHit;
-                thebullet.GetComponent<Bullet>().BulletSpeed = CustomDashSpeed * 1.5f;
-                thebullet.GetComponent<Bullet>().Damage = 5;
-                thebullet.GetComponentInChildren<SpriteRenderer>().sprite = ProjectileImage;
-                GameObject _pssystem = thebullet.transform.Find("ParticleSystem").gameObject;
-                _pssystem.SetActive(false);
+                thebullet.GetComponent<CactusSplinter>().CameraShakeStrength = 0;
+                thebullet.GetComponent<CactusSplinter>().TimeToLive = 1f;
+                thebullet.GetComponent<CactusSplinter>().WhatToHit = CurrentWeapon.WhatToHit;
+                thebullet.GetComponent<CactusSplinter>().BulletSpeed = CustomDashSpeed * 1.5f;
+                thebullet.GetComponent<CactusSplinter>().Damage = 5;
+                thebullet.GetComponent<CactusSplinter>().IsHoming = false;
             }
         }
     }
     public IEnumerator CactusTokenCounter()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (_playerHealth.IsBlocking == true)
             {
                 yield return new WaitForSeconds(0.1f);
                 float _randomSpread = Random.Range(-1, 1);
-                GameObject thebullet = Instantiate(CactusProjectileObject, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
+                GameObject thebullet = Instantiate(CactusSplinter, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
                 thebullet.transform.Rotate(0, 0, _randomSpread);
-                thebullet.GetComponent<Bullet>().CameraShakeStrength = 0;
-                thebullet.GetComponent<Bullet>().LifeSteal = 0;
-                thebullet.GetComponent<Bullet>().TimeToLive = 1f;
-                thebullet.GetComponent<Bullet>().WhatToHit = CurrentWeapon.WhatToHit;
-                thebullet.GetComponent<Bullet>().BulletSpeed = CustomDashSpeed * 1.5f;
-                thebullet.GetComponent<Bullet>().Damage = 5;
-                thebullet.GetComponentInChildren<SpriteRenderer>().sprite = ProjectileImage;
-                GameObject _pssystem = thebullet.transform.Find("ParticleSystem").gameObject;
-                _pssystem.SetActive(false);
+                thebullet.GetComponent<CactusSplinter>().CameraShakeStrength = 0;
+                thebullet.GetComponent<CactusSplinter>().TimeToLive = 10f;
+                thebullet.GetComponent<CactusSplinter>().WhatToHit = CurrentWeapon.WhatToHit;
+                thebullet.GetComponent<CactusSplinter>().BulletSpeed = 4f;
+                thebullet.GetComponent<CactusSplinter>().Damage = 5;
+                thebullet.GetComponent<CactusSplinter>().IsHoming = true;
             }
         }
+    }
+    public void CactusTokenShield()
+    {
+
     }
 
 
@@ -255,8 +255,8 @@ This means that is a game run on higher frames per second the update function wi
         GunLifeStealAmount = 0;
         CurrentWeapon.BulletTimeToLive = 1f;
         CurrentWeapon.Firerate = 10;
-
-
+        CurrentWeapon.MinVerticalSpread = -1;
+        CurrentWeapon.MaxVerticalSpread = 5;
 
         CustomDashSpeed = 40;
         CustomDashDuration = 0.2f;
@@ -292,7 +292,8 @@ This means that is a game run on higher frames per second the update function wi
         GunLifeStealAmount = 0.2f;
         CurrentWeapon.BulletTimeToLive = .2f;
         CurrentWeapon.Firerate = 3;
-
+        CurrentWeapon.MinVerticalSpread = 0;
+        CurrentWeapon.MaxVerticalSpread = 0;
 
         CustomDashSpeed = 20;
         CustomDashDuration = 0.6f;

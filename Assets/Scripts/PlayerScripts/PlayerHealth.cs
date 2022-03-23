@@ -48,10 +48,7 @@ This means that is a game run on higher frames per second the update function wi
             IsBlocking = true;
             _tempBlockTimer = BlockCooldownTime;
             StartCoroutine(BlockCoolDown());
-            if (UsingCactusToken = true)
-            {
-                StartCoroutine(_tokenManager.CactusTokenCounter());
-            }
+
         }
         if (CurrentHP > MaxHP)
         {
@@ -69,6 +66,10 @@ This means that is a game run on higher frames per second the update function wi
         {
             CurrentHP += BlockLifeSteal;
             _tempBlockTimer = BlockCooldownTime;
+            if (UsingCactusToken == true)
+            {
+                StartCoroutine(_tokenManager.CactusTokenCounter());
+            }
         }
         else
         {

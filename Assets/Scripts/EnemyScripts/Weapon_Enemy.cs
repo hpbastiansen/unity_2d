@@ -54,6 +54,8 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
             _theBullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
             _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
+            _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
+
         }
     }
     void ShootFullAuto()
@@ -71,6 +73,10 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
             _theBullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
             _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
+            _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
+            _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
+
+
         }
         StartCoroutine(FullAutoCooldown());
 
