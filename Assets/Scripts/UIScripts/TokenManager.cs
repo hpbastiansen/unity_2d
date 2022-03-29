@@ -268,7 +268,7 @@ This means that is a game run on higher frames per second the update function wi
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
         ShortInfo = "Default token is obtained at the start of the game for free. The values in the token is the default values for all the variables. Other tokens can however change these.";
 
-        CustomPlayerMoveSpeed = 10;
+        CustomPlayerMoveSpeed = 50;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
@@ -318,7 +318,7 @@ This means that is a game run on higher frames per second the update function wi
         ShortInfo = "When dashing projectiles shoot out in the direction of the momentum. Bullets split into 8 after traveling the maximum distance. When blocking succesfully it shoots out 3 thorns, which homes to the nearest enemy. " +
         "Shield gives the player touch damage.";
 
-        CustomPlayerMoveSpeed = 10;
+        CustomPlayerMoveSpeed = 50;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
@@ -371,7 +371,7 @@ This means that is a game run on higher frames per second the update function wi
         ShortInfo = "The Revlover tokens allows the gun can to shoot 6 times in rapid succession. When dashing the your gun is reloaded. If you successfully counter/block another bullet it adds one more ammo to the current clip."
         + " Shield has however lower health.";
 
-        CustomPlayerMoveSpeed = 10;
+        CustomPlayerMoveSpeed = 50;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
@@ -426,7 +426,7 @@ This means that is a game run on higher frames per second the update function wi
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
         ShortInfo = "Can dash through walls and objects as long as there is open space behind it. Bullets are noe slow, homing bullets.";
 
-        CustomPlayerMoveSpeed = 7;
+        CustomPlayerMoveSpeed = 40;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 

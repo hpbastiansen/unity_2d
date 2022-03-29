@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class WormCollision : MonoBehaviour
 {
+    [SerializeField] private float _damage = 1f;
+    [SerializeField] private float _knockback;
     private PolygonCollider2D _polygonCollider;
     private RectTransform _wormHead;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -64,5 +67,13 @@ public class WormCollision : MonoBehaviour
         };
 
         return _colliderPositions;
+    }
+
+    private void OnTriggerEnter2D(Collider2D _other)
+    {
+        if (_other.tag == "Player")
+        {
+            _other.GetComponent<PlayerHealth>().TakeDamage(_damage, _knockback);
+        }
     }
 }

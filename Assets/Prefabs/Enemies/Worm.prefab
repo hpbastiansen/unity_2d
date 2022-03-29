@@ -109,7 +109,7 @@ MonoBehaviour:
   - {x: -0.098303795, y: 0.25050592, z: 0}
   m_ShapePathHash: 2144903029
   m_Mesh: {fileID: 0}
-  m_InstanceId: 45740
+  m_InstanceId: 52484
 --- !u!114 &3769172236211256347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3961dd8243b3864daf8f59ce5236a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 1
+  _knockback: 10
 --- !u!1 &5548227530419961946
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,9 @@ public class PlayerHealth : MonoBehaviour
     private float _tempBlockTimer;
     public bool UsingCactusToken;
     private TokenManager _tokenManager;
-
+    [SerializeField] private float _invincibilitySeconds = 1f;
+    private float _invincibilityTimer = 0f;
+    private bool _isInvulnerable = false;
 
     /// Start methods run once when enabled.
     /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -38,6 +40,13 @@ This means that is a game run on higher frames per second the update function wi
     set the IsBlocking to true and starts the coroutine "BlockCoolDown()".*/
     void Update()
     {
+        if (_isInvulnerable) _invincibilityTimer += Time.deltaTime;
+        if (_invincibilityTimer > _invincibilitySeconds)
+        {
+            _invincibilityTimer = 0f;
+            _isInvulnerable = false;
+        }
+
         UsingCactusToken = _tokenManager.CactusTokenActive;
         if (_tempBlockTimer > 0)
         {
@@ -60,8 +69,9 @@ This means that is a game run on higher frames per second the update function wi
     /**If the player is blocking while this function is called, the player does not lose any health, but rather gains health depending on the lifesteal value.
     If the player is not blocking a decrease in health will happen, the amount depending on the provided parameter.
     If the player has zero or less health we log it and restarts the current scene (level).*/
-    public void TakeDamage(float x)
+    public void TakeDamage(float x, float _knockback = 10f)
     {
+        if (_isInvulnerable) return;
         if (IsBlocking == true)
         {
             CurrentHP += BlockLifeSteal;
@@ -79,6 +89,8 @@ This means that is a game run on higher frames per second the update function wi
         {
             CurrentHP -= x;
             _tempBlockTimer = BlockCooldownTime;
+            if (_knockback > 0f) PlayerMovement.Knockback(_knockback);
+            _isInvulnerable = true;
         }
         if (Mathf.Round(CurrentHP) * 1 <= 0)
         {

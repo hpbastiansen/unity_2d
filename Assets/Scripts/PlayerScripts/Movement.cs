@@ -66,23 +66,30 @@ public class Movement : MonoBehaviour
     /**FixedUpdate has the frequency of the physics system; it is called every fixed frame-rate frame. Compute Physics system calculations after FixedUpdate. 0.02 seconds (50 calls per second) is the default time between calls.*/
     /*! Note: This FixedUpdate fuction is fairly long, and more documentation will be written "inline" in the code itself.*/
     /*! The FixedUpdate function controls the overall movements that the player can do. This includes Walking/Running, Dashing, Jumping, Checking when to flip the player, and Animations related to this.*/
-    async void FixedUpdate()
+    void FixedUpdate()
     {
         //Get the mouse position to screen position.
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Find and assign the axis for walk movement.
         float x = Input.GetAxisRaw("Horizontal");
         //Only allow walking if player is not hooked with grapplinghook.
+        if (PlayerRigidbody.velocity.x > 10) PlayerRigidbody.velocity = new Vector2(10, PlayerRigidbody.velocity.y);
+        if (PlayerRigidbody.velocity.x < -10) PlayerRigidbody.velocity = new Vector2(-10, PlayerRigidbody.velocity.y);
+
         if (_grapplingHookController.IsHooked == false)
         {
-            if (CanWalk)
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
             {
-                PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+                PlayerRigidbody.AddForce(Vector2.right * ActiveMoveSpeed * x);
             }
-            else
-            {
-                PlayerRigidbody.velocity = new Vector2(x * 0, PlayerRigidbody.velocity.y);
-            }
+            //if (CanWalk)
+            //{
+            //    PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+            //}
+            //else
+            //{
+            //    PlayerRigidbody.velocity = new Vector2(x * 0, PlayerRigidbody.velocity.y);
+            //}
         }
         //Everything in this else scope will check for the following respectively: If player is not touching ground and is hooked give player a small boost boost as a Force.
         //If the player is touching ground and is hooked, the player can walk like normal.
@@ -257,6 +264,15 @@ public class Movement : MonoBehaviour
         FacingRight = !FacingRight;
         transform.Rotate(0f, 180f, 0f);
     }
+
+    public void Knockback(float _force, float _angle = 0f)
+    {
+        float _tempAngle = _angle;
+        if (_tempAngle == 0f) _tempAngle = FacingRight ? 135f : 45f;
+        Vector2 _knockbackForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * _tempAngle) * 5f, Mathf.Sin(Mathf.Deg2Rad * _tempAngle)) * _force;
+        PlayerRigidbody.AddForce(_knockbackForce, ForceMode2D.Impulse);
+    }
+
     /// IEnumerator for dashing that can be called with StartCoroutine().
     /** This IEnumerator allows to stop the process at any given moment, and then resume if wanted. All without stopping other processes or functions within the script.*/
     /*! The dash IEnumerator sets the gravity to zero, set the desired movement speed, cooldown time, and active time for the dash. Then it waits for the time it should be active.

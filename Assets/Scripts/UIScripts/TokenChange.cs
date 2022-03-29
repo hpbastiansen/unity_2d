@@ -31,7 +31,7 @@ public class TokenChange : MonoBehaviour
     ///Function to allow TokenManager to do the token change animation, and change the text.
     public void ActivateTokenAimations(string _text)
     {
-        if (gameObject.active)
+        if (gameObject.activeSelf)
         {
             StartCoroutine(ActivateTokenAimation(_text));
         }
