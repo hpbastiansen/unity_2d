@@ -72,24 +72,17 @@ public class Movement : MonoBehaviour
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Find and assign the axis for walk movement.
         float x = Input.GetAxisRaw("Horizontal");
-        //Only allow walking if player is not hooked with grapplinghook.
-        if (PlayerRigidbody.velocity.x > 10) PlayerRigidbody.velocity = new Vector2(10, PlayerRigidbody.velocity.y);
-        if (PlayerRigidbody.velocity.x < -10) PlayerRigidbody.velocity = new Vector2(-10, PlayerRigidbody.velocity.y);
 
+        if (PlayerRigidbody.velocity.x > ActiveMoveSpeed) PlayerRigidbody.velocity = new Vector2(ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+        if (PlayerRigidbody.velocity.x < -ActiveMoveSpeed) PlayerRigidbody.velocity = new Vector2(-ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+
+        //Only allow walking if player is not hooked with grapplinghook.
         if (_grapplingHookController.IsHooked == false)
         {
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+            if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && CanWalk == true && IsDashing == false)
             {
-                PlayerRigidbody.AddForce(Vector2.right * ActiveMoveSpeed * x);
+                PlayerRigidbody.AddForce(Vector2.right * 2f * x, ForceMode2D.Impulse);
             }
-            //if (CanWalk)
-            //{
-            //    PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
-            //}
-            //else
-            //{
-            //    PlayerRigidbody.velocity = new Vector2(x * 0, PlayerRigidbody.velocity.y);
-            //}
         }
         //Everything in this else scope will check for the following respectively: If player is not touching ground and is hooked give player a small boost boost as a Force.
         //If the player is touching ground and is hooked, the player can walk like normal.
@@ -101,11 +94,11 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    PlayerRigidbody.AddForce(Vector2.right * ActiveMoveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+                    PlayerRigidbody.AddForce(Vector2.right * .08f, ForceMode2D.Impulse);
                 }
                 else
                 {
-                    PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+                    PlayerRigidbody.AddForce(Vector2.right * ActiveMoveSpeed, ForceMode2D.Impulse);
                 }
                 if (FacingRight && IsTouchingGround == false)
                 {
@@ -114,7 +107,6 @@ public class Movement : MonoBehaviour
             }
             else if (Input.GetKeyUp(KeyCode.D))
             {
-                PlayerRigidbody.velocity = new Vector2(x * 0, PlayerRigidbody.velocity.y);
                 DashAnimation.SetActive(false);
             }
 
@@ -122,11 +114,11 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    PlayerRigidbody.AddForce(Vector2.left * ActiveMoveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+                    PlayerRigidbody.AddForce(Vector2.left * .08f, ForceMode2D.Impulse);
                 }
                 else
                 {
-                    PlayerRigidbody.velocity = new Vector2(x * ActiveMoveSpeed, PlayerRigidbody.velocity.y);
+                    PlayerRigidbody.AddForce(Vector2.left * ActiveMoveSpeed, ForceMode2D.Impulse);
                 }
                 if (!FacingRight && IsTouchingGround == false)
                 {
@@ -135,7 +127,6 @@ public class Movement : MonoBehaviour
             }
             else if (Input.GetKeyUp(KeyCode.A))
             {
-                PlayerRigidbody.velocity = new Vector2(x * 0, PlayerRigidbody.velocity.y);
                 DashAnimation.SetActive(false);
             }
         }

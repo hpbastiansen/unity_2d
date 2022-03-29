@@ -1103,7 +1103,7 @@ MonoBehaviour:
   - {x: -0.5483908, y: -0.5307555, z: 0}
   m_ShapePathHash: 487552814
   m_Mesh: {fileID: 0}
-  m_InstanceId: 62000
+  m_InstanceId: -28958
 --- !u!1 &2127231842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,6 +1272,7 @@ MonoBehaviour:
   BlockLifeSteal: 0
   BlockCooldownTime: 2
   UsingCactusToken: 0
+  _invincibilitySeconds: 1
 --- !u!114 &1282480357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,8 +1364,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.13085413}
-  m_Size: {x: 0.5, y: 0.95769596}
+  m_Offset: {x: 0, y: -0.1358121}
+  m_Size: {x: 0.5, y: 0.9676119}
   m_Direction: 0
 --- !u!1 &3506537846467988749
 GameObject:
@@ -1726,7 +1727,7 @@ PrefabInstance:
     - target: {fileID: 7018510399887525642, guid: d488068a08431b844bcff710808f4933,
         type: 3}
       propertyPath: m_InstanceId
-      value: -60950
+      value: -29028
       objectReference: {fileID: 0}
     - target: {fileID: 7018510399887525642, guid: d488068a08431b844bcff710808f4933,
         type: 3}
@@ -1798,7 +1799,7 @@ PrefabInstance:
     - target: {fileID: 618244907229083198, guid: 46fd7e3ae8cb4814586d880769b1ce1e,
         type: 3}
       propertyPath: m_InstanceId
-      value: -60976
+      value: -29008
       objectReference: {fileID: 0}
     - target: {fileID: 618244907229083198, guid: 46fd7e3ae8cb4814586d880769b1ce1e,
         type: 3}
@@ -2087,7 +2088,7 @@ PrefabInstance:
     - target: {fileID: 4910376940880752308, guid: ecde3cd1dac761147aba44e7d3dbdf49,
         type: 3}
       propertyPath: m_InstanceId
-      value: -60986
+      value: -29058
       objectReference: {fileID: 0}
     - target: {fileID: 5917211250844030150, guid: ecde3cd1dac761147aba44e7d3dbdf49,
         type: 3}
