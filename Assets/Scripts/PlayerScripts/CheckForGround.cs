@@ -7,6 +7,7 @@ public class CheckForGround : MonoBehaviour
 {
     private Movement _playerMovement;
     public LayerMask WhatToHit;
+    public bool CheckForRoof;
 
 
     /// Start methods run once when enabled.
@@ -25,7 +26,14 @@ public class CheckForGround : MonoBehaviour
     {
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
-            _playerMovement.IsTouchingGround = true;
+            if (CheckForRoof == false)
+            {
+                _playerMovement.IsTouchingGround = true;
+            }
+            else if (CheckForRoof == true)
+            {
+                _playerMovement.IsCloseToRoof = true;
+            }
         }
     }
     ///Sent when another object leaves a trigger collider attached to this object
@@ -35,7 +43,14 @@ public class CheckForGround : MonoBehaviour
     {
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
-            _playerMovement.IsTouchingGround = false;
+            if (CheckForRoof == false)
+            {
+                _playerMovement.IsTouchingGround = false;
+            }
+            else if (CheckForRoof == true)
+            {
+                _playerMovement.IsCloseToRoof = false;
+            }
         }
     }
 }

@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
     public bool IsEnemyBullet;
     public bool UsingCactusToken = false;
 
+    [Header("Homing")]
+    public bool IsHoming;
     public GameObject CactusSplinters;
 
     [Header("Lifesteal settings")]
@@ -29,12 +31,29 @@ public class Bullet : MonoBehaviour
     And lastly finds and assigs the PlayerHealth script.*/
     void Start()
     {
-        BulletRigidbody.velocity = transform.right * BulletSpeed;
+        if (IsHoming == false)
+        {
+            BulletRigidbody.velocity = transform.right * BulletSpeed;
+        }
         StartCoroutine(DestoryBullet());
         PlayerHealthScript = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
         UsingCactusToken = Object.FindObjectOfType<TokenManager>().CactusTokenActive;
     }
-
+    private void Update()
+    {
+        if (IsHoming == true)
+        {
+            EnemyDistance closestEnemy = EnemyDistance.FindNearest(transform.position);
+            if (closestEnemy != null)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position, Time.deltaTime * BulletSpeed);
+            }
+            else
+            {
+                BulletRigidbody.velocity = transform.right * BulletSpeed;
+            }
+        }
+    }
     ///Function will run when an incoming collider makes contact with this object's collider.
     /**In this function we check what the bullet hits. If the bullet hits another collider with a specific layer, we either;
     Call the TakeDamage function on the player, enemy or shield. 

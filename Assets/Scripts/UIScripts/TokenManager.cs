@@ -12,6 +12,10 @@ public class TokenManager : MonoBehaviour
     public bool DefaultTokenActive;
     public GameObject CactusToken;
     public bool CactusTokenActive;
+    public GameObject RevloverToken;
+    public bool RevloverTokenActive;
+    public GameObject WormToken;
+    public bool WormTokenActive;
     public bool TokenUIactive;
     public List<GameObject> TokensOwned;
     public List<bool> TokensActive;
@@ -39,6 +43,7 @@ public class TokenManager : MonoBehaviour
     public Weapon CurrentWeapon;
     public float CustomDashSpeed;
     public float CustomDashDuration;
+    public float CustomDashCooldown;
     public int CustomBlockLifeSteal;
     public int CustomBlockLifeStealCooldown;
     public int CustomBlockLifeStealActiveTime;
@@ -58,6 +63,8 @@ public class TokenManager : MonoBehaviour
     [Header("CactusToken")]
     public GameObject CactusSplinter;
     public WeaponController WeaponControllerScript;
+
+
 
     ///Awake is called when the script instance is being loaded.
     /**Awake is called either when an active GameObject that contains the script is initialized when a Scene loads, 
@@ -87,6 +94,10 @@ public class TokenManager : MonoBehaviour
         TokenUIactive = false;
         TokensOwned.Add(DefaultToken);
         TokensOwned.Add(CactusToken);
+        TokensOwned.Add(RevloverToken);
+        TokensOwned.Add(WormToken);
+
+
 
         foreach (GameObject tokens in TokensOwned)
         {
@@ -228,9 +239,19 @@ This means that is a game run on higher frames per second the update function wi
             }
         }
     }
-    public void CactusTokenShield()
+    public void RevolverTokenDash()
     {
-
+        CurrentWeapon.InstantReload();
+        StopCoroutine(CurrentWeapon.ReloadClipTimer());
+    }
+    public void RevolverTokenCounter()
+    {
+        CurrentWeapon.AddAmmo(1);
+    }
+    public void WormTokenDash()
+    {
+        Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        PlayerMovement.transform.position = new Vector2(_mousePos.x, _mousePos.y);
     }
 
 
@@ -241,6 +262,8 @@ This means that is a game run on higher frames per second the update function wi
     {
         DefaultTokenActive = true;
         CactusTokenActive = false;
+        WormTokenActive = false;
+        RevloverTokenActive = false;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
         ShortInfo = "Default token is obtained at the start of the game for free. The values in the token is the default values for all the variables. Other tokens can however change these.";
@@ -257,11 +280,17 @@ This means that is a game run on higher frames per second the update function wi
         CurrentWeapon.Firerate = 10;
         CurrentWeapon.MinVerticalSpread = -1;
         CurrentWeapon.MaxVerticalSpread = 5;
+        CurrentWeapon.UseClipSize = false;
+        CurrentWeapon.Damage = 8;
+        CurrentWeapon.BulletSpeed = 30;
+        CurrentWeapon.IsHoming = false;
 
         CustomDashSpeed = 40;
         CustomDashDuration = 0.2f;
+        CustomDashCooldown = 1;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
+        PlayerMovement.DashCooldown = CustomDashCooldown;
 
         CustomBlockLifeSteal = 0;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
@@ -272,14 +301,18 @@ This means that is a game run on higher frames per second the update function wi
 
         ShieldLifeSteal = 0;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
+        _shieldHP.MaxHP = 30;
+        _shieldHP.HP = 30;
 
         _weaponAccuracy = "decent";
     }
-    ///The ActivateCactusToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
+    ///The ActivateCactusToken function activates the Cactus token, and deacitvates every other token. Then different variables to match it's unique trait.
     public void ActivateCactusToken()
     {
         DefaultTokenActive = false;
         CactusTokenActive = true;
+        WormTokenActive = false;
+        RevloverTokenActive = false;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
         ShortInfo = "When dashing projectiles shoot out in the direction of the momentum. Bullets split into 8 after traveling the maximum distance. When blocking succesfully it shoots out 3 thorns, which homes to the nearest enemy. " +
@@ -289,16 +322,26 @@ This means that is a game run on higher frames per second the update function wi
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
+        CustomPlayerJumpHeight = 10000;
+        PlayerMovement.JumpForce = CustomPlayerJumpHeight;
+
         GunLifeStealAmount = 0.2f;
         CurrentWeapon.BulletTimeToLive = .2f;
         CurrentWeapon.Firerate = 3;
         CurrentWeapon.MinVerticalSpread = 0;
         CurrentWeapon.MaxVerticalSpread = 0;
+        CurrentWeapon.UseClipSize = false;
+        CurrentWeapon.Damage = 10;
+        CurrentWeapon.BulletSpeed = 30;
+        CurrentWeapon.IsHoming = false;
+
 
         CustomDashSpeed = 20;
         CustomDashDuration = 0.6f;
+        CustomDashCooldown = 1;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
+        PlayerMovement.DashCooldown = CustomDashCooldown;
 
         CustomBlockLifeSteal = 3;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
@@ -307,10 +350,120 @@ This means that is a game run on higher frames per second the update function wi
         CustomBlockLifeStealActiveTime = 1;
         _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
 
-
         ShieldLifeSteal = 1;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
-        _weaponAccuracy = "decent";
+        _shieldHP.MaxHP = 30;
+        _shieldHP.HP = 30;
 
+        _weaponAccuracy = "Perfect";
+
+    }
+    ///The ActivateRevolverToken function activates the Revolver token, and deacitvates every other token. Then different variables to match it's unique trait.
+
+    public void ActivateRevolverToken()
+    {
+        DefaultTokenActive = false;
+        CactusTokenActive = false;
+        WormTokenActive = false;
+        RevloverTokenActive = true;
+
+        //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        ShortInfo = "The Revlover tokens allows the gun can to shoot 6 times in rapid succession. When dashing the your gun is reloaded. If you successfully counter/block another bullet it adds one more ammo to the current clip."
+        + " Shield has however lower health.";
+
+        CustomPlayerMoveSpeed = 10;
+        PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
+        PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
+
+        CustomPlayerJumpHeight = 10000;
+        PlayerMovement.JumpForce = CustomPlayerJumpHeight;
+
+        GunLifeStealAmount = 0.3f;
+        CurrentWeapon.BulletTimeToLive = 3f;
+        CurrentWeapon.Firerate = 20;
+        CurrentWeapon.MinVerticalSpread = -5;
+        CurrentWeapon.MaxVerticalSpread = 5;
+        CurrentWeapon.UseClipSize = true;
+        CurrentWeapon.MaxClipSize = 6;
+        CurrentWeapon.ReloadTime = 2f;
+        CurrentWeapon.Damage = 50;
+        CurrentWeapon.BulletSpeed = 30;
+        CurrentWeapon.IsHoming = false;
+
+
+
+        CustomDashSpeed = 100;
+        CustomDashDuration = 0.1f;
+        CustomDashCooldown = 2;
+        PlayerMovement.DashLength = CustomDashDuration;
+        PlayerMovement.DashSpeed = CustomDashSpeed;
+        PlayerMovement.DashCooldown = CustomDashCooldown;
+
+        CustomBlockLifeSteal = 1;
+        _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
+        CustomBlockLifeStealCooldown = 2;
+        _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
+        CustomBlockLifeStealActiveTime = 1;
+        _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
+
+        ShieldLifeSteal = 1;
+        _shieldHP.MaxHP = 10;
+        _shieldHP.HP = 10;
+        _shieldHP.LifeStealAmount = ShieldLifeSteal;
+
+        _weaponAccuracy = "Decent";
+    }
+
+    ///The ActivateWormToken function activates the Worm token, and deacitvates every other token. Then different variables to match it's unique trait.
+
+    public void ActivateWormToken()
+    {
+        DefaultTokenActive = false;
+        CactusTokenActive = false;
+        RevloverTokenActive = false;
+        WormTokenActive = true;
+
+        //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        ShortInfo = "Can dash through walls and objects as long as there is open space behind it. Bullets are noe slow, homing bullets.";
+
+        CustomPlayerMoveSpeed = 7;
+        PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
+        PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
+
+        CustomPlayerJumpHeight = 10000;
+        PlayerMovement.JumpForce = CustomPlayerJumpHeight;
+
+        GunLifeStealAmount = 0f;
+        CurrentWeapon.BulletTimeToLive = 3f;
+        CurrentWeapon.Firerate = 10;
+        CurrentWeapon.MinVerticalSpread = 0;
+        CurrentWeapon.MaxVerticalSpread = 0;
+        CurrentWeapon.UseClipSize = false;
+        CurrentWeapon.MaxClipSize = 6;
+        CurrentWeapon.ReloadTime = 2f;
+        CurrentWeapon.Damage = 5;
+        CurrentWeapon.BulletSpeed = 10;
+        CurrentWeapon.IsHoming = true;
+
+        CustomDashSpeed = 0;
+        CustomDashDuration = 0;
+        CustomDashCooldown = 3;
+        PlayerMovement.DashLength = CustomDashDuration;
+        PlayerMovement.DashSpeed = CustomDashSpeed;
+        PlayerMovement.DashCooldown = CustomDashCooldown;
+
+        CustomBlockLifeSteal = 1;
+        _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
+        CustomBlockLifeStealCooldown = 2;
+        _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
+        CustomBlockLifeStealActiveTime = 1;
+        _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
+
+        ShieldLifeSteal = 3;
+        _shieldHP.MaxHP = 10;
+        _shieldHP.HP = 10;
+        _shieldHP.LifeStealAmount = ShieldLifeSteal;
+
+        _weaponAccuracy = "EPIC";
     }
 }

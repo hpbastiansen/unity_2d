@@ -28,7 +28,9 @@ public class Movement : MonoBehaviour
     public Transform GroundCheckObject;
     public float GroundCheckRadius;
     public bool IsTouchingGround;
+    public bool IsCloseToRoof;
     private bool _tryingToJump;
+    public bool PlayerIsInsideAnotherCollider;
 
     [Header("Dash")]
     public bool IsDashing = false;
@@ -38,6 +40,7 @@ public class Movement : MonoBehaviour
     public float DashCooldownCounter;
     public GameObject DashAnimation;
     private TokenManager _tokenManager;
+    private MousePositionOverCollider _mouseOverCollider;
 
 
 
@@ -54,6 +57,7 @@ public class Movement : MonoBehaviour
         DashAnimation.SetActive(false);
         CanWalk = true;
         _tokenManager = Object.FindObjectOfType<TokenManager>();
+        _mouseOverCollider = Object.FindObjectOfType<MousePositionOverCollider>();
         DontDestroyOnLoad(gameObject);
 
     }
@@ -62,9 +66,8 @@ public class Movement : MonoBehaviour
     /**FixedUpdate has the frequency of the physics system; it is called every fixed frame-rate frame. Compute Physics system calculations after FixedUpdate. 0.02 seconds (50 calls per second) is the default time between calls.*/
     /*! Note: This FixedUpdate fuction is fairly long, and more documentation will be written "inline" in the code itself.*/
     /*! The FixedUpdate function controls the overall movements that the player can do. This includes Walking/Running, Dashing, Jumping, Checking when to flip the player, and Animations related to this.*/
-    void FixedUpdate()
+    async void FixedUpdate()
     {
-
         //Get the mouse position to screen position.
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Find and assign the axis for walk movement.
@@ -178,7 +181,7 @@ public class Movement : MonoBehaviour
         }
 
         //Allow player to jump if player is not hooked, and is touching the ground.
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) && _grapplingHookController.IsHooked == false)
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) && _grapplingHookController.IsHooked == false && IsCloseToRoof == false)
         {
             Jump();
         }
@@ -189,7 +192,7 @@ public class Movement : MonoBehaviour
         //Allow player to increase the falling speed if key "S" is pressed.
         if (Input.GetKeyDown(KeyCode.S))
         {
-            PlayerRigidbody.gravityScale += 10;
+            PlayerRigidbody.gravityScale = 20;
         }
         if (Input.GetKeyUp(KeyCode.S))
         {
@@ -199,9 +202,22 @@ public class Movement : MonoBehaviour
         //Start Dash if Left Shift is pressed.
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (DashCooldownCounter <= 0)
+            if (DashCooldownCounter <= 0 && _tokenManager.WormTokenActive == false)
             {
+                if (_tokenManager.RevloverTokenActive)
+                {
+                    _tokenManager.RevolverTokenDash();
+                }
                 StartCoroutine(Dash());
+            }
+            else if (_tokenManager.WormTokenActive && DashCooldownCounter <= 0)
+            {
+                var _insideCollider = _mouseOverCollider.CheckForCollider();
+                if (_insideCollider == false)
+                {
+                    _tokenManager.WormTokenDash();
+                    StartCoroutine(Dash());
+                }
             }
         }
         //Check if player is dashing.
@@ -313,7 +329,7 @@ public class Movement : MonoBehaviour
     ///Allows the player to jump
     void Jump()
     {
-        if (IsTouchingGround && CanWalk)
+        if (IsTouchingGround && CanWalk && IsCloseToRoof == false)
         {
             PlayerAnimator.SetBool("Jump", true);
             //Important, because when jumping while player already got an acting force in the Y-axis they will combine to give the player super jump. This prevents it.
@@ -321,4 +337,5 @@ public class Movement : MonoBehaviour
             PlayerRigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Force);
         }
     }
+
 }

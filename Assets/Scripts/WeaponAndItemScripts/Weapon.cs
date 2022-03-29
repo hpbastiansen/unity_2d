@@ -17,7 +17,12 @@ public class Weapon : MonoBehaviour
     public string WeaponType = "Rifle";
     public int Ammo = 1;
     public bool FullAuto;
-    public bool IsShootingFullAuto;
+    public bool IsHoming;
+    public bool UseClipSize;
+    public int MaxClipSize;
+    public int CurrentAmmoInClip;
+    public float ReloadTime;
+    public bool CanShoot;
     public float Firerate;
     public float FirerateCounter = 0;
     public float BulletTimeToLive = 1;
@@ -45,14 +50,13 @@ public class Weapon : MonoBehaviour
         AmmoText = GameObject.Find("AmmoTextUI").GetComponent<Text>();
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
         _checkUI = Object.FindObjectOfType<UITest>();
-        
-
+        CanShoot = true;
     }
 
     /// LateUpdate is called every frame
     /** LateUpdate is called after all Update functions have been called. This is useful to order script execution.*/
     /*! The Late Update allows for shooting in both FullAuto and SemiAutomatic. 
-    The Late Update also makes sure to update the Ammo UI text at the end.*/
+    The Late Update also makes sure to update the Ammo UI text at the end, and reloads the gun if the bullets hit 0 and the UseClip is true*/
     async void LateUpdate()
     {
         if (FullAuto == true)
@@ -71,7 +75,27 @@ public class Weapon : MonoBehaviour
                 Shoot();
             }
         }
-        AmmoText.text = Ammo.ToString();
+        if (UseClipSize == false)
+        {
+            AmmoText.text = Ammo.ToString();
+        }
+        else
+        {
+            AmmoText.text = CurrentAmmoInClip + "/" + Ammo.ToString();
+        }
+        if (CurrentAmmoInClip > MaxClipSize)
+        {
+            CurrentAmmoInClip = MaxClipSize;
+        }
+        if (CurrentAmmoInClip < 0)
+        {
+            CurrentAmmoInClip = 0;
+        }
+        if (CurrentAmmoInClip == 0 && CanShoot && UseClipSize)
+        {
+            CanShoot = false;
+            Reload();
+        }
     }
 
     ///This function is called when the object becomes enabled and active.
@@ -80,77 +104,93 @@ public class Weapon : MonoBehaviour
     private void OnEnable()
     {
         ImageUI = GameObject.Find("currentWepImg").GetComponent<Image>();
-        IsShootingFullAuto = false;
         ImageUI.sprite = WeaponSymbol;
         AmmoText = GameObject.Find("AmmoTextUI").GetComponent<Text>();
         AmmoText.text = Ammo.ToString();
     }
 
 
-    ///The Shoot function allows the gun to shoot SemiAuto.
-    /**The function checks if the Ammo amount is above 0.
-    If true, it gathers information about the current tokens lifesteal stats, subtracts one from the ammo value, generates a random vertical spread,
-    plays a muzzleflash animation (light at the end of the gun when shooting), instantiates a bullet gameobject based on a prefab, and set its correct location to be at the end of the gunbarrel.
+    ///The Shoot function allows the gun to shoot.
+    /**The function checks if the weapon is having a limited clip size.
+    If true, it only allows to shoot if the gun has bullets in the clip. If false it allows the player to shoot aslong as the weapons got bullets, 
+    after that it gathers information about the current tokens lifesteal stats, subtracts one from the ammo value, generates a random vertical spread,
+    plays a muzzleflash animation (light at the end of the gun when shooting), instantiates a bullet gameobject based on a prefab, 
+    and set its correct location to be at the end of the gunbarrel.
     then it sets the rotation of the bullet to be equal the _randomSpread and lastly assigns necessary values to the bullet 
     (e.g. lifesteal, camerashake strength, what it can hit, bulletspeed and damage).*/
     void Shoot()
     {
-        if (Ammo > 0)
+        if (UseClipSize)
         {
-            LifeSteal = TokenManagerScript.GunLifeStealAmount;
-            MuzzleFlashAnimator.Play(MuzzleFlashAnimationName);
-            Ammo -= 1;
-            float _randomSpread = Random.Range(MinVerticalSpread, MaxVerticalSpread);
-            GameObject thebullet = Instantiate(BulletObject, FirePoint.position, FirePoint.rotation);
-            thebullet.transform.Rotate(0, 0, _randomSpread);
-            thebullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
-            thebullet.GetComponent<Bullet>().TimeToLive = BulletTimeToLive;
-            thebullet.GetComponent<Bullet>().LifeSteal = LifeSteal;
-            thebullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
-            thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
-            thebullet.GetComponent<Bullet>().Damage = Damage;
-        }
-    }
-
-    ///The ShootFullAuto function allows the gun to shoot FullAuto.
-    /**The function checks if the player is shooting at full auto and if Ammo amount is above 0.
-    If true, it gathers information about the current tokens lifesteal stats, subtracts one from the ammo value, generates a random vertical spread,
-    plays a muzzleflash animation (light at the end of the gun when shooting), instantiates a bullet gameobject based on a prefab, and set its correct location to be at the end of the gunbarrel.
-    then it sets the rotation of the bullet to be equal the _randomSpread and lastly assigns necessary values to the bullet 
-    (e.g. lifesteal, camerashake strength, what it can hit, bulletspeed and damage).*/
-
-    /*!The function then starts a new coroutine where the ShootFullAuto function is called with a delay equal to the firerate.*/
-    void ShootFullAuto()
-    {
-        if (IsShootingFullAuto == true)
-        {
-            if (Ammo > 0)
+            if (CurrentAmmoInClip > 0 && CanShoot)
             {
                 LifeSteal = TokenManagerScript.GunLifeStealAmount;
+                MuzzleFlashAnimator.Play(MuzzleFlashAnimationName);
+                CurrentAmmoInClip -= 1;
+                float _randomSpread = Random.Range(MinVerticalSpread, MaxVerticalSpread);
+                GameObject thebullet = Instantiate(BulletObject, FirePoint.position, FirePoint.rotation);
+                thebullet.transform.Rotate(0, 0, _randomSpread);
+                thebullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
+                thebullet.GetComponent<Bullet>().TimeToLive = BulletTimeToLive;
+                thebullet.GetComponent<Bullet>().LifeSteal = LifeSteal;
+                thebullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
+                thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
+                thebullet.GetComponent<Bullet>().Damage = Damage;
+                thebullet.GetComponent<Bullet>().IsHoming = IsHoming;
 
+            }
+        }
+        else
+        {
+            if (Ammo > 0 && CanShoot)
+            {
+                LifeSteal = TokenManagerScript.GunLifeStealAmount;
                 MuzzleFlashAnimator.Play(MuzzleFlashAnimationName);
                 Ammo -= 1;
                 float _randomSpread = Random.Range(MinVerticalSpread, MaxVerticalSpread);
                 GameObject thebullet = Instantiate(BulletObject, FirePoint.position, FirePoint.rotation);
                 thebullet.transform.Rotate(0, 0, _randomSpread);
                 thebullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
-                thebullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
-                thebullet.GetComponent<Bullet>().TimeToLive = 1f;
-                thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
+                thebullet.GetComponent<Bullet>().TimeToLive = BulletTimeToLive;
                 thebullet.GetComponent<Bullet>().LifeSteal = LifeSteal;
+                thebullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
+                thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
                 thebullet.GetComponent<Bullet>().Damage = Damage;
-                thebullet.GetComponent<Rigidbody2D>().mass = BulletWeight;
-
+                thebullet.GetComponent<Bullet>().IsHoming = IsHoming;
             }
-            StartCoroutine(FullAutoCooldown());
         }
     }
-    ///An IEnumerator that calls ShootFullAuto after a delay equal to the firerate has passed.
-    IEnumerator FullAutoCooldown()
+
+    public void Reload()
     {
-        FirerateCounter = Firerate;
-        yield return new WaitForSeconds(Firerate);
-        ShootFullAuto();
+        StopAllCoroutines();
+        StartCoroutine(ReloadClipTimer());
+    }
+    public IEnumerator ReloadClipTimer()
+    {
+        CanShoot = false;
+        yield return new WaitForSeconds(ReloadTime);
+        InstantReload();
+        yield return null;
+        StopCoroutine(ReloadClipTimer());
     }
 
+    public void InstantReload()
+    {
+        CanShoot = false;
+        while (Ammo > 0 && CurrentAmmoInClip < MaxClipSize)
+        {
+            CurrentAmmoInClip += 1;
+            Ammo -= 1;
+        }
+        CanShoot = true;
+    }
+
+    public void AddAmmo(int _x)
+    {
+        if (CurrentAmmoInClip < MaxClipSize)
+        {
+            CurrentAmmoInClip += _x;
+        }
+    }
 }

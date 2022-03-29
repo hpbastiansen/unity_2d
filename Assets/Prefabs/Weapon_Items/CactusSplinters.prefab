@@ -295,7 +295,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &4818437691604951235
@@ -375,7 +375,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &4818437691949621345
@@ -820,7 +820,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &4818437692400232582
@@ -1009,7 +1009,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &4818437692581289221
@@ -1198,7 +1198,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &4818437692755029763
@@ -1278,7 +1278,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &4818437693102584755
@@ -1358,7 +1358,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &7655715709134163652
@@ -1438,7 +1438,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4918
   CameraShakeStrength: 0
-  TimeToLive: 0.5
+  TimeToLive: 1.5
   PlayerHealthScript: {fileID: 0}
   IsHoming: 0
 --- !u!1 &7655715709247628744
