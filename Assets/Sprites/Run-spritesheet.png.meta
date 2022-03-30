@@ -142,10 +142,10 @@ TextureImporter:
       name: Run-spritesheet_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 33
-        width: 25
-        height: 40
+        x: 1
+        y: 101
+        width: 24
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,10 +163,10 @@ TextureImporter:
       name: Run-spritesheet_1
       rect:
         serializedVersion: 2
-        x: 27
-        y: 33
-        width: 28
-        height: 40
+        x: 26
+        y: 101
+        width: 26
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,10 +184,10 @@ TextureImporter:
       name: Run-spritesheet_2
       rect:
         serializedVersion: 2
-        x: 54
-        y: 33
-        width: 27
-        height: 40
+        x: 53
+        y: 101
+        width: 24
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,10 +205,10 @@ TextureImporter:
       name: Run-spritesheet_3
       rect:
         serializedVersion: 2
-        x: 84
-        y: 33
-        width: 24
-        height: 40
+        x: 83
+        y: 101
+        width: 21
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,10 +226,10 @@ TextureImporter:
       name: Run-spritesheet_4
       rect:
         serializedVersion: 2
-        x: 110
-        y: 33
-        width: 25
-        height: 40
+        x: 109
+        y: 101
+        width: 24
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,10 +247,10 @@ TextureImporter:
       name: Run-spritesheet_5
       rect:
         serializedVersion: 2
-        x: 135
-        y: 33
+        x: 134
+        y: 101
         width: 28
-        height: 40
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,10 +268,10 @@ TextureImporter:
       name: Run-spritesheet_6
       rect:
         serializedVersion: 2
-        x: 162
-        y: 33
-        width: 27
-        height: 40
+        x: 161
+        y: 101
+        width: 24
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,10 +289,10 @@ TextureImporter:
       name: Run-spritesheet_7
       rect:
         serializedVersion: 2
-        x: 192
-        y: 33
-        width: 24
-        height: 40
+        x: 191
+        y: 101
+        width: 21
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

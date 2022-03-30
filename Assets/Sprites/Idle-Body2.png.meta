@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 097fd1c56b66f92498d6fa1d98e837e3
+guid: 50b2dd1cb4f34fb4aa3ed65055b27814
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4273631533692792779
-    second: Idle-Body_0
+      213: -5561943323132339894
+    second: Idle-Body2_0
   - first:
-      213: 5474601928661379979
-    second: Idle-Body_1
+      213: -1113932538057000110
+    second: Idle-Body2_1
   - first:
-      213: -8781814580202723289
-    second: Idle-Body_2
+      213: -4900890274745691082
+    second: Idle-Body2_2
   - first:
-      213: -1509064525524600439
-    second: Idle-Body_3
+      213: 270627175476263611
+    second: Idle-Body2_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -99,89 +99,101 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle-Body_0
+      name: Idle-Body2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 50
+        y: 75
+        width: 46
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcfaaaabc3dfe4b30800000000000000
-      internalID: 4273631533692792779
+      spriteID: a4957db140200d2b0800000000000000
+      internalID: -5561943323132339894
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Body_1
+      name: Idle-Body2_1
       rect:
         serializedVersion: 2
         x: 50
-        y: 0
-        width: 50
+        y: 75
+        width: 46
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8ba78cc271b9fb40800000000000000
-      internalID: 5474601928661379979
+      spriteID: 25bfc5d22448a80f0800000000000000
+      internalID: -1113932538057000110
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Body_2
+      name: Idle-Body2_2
       rect:
         serializedVersion: 2
         x: 100
-        y: 0
-        width: 50
+        y: 75
+        width: 46
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 728aba7da2ab02680800000000000000
-      internalID: -8781814580202723289
+      spriteID: 634dd9ad24a8cfbb0800000000000000
+      internalID: -4900890274745691082
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Body_3
+      name: Idle-Body2_3
       rect:
         serializedVersion: 2
         x: 150
-        y: 0
-        width: 50
+        y: 75
+        width: 46
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98976f43fc9be0be0800000000000000
-      internalID: -1509064525524600439
+      spriteID: bba74d47bf571c300800000000000000
+      internalID: 270627175476263611
       vertices: []
       indices: 
       edges: []

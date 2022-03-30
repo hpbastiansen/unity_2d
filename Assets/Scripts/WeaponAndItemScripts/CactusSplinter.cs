@@ -42,7 +42,10 @@ public class CactusSplinter : MonoBehaviour
         if (IsHoming == true)
         {
             EnemyDistance closestEnemy = EnemyDistance.FindNearest(transform.position);
-            transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position, Time.deltaTime * BulletSpeed);
+            if (closestEnemy != null)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position, Time.deltaTime * BulletSpeed);
+            }
         }
     }
 
