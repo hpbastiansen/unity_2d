@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
     public float TimeToLive = 1f;
     public bool IsEnemyBullet;
     public bool UsingCactusToken = false;
+    public GameObject EnemyShooterObject;
 
     [Header("Homing")]
     public bool IsHoming;
@@ -99,6 +100,11 @@ public class Bullet : MonoBehaviour
             {
                 _shieldHP.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
+                TokenManager _tokenManager = Object.FindObjectOfType<TokenManager>();
+                if (_tokenManager.WormTokenActive && IsEnemyBullet)
+                {
+                    EnemyShooterObject.GetComponent<EnemyTemplate>().Debuff();
+                }
                 if (_distance < 10)
                 {
                     ScreenShakeController.Instance.StartShake(.2f, .1f);

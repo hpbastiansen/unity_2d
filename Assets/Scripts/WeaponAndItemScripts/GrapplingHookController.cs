@@ -22,6 +22,7 @@ public class GrapplingHookController : MonoBehaviour
     public bool IsUsingGrapplingHookGun;
     public DialogueManager DialogueManagerScript;
     public Rigidbody2D TempJoint;
+    public Movement MovementScript;
 
 
     /// Start methods run once when enabled.
@@ -35,6 +36,7 @@ public class GrapplingHookController : MonoBehaviour
         LineObject.enabled = false;
         IsUsingGrapplingHookGun = false;
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
+        MovementScript = Object.FindObjectOfType<Movement>();
     }
 
     ///Fixed Update is called based on a fixed frame rate.
@@ -66,7 +68,7 @@ public class GrapplingHookController : MonoBehaviour
                 _joint.distance += UpDownSpeed;
             }
         }
-        else
+        if (_joint.distance < .05f)
         {
             if (IsHooked == true)
             {
@@ -77,7 +79,6 @@ public class GrapplingHookController : MonoBehaviour
             LineObject.enabled = false;
             _joint.enabled = false;
         }
-
     }
 
     ///Update is called every frame.

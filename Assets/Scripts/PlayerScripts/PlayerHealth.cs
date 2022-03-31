@@ -13,7 +13,6 @@ public class PlayerHealth : MonoBehaviour
     public bool IsBlocking;
     [Tooltip("How long the block is active for.")]
     public float BlockActiveTime;
-    [Tooltip("This is the value which the damage is divided by. E.g. a bullet that takes 10 dmg and this value being 5 will give the player a life steal of 2.")]
     public int BlockLifeSteal;
     public float BlockCooldownTime;
     private float _tempBlockTimer;
@@ -83,6 +82,10 @@ This means that is a game run on higher frames per second the update function wi
             if (_tokenManager.RevloverTokenActive)
             {
                 _tokenManager.RevolverTokenCounter();
+            }
+            if (_tokenManager.WormTokenActive)
+            {
+                _tokenManager.WormTokenCounter();
             }
         }
         else

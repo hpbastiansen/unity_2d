@@ -34,7 +34,6 @@ public class ShieldHP : MonoBehaviour
         HP -= _damage;
         if (HP <= 0)
         {
-            Debug.Log("SHIELD DOWN!");
             _shieldTouchDamage.ShieldTouchDamageCooldownTimer = 0;
             WeaponController.UsingShield = !WeaponController.UsingShield;
             WeaponController.ShieldRechargeTimer = RechargeTimer;

@@ -25,11 +25,6 @@ public class OutlineController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            IsDefualtMaterial = !IsDefualtMaterial;
-        }
-
         if (IsDefualtMaterial)
         {
             foreach (var _sr in SpriteRenderers)

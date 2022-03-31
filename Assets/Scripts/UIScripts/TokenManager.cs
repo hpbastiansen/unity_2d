@@ -253,7 +253,14 @@ This means that is a game run on higher frames per second the update function wi
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         PlayerMovement.transform.position = new Vector2(_mousePos.x, _mousePos.y);
     }
-
+    public void WormTokenCounter()
+    {
+        Collider2D[] hitCollidersS = Physics2D.OverlapCircleAll(_playerHealth.transform.position, 10f, 1 << LayerMask.NameToLayer("Enemy"));
+        foreach (var hitCollider in hitCollidersS)
+        {
+            hitCollider.GetComponent<EnemyTemplate>().Debuff();
+        }
+    }
 
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/
 

@@ -55,6 +55,9 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
             _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
             _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
+            _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
+            _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
+
 
         }
     }
@@ -75,6 +78,7 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
             _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
             _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
+            _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
 
 
         }

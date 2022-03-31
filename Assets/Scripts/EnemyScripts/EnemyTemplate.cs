@@ -9,6 +9,8 @@ public class EnemyTemplate : MonoBehaviour
 
     public float HP;
     public Slider Healthbar;
+    public bool Debuffed;
+    public OutlineController OutlineControllerScript;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -17,6 +19,7 @@ public class EnemyTemplate : MonoBehaviour
     {
         Healthbar = transform.Find("Canvas").transform.Find("HealthBar").GetComponent<Slider>();
         Healthbar.maxValue = HP;
+        Debuffed = false;
     }
 
     ///Update is called every frame
@@ -36,6 +39,28 @@ public class EnemyTemplate : MonoBehaviour
     /**This function can be called from anywhere (e.g a bullet hit script) and by supplying a damage value in its parameter we can easily remove that amount from the enemies' health value.*/
     public void TakeDamage(float dmg)
     {
-        HP = HP - dmg;
+        if (Debuffed)
+        {
+            HP = HP - dmg * 1.5f;
+        }
+        else
+        {
+            HP = HP - dmg;
+        }
+
+    }
+    public void Debuff()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Debuffer());
+    }
+
+    public IEnumerator Debuffer()
+    {
+        OutlineControllerScript.IsDefualtMaterial = false;
+        Debuffed = true;
+        yield return new WaitForSeconds(2f);
+        Debuffed = false;
+        OutlineControllerScript.IsDefualtMaterial = true;
     }
 }
