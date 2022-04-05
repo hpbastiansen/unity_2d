@@ -11,6 +11,8 @@ public class EnemyTemplate : MonoBehaviour
     public Slider Healthbar;
     public bool Debuffed;
     public OutlineController OutlineControllerScript;
+    public Animator EnemyAnimator;
+    public bool IsRunning;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -34,6 +36,7 @@ public class EnemyTemplate : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        EnemyAnimator.SetBool("Running", IsRunning);
     }
     ///TakeDamage removes given damage from health.
     /**This function can be called from anywhere (e.g a bullet hit script) and by supplying a damage value in its parameter we can easily remove that amount from the enemies' health value.*/

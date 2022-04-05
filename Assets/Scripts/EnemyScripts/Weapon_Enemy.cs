@@ -8,6 +8,7 @@ public class Weapon_Enemy : MonoBehaviour
 {
     public Transform FirePoint;
     public GameObject Bullet;
+    public int Damage;
     public float Speedofbullet = 1f;
     public float MinVecticalSpread = 0f;
     public float MaxVerticalSpread = 0f;
@@ -56,6 +57,7 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
             _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
             _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
+            _theBullet.GetComponent<Bullet>().Damage = Damage;
             _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
 
 
@@ -78,6 +80,7 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
             _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
             _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
+            _theBullet.GetComponent<Bullet>().Damage = Damage;
             _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
 
 
