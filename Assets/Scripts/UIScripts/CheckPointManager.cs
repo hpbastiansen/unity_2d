@@ -23,6 +23,7 @@ public class CheckPointManager : MonoBehaviour
     public List<string> W3Scenes;
     [Header("Ammo and Health")]
     public HealthAndAmmoForStage AmmoAndHealth;
+    public int Value;
 
 
     // Start is called before the first frame update
@@ -32,7 +33,6 @@ public class CheckPointManager : MonoBehaviour
         {
             W1C1 = 1;
         }
-        W1Scenes.Add("LEVEL1_NOT");
     }
     public void AddCheckPointW1(string _name)
     {

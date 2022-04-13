@@ -92,12 +92,6 @@ public class TokenManager : MonoBehaviour
         _checkUI = Object.FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
-        TokensOwned.Add(DefaultToken);
-        TokensOwned.Add(CactusToken);
-        TokensOwned.Add(RevloverToken);
-        TokensOwned.Add(WormToken);
-
-
 
         foreach (GameObject tokens in TokensOwned)
         {
@@ -160,6 +154,11 @@ This means that is a game run on higher frames per second the update function wi
         if (CactusTokenActive == true)
         {
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            AddTokens(CactusToken);
         }
     }
 
@@ -260,6 +259,11 @@ This means that is a game run on higher frames per second the update function wi
         {
             hitCollider.GetComponent<EnemyTemplate>().Debuff();
         }
+    }
+
+    public void AddTokens(GameObject token)
+    {
+        TokensOwned.Add(token);
     }
 
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/

@@ -23,6 +23,8 @@ public class Weapon_Enemy : MonoBehaviour
     public string MuzzleAnimationName;
     public LayerMask WhatToHit;
 
+    public AudioSource ShootSoundSource;
+
     ///This is basically the same script as the Player weapon script. All necessary documentation should be in there.
     private void Start()
     {
@@ -59,7 +61,7 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
             _theBullet.GetComponent<Bullet>().Damage = Damage;
             _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
-
+            ShootSoundSource.Play();
 
         }
     }
@@ -82,6 +84,7 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
             _theBullet.GetComponent<Bullet>().Damage = Damage;
             _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
+            ShootSoundSource.Play();
 
 
         }
