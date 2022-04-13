@@ -23,6 +23,9 @@ public class GrapplingHookController : MonoBehaviour
     public DialogueManager DialogueManagerScript;
     public Rigidbody2D TempJoint;
     public Movement MovementScript;
+    public AudioSource HookAudioSource;
+    public AudioSource JumpBoostAudioSource;
+
 
 
     /// Start methods run once when enabled.
@@ -75,6 +78,7 @@ public class GrapplingHookController : MonoBehaviour
                 PlayerRigidbody.AddForce(Vector3.up * EndForce, ForceMode2D.Impulse);
                 IsHooked = false;
                 gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
+                JumpBoostAudioSource.Play();
             }
             LineObject.enabled = false;
             _joint.enabled = false;
@@ -112,6 +116,7 @@ This means that is a game run on higher frames per second the update function wi
             _hit = Physics2D.Raycast(transform.position, _targetPosition - transform.position, Distance, WhatToHit);
             if (_hit.collider != null && _hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
             {
+                HookAudioSource.Play();
                 IsHooked = true;
                 _joint.enabled = true;
                 Vector2 connectPoint = _hit.point - new Vector2(_hit.collider.transform.position.x, _hit.collider.transform.position.y);

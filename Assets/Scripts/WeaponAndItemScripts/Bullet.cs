@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D BulletRigidbody;
     public float Damage = 10;
     public GameObject HitEffect;
+    public GameObject HitShieldEffect;
+
     public GameObject BlockEffect;
     public LayerMask WhatToHit;
     public float CameraShakeStrength = 0;
@@ -99,7 +101,7 @@ public class Bullet : MonoBehaviour
             else if (_shieldHP != null)
             {
                 _shieldHP.TakeDamage(Damage);
-                Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
+                Instantiate(HitShieldEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 TokenManager _tokenManager = Object.FindObjectOfType<TokenManager>();
                 if (_tokenManager.WormTokenActive && IsEnemyBullet)
                 {

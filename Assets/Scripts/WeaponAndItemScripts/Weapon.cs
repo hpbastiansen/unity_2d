@@ -40,6 +40,10 @@ public class Weapon : MonoBehaviour
     public DialogueManager DialogueManagerScript;
     private UITest _checkUI;
 
+    public AudioSource ShootAudioSource;
+    public AudioSource ReloadAudioSource;
+
+
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
     /*! In the Start function several variables are set, and script, components and objects are found and assigned.*/
@@ -51,6 +55,7 @@ public class Weapon : MonoBehaviour
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
         _checkUI = Object.FindObjectOfType<UITest>();
         CanShoot = true;
+        ShootAudioSource = GetComponent<AudioSource>();
     }
 
     /// LateUpdate is called every frame
@@ -137,6 +142,7 @@ public class Weapon : MonoBehaviour
                 thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
                 thebullet.GetComponent<Bullet>().Damage = Damage;
                 thebullet.GetComponent<Bullet>().IsHoming = IsHoming;
+                ShootAudioSource.Play();
 
             }
         }
@@ -157,6 +163,8 @@ public class Weapon : MonoBehaviour
                 thebullet.GetComponent<Bullet>().BulletSpeed = BulletSpeed;
                 thebullet.GetComponent<Bullet>().Damage = Damage;
                 thebullet.GetComponent<Bullet>().IsHoming = IsHoming;
+                ShootAudioSource.Play();
+
             }
         }
     }
@@ -184,6 +192,7 @@ public class Weapon : MonoBehaviour
             Ammo -= 1;
         }
         CanShoot = true;
+        ReloadAudioSource.Play();
     }
 
     public void AddAmmo(int _x)

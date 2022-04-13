@@ -23,6 +23,9 @@ public class Movement : MonoBehaviour
     public bool GoingDown;
     public bool GoingLeft;
     public bool GoingRight;
+    public AudioSource JumpAudioSource;
+    public AudioSource FallHitGroundAudioSource;
+
     [Header("GroundCheck")]
 
     public Transform GroundCheckObject;
@@ -41,7 +44,7 @@ public class Movement : MonoBehaviour
     public GameObject DashAnimation;
     private TokenManager _tokenManager;
     private MousePositionOverCollider _mouseOverCollider;
-
+    public AudioSource DashAudioSource;
 
 
     /// Start methods run once when enabled.
@@ -270,6 +273,7 @@ public class Movement : MonoBehaviour
     When the time is up, all variable changes goes back to "normal" and the cooldown timer starts. When that is done the cooldown counter is set back to 0, which allows the player to use dash again.*/
     IEnumerator Dash()
     {
+        DashAudioSource.Play();
         PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY; PlayerRigidbody.constraints = RigidbodyConstraints2D.None; PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         PlayerRigidbody.gravityScale = 0;
         DashCooldownCounter = DashCooldown;
@@ -279,6 +283,7 @@ public class Movement : MonoBehaviour
         CanWalk = false;
         if (_tokenManager.CactusTokenActive) { StartCoroutine(_tokenManager.CactusTokenDash()); }
         yield return new WaitForSeconds(DashLength);
+        if (_tokenManager.WormTokenActive == false) DashAudioSource.Stop();
         ActiveMoveSpeed = tempspeed;
         CanWalk = true;
         PlayerRigidbody.gravityScale = NormalGravity;
@@ -339,6 +344,7 @@ public class Movement : MonoBehaviour
         if (IsTouchingGround && CanWalk && IsCloseToRoof == false)
         {
             PlayerAnimator.SetBool("Jump", true);
+            JumpAudioSource.Play();
             //Important, because when jumping while player already got an acting force in the Y-axis they will combine to give the player super jump. This prevents it.
             PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY; PlayerRigidbody.constraints = RigidbodyConstraints2D.None; PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
             PlayerRigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Force);

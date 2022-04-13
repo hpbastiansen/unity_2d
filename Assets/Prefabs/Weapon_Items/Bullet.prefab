@@ -4960,6 +4960,8 @@ MonoBehaviour:
   Damage: 10
   HitEffect: {fileID: 6505338092035888528, guid: 7e9e391955a75f74ab522e333a3ca1f9,
     type: 3}
+  HitShieldEffect: {fileID: 6505338092035888528, guid: f04f6fc780999b14db9d630e7ab3cff8,
+    type: 3}
   BlockEffect: {fileID: 3272860475171887518, guid: 333a3cf10354a594ea477f2791470a80,
     type: 3}
   WhatToHit:
@@ -4969,6 +4971,8 @@ MonoBehaviour:
   TimeToLive: 1
   IsEnemyBullet: 0
   UsingCactusToken: 0
+  EnemyShooterObject: {fileID: 0}
+  IsHoming: 0
   CactusSplinters: {fileID: 4818437691949621345, guid: 20831621cd9639b47be25369054d0f0c,
     type: 3}
   LifeSteal: 0

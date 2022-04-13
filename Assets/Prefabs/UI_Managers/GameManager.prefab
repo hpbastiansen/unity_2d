@@ -1,5 +1,132 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1100969236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1100969237}
+  - component: {fileID: 1100969238}
+  m_Layer: 0
+  m_Name: BackgroundMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1100969237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100969236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6889968767220443387}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1100969238
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100969236}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: fd2f09e0d5808fc44b8f352b43f05467, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.28
+  m_Pitch: 0.6
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 256
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1671044709
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,6 +177,59 @@ MonoBehaviour:
   ShowInteractButton: 0
   EInteract: {fileID: 0}
   InDialogue: 0
+--- !u!1 &1369218668643572748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6889968767220443387}
+  - component: {fileID: 7556668262662997081}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6889968767220443387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369218668643572748}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -463.4776, y: -189.32204, z: 331.34592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1100969237}
+  m_Father: {fileID: 7556668262444771458}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7556668262662997081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369218668643572748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc14d1e7709db594fb8a79e3d7e12e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGun: {fileID: 8300000, guid: 8cd82b4fb639cdb4fb3d9df18a465e38, type: 3}
+  Grapplinghook: {fileID: 8300000, guid: 63e941d56edab294cb5cb53352ec65a5, type: 3}
+  DashNormal: {fileID: 8300000, guid: a6d278952324e674f9ea075b515e9d07, type: 3}
+  DashWorm: {fileID: 8300000, guid: a6d278952324e674f9ea075b515e9d07, type: 3}
+  HitWall: {fileID: 0}
+  BackgroundMusicList:
+  - {fileID: 8300000, guid: fd2f09e0d5808fc44b8f352b43f05467, type: 3}
+  - {fileID: 8300000, guid: f8c7dd48872df124396e9c930280d474, type: 3}
+  BackgroundMusicSource: {fileID: 1100969238}
 --- !u!1 &7556668262444771459
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +244,7 @@ GameObject:
   - component: {fileID: 261743654}
   - component: {fileID: 261743655}
   - component: {fileID: 585062320}
+  - component: {fileID: 1880903823}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -83,6 +264,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1671044711}
+  - {fileID: 6889968767220443387}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -116,8 +298,12 @@ MonoBehaviour:
   TokenUI: {fileID: 0}
   DefaultToken: {fileID: 0}
   DefaultTokenActive: 1
-  BatToken: {fileID: 0}
-  BatTokenActive: 0
+  CactusToken: {fileID: 0}
+  CactusTokenActive: 0
+  RevloverToken: {fileID: 0}
+  RevloverTokenActive: 0
+  WormToken: {fileID: 0}
+  WormTokenActive: 0
   TokenUIactive: 0
   TokensOwned: []
   TokensActive: 
@@ -139,12 +325,16 @@ MonoBehaviour:
   CurrentWeapon: {fileID: 0}
   CustomDashSpeed: 0
   CustomDashDuration: 0
+  CustomDashCooldown: 0
   CustomBlockLifeSteal: 0
   CustomBlockLifeStealCooldown: 0
   CustomBlockLifeStealActiveTime: 0
   ShieldLifeSteal: 0
   TokenIndex: 0
   UsingTokenMenu: 0
+  CactusSplinter: {fileID: 3305105858080594305, guid: 9155608f81767d945808bea0bad43ca8,
+    type: 3}
+  WeaponControllerScript: {fileID: 0}
 --- !u!114 &261743654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,3 +391,20 @@ MonoBehaviour:
   W1C6: 0
   W1C6Scenename: 
   W1Scenes: []
+  W2Scenes: []
+  W3Scenes: []
+  AmmoAndHealth: {fileID: 0}
+--- !u!114 &1880903823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556668262444771459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406649bb0f8a5f84382c1fde01dbede5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultMaterial: {fileID: 2100000, guid: bea332025d7245646b5dbda11e642922, type: 2}
+  OutlineMaterial: {fileID: 2100000, guid: ea3c644198844c549bfadf5d20c43073, type: 2}

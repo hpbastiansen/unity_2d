@@ -20,7 +20,7 @@ public class CameraFollower : MonoBehaviour
     void Start()
     {
         PlayerMovement = GameObject.Find("Main_Character").GetComponent<Movement>();
-        Offset = new Vector3(0, .83f, -300);
+        Offset = new Vector3(0, .83f, -.5f);
     }
 
     ///Fixed Update is called based on a fixed frame rate.
