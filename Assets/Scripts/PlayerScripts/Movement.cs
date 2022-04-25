@@ -86,6 +86,10 @@ public class Movement : MonoBehaviour
             {
                 PlayerRigidbody.AddForce(Vector2.right * 2f * x, ForceMode2D.Impulse);
             }
+            if ((Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) && IsTouchingGround == false)
+            {
+                PlayerRigidbody.velocity = new Vector2(PlayerRigidbody.velocity.x / 1.5f, PlayerRigidbody.velocity.y);
+            }
         }
         //Everything in this else scope will check for the following respectively: If player is not touching ground and is hooked give player a small boost boost as a Force.
         //If the player is touching ground and is hooked, the player can walk like normal.
