@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SaveManager : MonoBehaviour
 {
     public CheckPointManager CheckPointManagerScript;
     public TokenManager TokenManagerScript;
+    public Slider SFXSoundSettings;
+    public Slider MusicSoundSettings;
+
+
 
     [Header("Default variables")]
     public List<string> defaultListForCheckpointsW1 = new List<string>();
@@ -18,29 +23,28 @@ public class SaveManager : MonoBehaviour
     {
         defaultListForCheckpointsW1.Add("LEVEL1_NOT");
         defaultListForTokensOwned.Add(TokenManagerScript.DefaultToken);
-
-
         Load();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Save();
-        }
     }
 
     public void Save()
     {
         ES3.Save("W1Scenes", CheckPointManagerScript.W1Scenes);
         ES3.Save("TokensOwned", TokenManagerScript.TokensOwned);
+        ES3.Save("SFXSoundVolume", SFXSoundSettings.value);
+        ES3.Save("MusicSoundVolume", MusicSoundSettings.value);
+
     }
 
     public void Load()
     {
         CheckPointManagerScript.W1Scenes = ES3.Load("W1Scenes", defaultListForCheckpointsW1);
         TokenManagerScript.TokensOwned = ES3.Load("TokensOwned", defaultListForTokensOwned);
+        SFXSoundSettings.value = ES3.Load("SFXSoundVolume", SFXSoundSettings.value);
+        MusicSoundSettings.value = ES3.Load("MusicSoundVolume", MusicSoundSettings.value);
+
+    }
+    private void OnApplicationQuit()
+    {
+        Save();
     }
 }

@@ -57,25 +57,21 @@ This means that is a game run on higher frames per second the update function wi
         ////////////////////////////////////////////////////////////////
         // https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
         ////////////////////////////////////////////////////////////////
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             //next Weapon
-            if (CurrentWeaponIndex < _totalWeapons - 1)
+            if (CurrentWeaponIndex == 0)
             {
                 Weapons[CurrentWeaponIndex].SetActive(false);
                 CurrentWeaponIndex += 1;
                 Weapons[CurrentWeaponIndex].SetActive(true);
                 CurrentGun = Weapons[CurrentWeaponIndex];
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            //previous Weapon
-            if (CurrentWeaponIndex > 0)
+            else if (CurrentWeaponIndex == 1)
             {
                 Weapons[CurrentWeaponIndex].SetActive(false);
-                CurrentWeaponIndex -= 1;
+                CurrentWeaponIndex = 0;
                 Weapons[CurrentWeaponIndex].SetActive(true);
                 CurrentGun = Weapons[CurrentWeaponIndex];
             }

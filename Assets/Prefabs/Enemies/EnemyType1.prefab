@@ -192,7 +192,7 @@ MonoBehaviour:
   - {x: -0.40005636, y: 0.37428522, z: 0}
   m_ShapePathHash: -1429148193
   m_Mesh: {fileID: 0}
-  m_InstanceId: 71812
+  m_InstanceId: 111732
 --- !u!1 &195961055208341641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1026337685858513634}
   - component: {fileID: 73334822832635633}
+  - component: {fileID: 7374648652777651982}
   m_Layer: 12
   m_Name: Sound
   m_TagString: Untagged
@@ -1304,3 +1305,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7374648652777651982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7654158705530444762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4160ed021606c24a940db35683a5355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  _soundManager: {fileID: 0}
+  MaxVolume: 0
+  SFX: 1
+  Music: 0

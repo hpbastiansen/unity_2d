@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c6a838aeec2255d4db7a0a1230b7b2f2
+guid: 4a057fdbe55d84a40970d27c62413f89
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Pixel-Noir
+  - monogramextended
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 2

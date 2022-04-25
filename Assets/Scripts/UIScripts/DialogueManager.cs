@@ -36,7 +36,7 @@ This means that is a game run on higher frames per second the update function wi
     /*! The Update function allows the player to display the next sentences and shows the interaction button if the ShowInteractButtom boolean is true, and vice versa.*/
     private void Update()
     {
-        if (Input.GetMouseButtonUp(1) && _myUIManager.IsDialogue)
+        if (Input.GetMouseButtonUp(1) && _myUIManager.IsDialogue && _myUIManager.UsingMainMenu == false)
         {
             DisplayNextSentence();
         }

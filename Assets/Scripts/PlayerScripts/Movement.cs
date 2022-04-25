@@ -262,7 +262,7 @@ public class Movement : MonoBehaviour
     public void Knockback(float _force, float _angle = 0f)
     {
         float _tempAngle = _angle;
-        if (_tempAngle == 0f) _tempAngle = FacingRight ? 135f : 45f;
+        if (_tempAngle == 0f) _tempAngle = 45f;
         Vector2 _knockbackForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * _tempAngle) * 5f, Mathf.Sin(Mathf.Deg2Rad * _tempAngle)) * _force;
         PlayerRigidbody.AddForce(_knockbackForce, ForceMode2D.Impulse);
     }

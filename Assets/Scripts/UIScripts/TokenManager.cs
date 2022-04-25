@@ -33,6 +33,7 @@ public class TokenManager : MonoBehaviour
     public Text BulletInfoText;
     public Text CounterInfoText;
     public Text MovementInfoText;
+    private UIManager _uiManager;
 
 
     [Header("Changeable values")]
@@ -78,6 +79,7 @@ public class TokenManager : MonoBehaviour
         _shieldHP = Object.FindObjectOfType<ShieldHP>();
         _myUIManager = GameObject.FindObjectOfType<UIManager>();
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
+        _uiManager = Object.FindObjectOfType<UIManager>();
 
 
     }
@@ -97,8 +99,7 @@ public class TokenManager : MonoBehaviour
         {
             tokens.SetActive(false);
         }
-        TokensOwned[TokenIndex].SetActive(true);
-
+        //TokensOwned[TokenIndex].SetActive(true);
         ActivateDefaultToken();
     }
 
@@ -125,7 +126,7 @@ This means that is a game run on higher frames per second the update function wi
         {
             UsingTokenMenu = false;
         }
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T) && _uiManager.UsingMainMenu == false)
         {
             TokenUIactive = !TokenUIactive;
             UsingTokenMenu = true;
@@ -137,7 +138,7 @@ This means that is a game run on higher frames per second the update function wi
         ShieldInfo = "Lifesteal: " + ShieldLifeSteal + _spacechar + "Health: " + _shieldHP.MaxHP + _spacechar + "Cooldown: " + _shieldHP.RechargeTimer + "s";
         ShieldInfoText.text = ShieldInfo.ToString();
 
-        BulletInfo = "                    Damage: " + CurrentWeapon.Damage + _spacechar + "Lifesteal: " + CurrentWeapon.LifeSteal + _spacechar + "Speed: " +
+        BulletInfo = "           Damage: " + CurrentWeapon.Damage + _spacechar + "Lifesteal: " + CurrentWeapon.LifeSteal + _spacechar + "Speed: " +
         CurrentWeapon.BulletSpeed + _spacechar + "Accuracy: " + _weaponAccuracy + _spacechar + "Firerate: " + CurrentWeapon.Firerate + _spacechar + "FullAuto: " + CurrentWeapon.FullAuto + _spacechar
         + "Knockback: " + CurrentWeapon.BulletWeight + _spacechar + "Type: " + CurrentWeapon.WeaponType;
         BulletInfoText.text = BulletInfo.ToString();
@@ -151,15 +152,6 @@ This means that is a game run on higher frames per second the update function wi
         ShortInfoText.text = ShortInfo.ToString();
 
 
-        if (CactusTokenActive == true)
-        {
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            AddTokens(CactusToken);
-        }
     }
 
 

@@ -15,6 +15,8 @@ public class GoToWorld : MonoBehaviour
     public float HealthForThisWorld;
     private PlayerHealth _playerHealth;
     private CheckPointManager _checkpointManager;
+    private UIManager _myUIManager;
+
 
 
     [Header("Which World")]
@@ -34,12 +36,14 @@ public class GoToWorld : MonoBehaviour
         _dialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
         CanStartDialogue = false;
         _checkpointManager = Object.FindObjectOfType<CheckPointManager>();
+        _myUIManager = GameObject.FindObjectOfType<UIManager>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (CanStartDialogue)
+        if (CanStartDialogue && _myUIManager.UsingMainMenu == false)
         {
             if (Input.GetKeyUp(KeyCode.E))
             {
