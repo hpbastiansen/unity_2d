@@ -249,7 +249,7 @@ This means that is a game run on higher frames per second the update function wi
         Collider2D[] hitCollidersS = Physics2D.OverlapCircleAll(_playerHealth.transform.position, 10f, 1 << LayerMask.NameToLayer("Enemy"));
         foreach (var hitCollider in hitCollidersS)
         {
-            hitCollider.GetComponent<EnemyTemplate>().Debuff();
+            hitCollider.GetComponent<EnemyHealth>().Debuff();
         }
     }
 

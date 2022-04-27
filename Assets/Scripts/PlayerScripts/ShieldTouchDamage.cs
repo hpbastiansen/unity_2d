@@ -26,11 +26,11 @@ public class ShieldTouchDamage : MonoBehaviour
 
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
-            EnemyTemplate _enemyTemplate = other.gameObject.GetComponent<EnemyTemplate>();
+            EnemyHealth _enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
 
-            if (_enemyTemplate != null && _tokenManager.CactusTokenActive == true && ShieldTouchDamageCooldownTimer <= 0)
+            if (_enemyHealth != null && _tokenManager.CactusTokenActive == true && ShieldTouchDamageCooldownTimer <= 0)
             {
-                _enemyTemplate.TakeDamage(Damage);
+                _enemyHealth.TakeDamage(Damage);
                 StartCoroutine(Cooldowner());
             }
         }

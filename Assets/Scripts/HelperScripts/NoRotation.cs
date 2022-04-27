@@ -10,5 +10,6 @@ public class NoRotation : MonoBehaviour
     void Update()
     {
         transform.eulerAngles = Vector3.zero;
+        transform.localScale = new Vector3(transform.root.localScale.x == -1 ? -1 : 1, 1, 1);
     }
 }

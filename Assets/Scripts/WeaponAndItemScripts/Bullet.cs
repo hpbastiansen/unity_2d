@@ -68,13 +68,13 @@ public class Bullet : MonoBehaviour
         float _distance = Vector3.Distance(PlayerHealthScript.transform.position, transform.position);
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) //http://answers.unity.com/answers/1394106/view.html
         {
-            EnemyTemplate _enemyTemplate = other.gameObject.GetComponent<EnemyTemplate>();
+            EnemyHealth _enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             PlayerHealth _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             ShieldHP _shieldHP = other.gameObject.GetComponent<ShieldHP>();
 
-            if (_enemyTemplate != null)
+            if (_enemyHealth != null)
             {
-                _enemyTemplate.TakeDamage(Damage);
+                _enemyHealth.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 ScreenShakeController.Instance.StartShake(.05f, .03f);
                 PlayerHealthScript.CurrentHP += LifeSteal;
@@ -105,7 +105,7 @@ public class Bullet : MonoBehaviour
                 TokenManager _tokenManager = Object.FindObjectOfType<TokenManager>();
                 if (_tokenManager.WormTokenActive && IsEnemyBullet)
                 {
-                    EnemyShooterObject.GetComponent<EnemyTemplate>().Debuff();
+                    EnemyShooterObject.GetComponent<EnemyHealth>().Debuff();
                 }
                 if (_distance < 10)
                 {

@@ -16,7 +16,7 @@ public class Weapon_Enemy : MonoBehaviour
     public int Ammo = 1;
     public bool MaxAmmo;
     public float Firerate;
-    public float FirerateCouter = 0;
+    public float FirerateCounter = 0;
 
     public float CameraShakeStrength = 1;
     public Animator MuzzleFlashAnimation;
@@ -28,7 +28,7 @@ public class Weapon_Enemy : MonoBehaviour
     ///This is basically the same script as the Player weapon script. All necessary documentation should be in there.
     private void Start()
     {
-        ShootFullAuto();
+        // ShootFullAuto();
     }
 
     void LateUpdate()
@@ -38,15 +38,23 @@ public class Weapon_Enemy : MonoBehaviour
             Ammo = 100000;
         }
 
-        if (FirerateCouter >= 0)
+        if (FirerateCounter >= 0)
         {
-            FirerateCouter -= Time.deltaTime;
+            FirerateCounter -= Time.deltaTime;
         }
     }
-    void Shoot()
+    
+    public void AimAt(Transform _target)
     {
+        Vector3 _targetDirection = Quaternion.Euler(0, 0, 90) * (_target.position - transform.parent.position);
+        Quaternion _aimDirection = Quaternion.LookRotation(forward: Vector3.forward, upwards: _targetDirection);
+        transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, _aimDirection, 5);
+        FirePoint.rotation = Quaternion.RotateTowards(transform.parent.rotation, _aimDirection, 5);
+    }
 
-        if (Ammo > 0)
+    public void Shoot()
+    {
+        if (Ammo > 0 && FirerateCounter < 0)
         {
             MuzzleFlashAnimation.Play(MuzzleAnimationName);
 
@@ -62,13 +70,11 @@ public class Weapon_Enemy : MonoBehaviour
             _theBullet.GetComponent<Bullet>().Damage = Damage;
             _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
             ShootSoundSource.Play();
-
+            FirerateCounter = Firerate;
         }
     }
-    void ShootFullAuto()
+    public void ShootFullAuto()
     {
-
-
         if (Ammo > 0)
         {
             MuzzleFlashAnimation.Play(MuzzleAnimationName);
@@ -91,9 +97,10 @@ public class Weapon_Enemy : MonoBehaviour
         StartCoroutine(FullAutoCooldown());
 
     }
+
     IEnumerator FullAutoCooldown()
     {
-        FirerateCouter = Firerate;
+        FirerateCounter = Firerate;
         yield return new WaitForSeconds(Firerate);
         ShootFullAuto();
     }
