@@ -9,8 +9,10 @@ using System.Collections;
 ///The GrapplingHookController is a script that is assigned to the player object. The script's purpose is to control and manage all aspect of the grapplinghookgun that is related to physics.
 public class GrapplingHookController : MonoBehaviour
 {
+    private GrapplingHookGun _grapplingHookGun;
     public Rigidbody2D PlayerRigidbody;
     public bool IsHooked;
+    public GameObject HookedPoint;
     public float EndForce;
     public LineRenderer LineObject;
     DistanceJoint2D _joint;
@@ -40,6 +42,7 @@ public class GrapplingHookController : MonoBehaviour
         IsUsingGrapplingHookGun = false;
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
         MovementScript = Object.FindObjectOfType<Movement>();
+        _grapplingHookGun = transform.Find("Arm/WeaponHolder/Grapplinghook").GetComponent<GrapplingHookGun>();
     }
 
     ///Fixed Update is called based on a fixed frame rate.
@@ -76,6 +79,7 @@ public class GrapplingHookController : MonoBehaviour
             if (IsHooked == true)
             {
                 PlayerRigidbody.AddForce(Vector3.up * EndForce, ForceMode2D.Impulse);
+                HookedPoint = null;
                 IsHooked = false;
                 gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
                 JumpBoostAudioSource.Play();
@@ -102,22 +106,23 @@ This means that is a game run on higher frames per second the update function wi
         if ((Input.GetMouseButtonDown(0) && IsHooked == true && IsUsingGrapplingHookGun == true) || (IsHooked && IsUsingGrapplingHookGun == false && Input.GetKeyDown(KeyCode.G)))
         {
             IsHooked = false;
+            HookedPoint = null;
             _joint.enabled = false;
             LineObject.enabled = false;
             gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
             _joint.connectedBody = TempJoint;
 
         }
-        if (Input.GetMouseButtonDown(0) && IsUsingGrapplingHookGun == true && DialogueManagerScript.InDialogue == false)
+        if (Input.GetMouseButtonDown(0) && IsUsingGrapplingHookGun == true && DialogueManagerScript.InDialogue == false && _grapplingHookGun.ClosestGrapplingPoint)
         {
-            _targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _targetPosition.z = 0;
+            _targetPosition = _grapplingHookGun.ClosestGrapplingPoint.transform.position;
 
             _hit = Physics2D.Raycast(transform.position, _targetPosition - transform.position, Distance, WhatToHit);
             if (_hit.collider != null && _hit.collider.gameObject.GetComponent<Rigidbody2D>() != null && _hit.distance < MaxDistance)
             {
                 HookAudioSource.Play();
                 IsHooked = true;
+                HookedPoint = _grapplingHookGun.ClosestGrapplingPoint;
                 _joint.enabled = true;
                 Vector2 connectPoint = _hit.point - new Vector2(_hit.collider.transform.position.x, _hit.collider.transform.position.y);
                 connectPoint.x = connectPoint.x / _hit.collider.transform.localScale.x;

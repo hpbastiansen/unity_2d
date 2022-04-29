@@ -17,7 +17,7 @@ public class GrapplingHookGun : MonoBehaviour
     private string _ammo = "∞";
     [SerializeField] private float _losConeWidth = 1f;
     private List<GameObject> _grapplingPoints = new List<GameObject>();
-    private GameObject _closestGrapplingPoint = null;
+    [HideInInspector] public GameObject ClosestGrapplingPoint = null;
 
     /// Start methods run once when enabled.
     /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -48,6 +48,17 @@ This means that is a game run on higher frames per second the update function wi
         }
         _ammoText.text = _ammo.ToString();
 
+        if(ClosestGrapplingPoint)
+        {
+            if(GrapplingHookControllerScript.IsHooked && GrapplingHookControllerScript.HookedPoint == ClosestGrapplingPoint)
+            {
+                ClosestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                ClosestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
     }
     ///This function is called when the object becomes enabled and active.
 
@@ -80,36 +91,30 @@ This means that is a game run on higher frames per second the update function wi
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GrapplingHookControllerScript.IsHooked) return;
         if (collision.gameObject.layer == LayerMask.NameToLayer("GRAPPABLEOBJECTS"))
         {
             if(!_grapplingPoints.Contains(collision.gameObject))
             {
                 _grapplingPoints.Add(collision.gameObject);
 
-                if (!_closestGrapplingPoint)
+                if (!ClosestGrapplingPoint)
                 {
-                    _closestGrapplingPoint = collision.gameObject;
-                    _closestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = true;
+                    ClosestGrapplingPoint = collision.gameObject;
                 }
                 else
                 {
-                    if(Vector3.Distance(PlayerObject.transform.position, _closestGrapplingPoint.transform.position) > Vector3.Distance(PlayerObject.transform.position, collision.transform.position))
+                    if(Vector3.Distance(PlayerObject.transform.position, ClosestGrapplingPoint.transform.position) > Vector3.Distance(PlayerObject.transform.position, collision.transform.position))
                     {
-                        _closestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = false;
-                        _closestGrapplingPoint = collision.gameObject;
-                        _closestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = true;
+                        ClosestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = false;
+                        ClosestGrapplingPoint = collision.gameObject;
                     }
                 }
             }
-            Debug.Log("Entered range");
-            // Draw target on object
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (GrapplingHookControllerScript.IsHooked) return;
         if (collision.gameObject.layer == LayerMask.NameToLayer("GRAPPABLEOBJECTS"))
         {
             if(_grapplingPoints.Contains(collision.gameObject))
@@ -117,10 +122,10 @@ This means that is a game run on higher frames per second the update function wi
                 _grapplingPoints.Remove(collision.gameObject);
             }
 
-            if(collision.gameObject == _closestGrapplingPoint)
+            if(collision.gameObject == ClosestGrapplingPoint)
             {
-                _closestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = false;
-                if(_grapplingPoints.Count > 0)
+                ClosestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = false;
+                if (_grapplingPoints.Count > 0)
                 {
                     GameObject _closest = null;
                     foreach (GameObject _grapplingPoint in _grapplingPoints)
@@ -131,16 +136,13 @@ This means that is a game run on higher frames per second the update function wi
                             _closest = _grapplingPoint;
                         }
                     }
-                    _closestGrapplingPoint = _closest;
-                    _closestGrapplingPoint.transform.Find("Target").GetComponent<SpriteRenderer>().enabled = true;
+                    ClosestGrapplingPoint = _closest;
                 }
                 else
                 {
-                    _closestGrapplingPoint = null;
+                    ClosestGrapplingPoint = null;
                 }
             }
-            Debug.Log("Exited range");
-            // Remove target on object
         }
     }
 }
