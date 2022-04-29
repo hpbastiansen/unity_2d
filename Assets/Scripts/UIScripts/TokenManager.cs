@@ -80,8 +80,6 @@ public class TokenManager : MonoBehaviour
         _myUIManager = GameObject.FindObjectOfType<UIManager>();
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
         _uiManager = Object.FindObjectOfType<UIManager>();
-
-
     }
 
     /// Start methods run once when enabled.
@@ -99,11 +97,12 @@ public class TokenManager : MonoBehaviour
         {
             tokens.SetActive(false);
         }
-        //TokensOwned[TokenIndex].SetActive(true);
+
         ActivateDefaultToken();
+        TokensOwned[TokenIndex].SetActive(true);
+        UsingTokenMenu = true;
+        UsingTokenMenu = false;
     }
-
-
 
     ///Update is called every frame.
     /**The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
@@ -138,7 +137,7 @@ This means that is a game run on higher frames per second the update function wi
         ShieldInfo = "Lifesteal: " + ShieldLifeSteal + _spacechar + "Health: " + _shieldHP.MaxHP + _spacechar + "Cooldown: " + _shieldHP.RechargeTimer + "s";
         ShieldInfoText.text = ShieldInfo.ToString();
 
-        BulletInfo = "           Damage: " + CurrentWeapon.Damage + _spacechar + "Lifesteal: " + CurrentWeapon.LifeSteal + _spacechar + "Speed: " +
+        BulletInfo = "            Damage: " + CurrentWeapon.Damage + _spacechar + "Lifesteal: " + CurrentWeapon.LifeSteal + _spacechar + "Speed: " +
         CurrentWeapon.BulletSpeed + _spacechar + "Accuracy: " + _weaponAccuracy + _spacechar + "Firerate: " + CurrentWeapon.Firerate + _spacechar + "FullAuto: " + CurrentWeapon.FullAuto + _spacechar
         + "Knockback: " + CurrentWeapon.BulletWeight + _spacechar + "Type: " + CurrentWeapon.WeaponType;
         BulletInfoText.text = BulletInfo.ToString();

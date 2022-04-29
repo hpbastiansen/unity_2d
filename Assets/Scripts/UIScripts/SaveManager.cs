@@ -19,7 +19,7 @@ public class SaveManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         defaultListForCheckpointsW1.Add("LEVEL1_NOT");
         defaultListForTokensOwned.Add(TokenManagerScript.DefaultToken);
@@ -39,6 +39,7 @@ public class SaveManager : MonoBehaviour
     {
         CheckPointManagerScript.W1Scenes = ES3.Load("W1Scenes", defaultListForCheckpointsW1);
         TokenManagerScript.TokensOwned = ES3.Load("TokensOwned", defaultListForTokensOwned);
+        TokenManagerScript.ActivateDefaultToken();
         SFXSoundSettings.value = ES3.Load("SFXSoundVolume", SFXSoundSettings.value);
         MusicSoundSettings.value = ES3.Load("MusicSoundVolume", MusicSoundSettings.value);
 

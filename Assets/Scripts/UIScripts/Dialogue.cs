@@ -12,6 +12,6 @@ public class Dialogue
     public Sprite ImageOfSpeaker;
 
     [TextArea(3, 10)]
-    public string[] SentencesToSpeak;
+    public List<string> SentencesToSpeak;
 
 }

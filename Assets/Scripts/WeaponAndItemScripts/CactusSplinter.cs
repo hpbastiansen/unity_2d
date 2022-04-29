@@ -69,14 +69,14 @@ public class CactusSplinter : MonoBehaviour
             {
                 _enemyTemplate.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-                ScreenShakeController.Instance.StartShake(.05f, .03f);
+                ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 Destroy(gameObject);
             }
             else
             {
                 if (_distance < 10)
                 {
-                    ScreenShakeController.Instance.StartShake(.05f, .03f);
+                    ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 }
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 Destroy(gameObject);
