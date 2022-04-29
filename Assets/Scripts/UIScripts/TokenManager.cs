@@ -271,7 +271,7 @@ This means that is a game run on higher frames per second the update function wi
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
         ShortInfo = "Default token is obtained at the start of the game for free. The values in the token is the default values for all the variables. Other tokens can however change these.";
 
-        CustomPlayerMoveSpeed = 10f;
+        CustomPlayerMoveSpeed = 5f;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
@@ -288,7 +288,7 @@ This means that is a game run on higher frames per second the update function wi
         CurrentWeapon.BulletSpeed = 30;
         CurrentWeapon.IsHoming = false;
 
-        CustomDashSpeed = 40;
+        CustomDashSpeed = 15;
         CustomDashDuration = 0.2f;
         CustomDashCooldown = 1;
         PlayerMovement.DashLength = CustomDashDuration;

@@ -101,7 +101,7 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    PlayerRigidbody.AddForce(Vector2.right * .08f, ForceMode2D.Impulse);
+                    PlayerRigidbody.AddForce(Vector2.right * 4f, ForceMode2D.Impulse);
                 }
                 else
                 {
@@ -121,7 +121,7 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    PlayerRigidbody.AddForce(Vector2.left * .08f, ForceMode2D.Impulse);
+                    PlayerRigidbody.AddForce(Vector2.left * 4f, ForceMode2D.Impulse);
                 }
                 else
                 {
