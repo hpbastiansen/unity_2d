@@ -25,7 +25,7 @@ public class GrapplingHookController : MonoBehaviour
     public Movement MovementScript;
     public AudioSource HookAudioSource;
     public AudioSource JumpBoostAudioSource;
-
+    public float MaxDistance = 5f;
 
 
     /// Start methods run once when enabled.
@@ -68,7 +68,7 @@ public class GrapplingHookController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.S))
             {
-                _joint.distance += UpDownSpeed;
+                if(_joint.distance < MaxDistance) _joint.distance += UpDownSpeed;
             }
         }
         if (_joint.distance < .05f)
@@ -114,7 +114,7 @@ This means that is a game run on higher frames per second the update function wi
             _targetPosition.z = 0;
 
             _hit = Physics2D.Raycast(transform.position, _targetPosition - transform.position, Distance, WhatToHit);
-            if (_hit.collider != null && _hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (_hit.collider != null && _hit.collider.gameObject.GetComponent<Rigidbody2D>() != null && _hit.distance < MaxDistance)
             {
                 HookAudioSource.Play();
                 IsHooked = true;
