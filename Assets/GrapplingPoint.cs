@@ -8,6 +8,7 @@ public class GrapplingPoint : MonoBehaviour
     [SerializeField] private float _timeActive;
     [SerializeField] private float _timeInactive;
     [SerializeField] private Sprite _activeSprite;
+    [SerializeField] private Sprite _switchingSprite;
     [SerializeField] private Sprite _inactiveSprite;
     [SerializeField] private float _offset;
     private SpriteRenderer _spriteRenderer;
@@ -50,7 +51,7 @@ public class GrapplingPoint : MonoBehaviour
 
     private void SwitchSprite()
     {
-        if (_spriteRenderer.sprite == _activeSprite) _spriteRenderer.sprite = _inactiveSprite;
+        if (_spriteRenderer.sprite == _activeSprite) _spriteRenderer.sprite = _switchingSprite;
         else _spriteRenderer.sprite = _activeSprite;
     }
 }
