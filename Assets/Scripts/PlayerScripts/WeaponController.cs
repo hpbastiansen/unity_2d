@@ -42,8 +42,6 @@ public class WeaponController : MonoBehaviour
 
         _tokenManager = Object.FindObjectOfType<TokenManager>();
         _tokenManager.CurrentWeapon = CurrentGun.GetComponent<Weapon>();
-
-
     }
 
     ///Update is called every frame.

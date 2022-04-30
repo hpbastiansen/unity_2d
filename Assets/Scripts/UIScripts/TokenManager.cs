@@ -88,7 +88,6 @@ public class TokenManager : MonoBehaviour
     We then add all the tokens that the player owns into a list. And then deactivates all of them and activates the default one.*/
     void Start()
     {
-
         _checkUI = Object.FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
@@ -97,11 +96,11 @@ public class TokenManager : MonoBehaviour
         {
             tokens.SetActive(false);
         }
-
         ActivateDefaultToken();
         TokensOwned[TokenIndex].SetActive(true);
         UsingTokenMenu = true;
         UsingTokenMenu = false;
+
     }
 
     ///Update is called every frame.
@@ -262,6 +261,7 @@ This means that is a game run on higher frames per second the update function wi
     ///The ActivateDefaultToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
     public void ActivateDefaultToken()
     {
+        CurrentWeapon = Object.FindObjectOfType<WeaponController>().CurrentGun.GetComponent<Weapon>();
         DefaultTokenActive = true;
         CactusTokenActive = false;
         WormTokenActive = false;

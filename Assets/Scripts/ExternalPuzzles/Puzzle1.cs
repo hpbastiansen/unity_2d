@@ -20,6 +20,7 @@ public class Puzzle1 : MonoBehaviour
     public GameObject AfterOpenDoorDiaTrigger;
     public DialogueTrigger GeneratorDiaTrigger;
     public DialogueTrigger OverrideKeyDiaTrigger;
+    public DialogueTrigger FinaleDiaTrigger;
     public float GeneratorPowerValue;
     public int AccessOverrideCode;
     private bool _startedOnGenerator;
@@ -27,6 +28,8 @@ public class Puzzle1 : MonoBehaviour
     public TargetLights TargetLight1;
     public TargetLights TargetLight2;
     public TargetLights TargetLight3;
+    public bool IsBossHackDone;
+    public bool FinaleStarted;
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +49,18 @@ public class Puzzle1 : MonoBehaviour
         OverrideKeyDiaTrigger.Dialogues.SentencesToSpeak.Add("The Override Key Is: " + AccessOverrideCode.ToString());
         Debug.Log(AccessOverrideCode);
         _startedOnGenerator = false;
-
+        IsBossHackDone = false;
+        FinaleStarted = false;
+        if (Directory.Exists(GamePath + "WormPosition/"))
+        {
+            try { Directory.Delete(GamePath + "WormPosition/", true); }
+            catch (IOException) { }
+        }
+        if (Directory.Exists(GamePath + "Generator/"))
+        {
+            try { Directory.Delete(GamePath + "Generator/", true); }
+            catch (IOException) { }
+        }
     }
 
     // Update is called once per frame
@@ -125,6 +139,16 @@ public class Puzzle1 : MonoBehaviour
         {
             AfterOpenDoorDiaTrigger.SetActive(true);
         }
+        if (System.IO.File.Exists(GamePath + "WormPosition/AWR/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/AQO/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/RTP/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/TRIQ/" + "Position.txt")
+         && System.IO.File.Exists(GamePath + "WormPosition/RTYD/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/ARIQ/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/SIAA/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/WQSY/" + "Position.txt")
+          && System.IO.File.Exists(GamePath + "WormPosition/PPOO/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/IAFAR/" + "Position.txt"))
+        {
+            IsBossHackDone = true;
+        }
+        else
+        {
+            IsBossHackDone = false;
+        }
     }
     public void OpenDoor1()
     {
@@ -170,7 +194,67 @@ public class Puzzle1 : MonoBehaviour
 
                 }
             }
+            else
+            {
+                Application.OpenURL("file:///" + GamePath);
+                Directory.CreateDirectory((GamePath + "Generator/"));
+            }
             _startedOnGenerator = true;
         }
+    }
+
+    public void StartFinaleSetup()
+    {
+        if (FinaleStarted == false)
+        {
+            if (Directory.Exists(GamePath + "WormPosition/"))
+            {
+                try
+                {
+                    Application.OpenURL("file:///" + GamePath);
+                    Directory.Delete(GamePath + "WormPosition/", true);
+                    Directory.CreateDirectory((GamePath + "WormPosition/"));
+                    System.IO.File.WriteAllText(GamePath + "WormPosition/" + "Triangulator.bat", "echo Node.sub.position successfully located>Position.txt");
+                    Directory.CreateDirectory((GamePath + "WormPosition/AWR"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/AQO"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/RTP"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/TRIQ"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/RTYD"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/ARIQ"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/SIAA"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/WQSY"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/PPOO"));
+                    Directory.CreateDirectory((GamePath + "WormPosition/IAFAR"));
+                }
+                catch (IOException)
+                {
+
+                }
+
+            }
+            else
+            {
+                Application.OpenURL("file:///" + GamePath);
+                Directory.CreateDirectory((GamePath + "WormPosition/"));
+                System.IO.File.WriteAllText(GamePath + "WormPosition/" + "Triangulator.bat", "echo Node.sub.position successfully located>Position.txt");
+                Directory.CreateDirectory((GamePath + "WormPosition/AWR"));
+                Directory.CreateDirectory((GamePath + "WormPosition/AQO"));
+                Directory.CreateDirectory((GamePath + "WormPosition/RTP"));
+                Directory.CreateDirectory((GamePath + "WormPosition/TRIQ"));
+                Directory.CreateDirectory((GamePath + "WormPosition/RTYD"));
+                Directory.CreateDirectory((GamePath + "WormPosition/ARIQ"));
+                Directory.CreateDirectory((GamePath + "WormPosition/SIAA"));
+                Directory.CreateDirectory((GamePath + "WormPosition/WQSY"));
+                Directory.CreateDirectory((GamePath + "WormPosition/PPOO"));
+                Directory.CreateDirectory((GamePath + "WormPosition/IAFAR"));
+            }
+        }
+        else
+        {
+            System.IO.File.WriteAllText(GamePath + "WormPosition/" + "Triangulator.bat", "echo Node.sub.position successfully located>Position.txt");
+            Application.OpenURL("file:///" + GamePath);
+        }
+
+        FinaleStarted = true;
     }
 }
