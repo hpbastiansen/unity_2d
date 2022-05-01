@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PRELOAD.unity
     guid: c4b55f214d61d8743aab1d73d105995b
   - enabled: 1
+    path: Assets/Scenes/TUTORIAL.unity
+    guid: 5e79a1cda2af7664ca5b2a0ef25561ef
+  - enabled: 1
     path: Assets/Scenes/The_Hub.unity
     guid: a6eb277987090934d811ae269c390e73
   - enabled: 1

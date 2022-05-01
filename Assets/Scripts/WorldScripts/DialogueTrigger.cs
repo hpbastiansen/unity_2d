@@ -21,7 +21,7 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Run Function")]
     public bool RunFunctionAfter;
     public UnityEvent FunctionToRun;
-    public bool TriggerOnceOnce;
+    public bool TriggerOnlyOnce;
     private bool _inDialogue;
 
     /// Start methods run once when enabled.
@@ -94,6 +94,10 @@ This means that is a game run on higher frames per second the update function wi
     public void EndDialogue()
     {
         _inDialogue = false;
+        if (TriggerOnlyOnce)
+        {
+            gameObject.SetActive(false);
+        }
         FindObjectOfType<DialogueManager>().EndDialogue();
     }
 

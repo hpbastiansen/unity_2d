@@ -25,6 +25,7 @@ public class GoToWorld : MonoBehaviour
     public bool World1;
     public bool World2;
     public bool World3;
+    public bool Tutorial;
 
     private string _checkpointCount = "// 0";
     private int _checkpointCountIndex = 0;
@@ -131,6 +132,10 @@ public class GoToWorld : MonoBehaviour
         {
             SceneManager.LoadScene("The_Hub");
         }
+        if (Tutorial)
+        {
+            SceneManager.LoadScene("TUTORIAL");
+        }
         _movePlayer();
     }
 
@@ -160,6 +165,10 @@ public class GoToWorld : MonoBehaviour
         if (Hub)
         {
             SceneManager.LoadScene("The_Hub");
+        }
+        if (Tutorial)
+        {
+            SceneManager.LoadScene("TUTORIAL");
         }
     }
 
