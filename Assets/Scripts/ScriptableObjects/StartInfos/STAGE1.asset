@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ed468a38ded864697b645824a069d4, type: 3}
   m_Name: STAGE1
   m_EditorClassIdentifier: 
-  StartPosition: {x: 0, y: 0}
+  StartPosition: {x: -20, y: 5}
   Ammo: 100
   Health: 100

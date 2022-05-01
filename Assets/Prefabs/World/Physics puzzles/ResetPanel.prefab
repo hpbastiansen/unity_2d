@@ -74,6 +74,10 @@ MonoBehaviour:
   _resetPosition: 0
   _resetRotation: 0
   _puzzleObjects: []
+  _activatedSprite: {fileID: 2938754312882585861, guid: 17ecc5586dcd8354797de40da191efa5,
+    type: 3}
+  _deactivatedSprite: {fileID: -6673142595051960610, guid: 17ecc5586dcd8354797de40da191efa5,
+    type: 3}
 --- !u!1 &2770597285068022715
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +149,7 @@ SpriteRenderer:
   m_SortingLayerID: -534675715
   m_SortingLayer: 1
   m_SortingOrder: 7
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7,
+  m_Sprite: {fileID: -6673142595051960610, guid: 17ecc5586dcd8354797de40da191efa5,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

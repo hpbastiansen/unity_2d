@@ -5,6 +5,7 @@ using UnityEngine;
 public class Killzone : MonoBehaviour
 {
     private GameObject _player;
+    [SerializeField] private bool _canGrappleThrough;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,10 @@ public class Killzone : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            _player.GetComponent<PlayerHealth>().TakeDamage(9999, 0);
+            if(!_canGrappleThrough || !_player.GetComponent<GrapplingHookController>().IsHooked)
+            {
+                _player.GetComponent<PlayerHealth>().TakeDamage(9999, 0);
+            }
         }
     }
 }
