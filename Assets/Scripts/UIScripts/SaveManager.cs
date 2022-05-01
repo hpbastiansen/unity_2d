@@ -20,7 +20,7 @@ public class SaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        defaultListForCheckpointsW1.Add("TUTORIAL");
+        defaultListForCheckpointsW1.Add("STAGE1");
         defaultListForTokensOwned.Add(TokenManagerScript.DefaultToken);
         Load();
     }
