@@ -68,7 +68,7 @@ This means that is a game run on higher frames per second the update function wi
     /**If the player is blocking while this function is called, the player does not lose any health, but rather gains health depending on the lifesteal value.
     If the player is not blocking a decrease in health will happen, the amount depending on the provided parameter.
     If the player has zero or less health we log it and restarts the current scene (level).*/
-    public void TakeDamage(float x, float _knockback = 10f)
+    public void TakeDamage(float x, float _knockback = 10f, float _angle = 45f)
     {
         if (_isInvulnerable) return;
         if (IsBlocking == true)
@@ -92,7 +92,7 @@ This means that is a game run on higher frames per second the update function wi
         {
             CurrentHP -= x;
             _tempBlockTimer = BlockCooldownTime;
-            if (_knockback > 0f) PlayerMovement.Knockback(_knockback);
+            if (_knockback > 0f) PlayerMovement.Knockback(_knockback, _angle);
             _isInvulnerable = true;
         }
         if (Mathf.Round(CurrentHP) * 1 <= 0)

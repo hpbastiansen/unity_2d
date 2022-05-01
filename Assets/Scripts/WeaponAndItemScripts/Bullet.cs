@@ -71,6 +71,7 @@ public class Bullet : MonoBehaviour
             EnemyHealth _enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             PlayerHealth _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             ShieldHP _shieldHP = other.gameObject.GetComponent<ShieldHP>();
+            WormWeakpoint _wormWeakpoint = other.gameObject.GetComponent<WormWeakpoint>();
 
             if (_enemyHealth != null)
             {
@@ -111,6 +112,14 @@ public class Bullet : MonoBehaviour
                 {
                     ScreenShakeController.Instance.StartShake(.2f, .1f);
                 }
+                Destroy(gameObject);
+            }
+            else if (_wormWeakpoint != null)
+            {
+                _wormWeakpoint.TakeDamage(Damage);
+                Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
+                ScreenShakeController.Instance.StartShake(.05f, .03f);
+                PlayerHealthScript.CurrentHP += LifeSteal;
                 Destroy(gameObject);
             }
             else

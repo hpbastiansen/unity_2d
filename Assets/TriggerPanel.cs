@@ -7,6 +7,7 @@ public class TriggerPanel : MonoBehaviour
     [SerializeField] GameObject _whatToTrigger;
     private MovingTerrain _triggerScript;
     private bool _hasBeenTriggered = false;
+    [SerializeField] private Sprite _spriteActivated;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class TriggerPanel : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                GetComponentInChildren<SpriteRenderer>().sprite = _spriteActivated;
                 _hasBeenTriggered = true;
                 _triggerScript.Triggered = true;
             }

@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
     private GrapplingHookController _grapplingHookController;
     public float ActiveMoveSpeed;
     public bool CanWalk;
+    public bool NoControl;
 
     public bool GoingUp;
     public bool GoingDown;
@@ -59,6 +60,7 @@ public class Movement : MonoBehaviour
         _grapplingHookController = GetComponent<GrapplingHookController>();
         DashAnimation.SetActive(false);
         CanWalk = true;
+        NoControl = false;
         _tokenManager = Object.FindObjectOfType<TokenManager>();
         _mouseOverCollider = Object.FindObjectOfType<MousePositionOverCollider>();
         DontDestroyOnLoad(gameObject);
@@ -71,6 +73,7 @@ public class Movement : MonoBehaviour
     /*! The FixedUpdate function controls the overall movements that the player can do. This includes Walking/Running, Dashing, Jumping, Checking when to flip the player, and Animations related to this.*/
     void FixedUpdate()
     {
+        if (NoControl) return;
         //Get the mouse position to screen position.
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Find and assign the axis for walk movement.
@@ -265,10 +268,12 @@ public class Movement : MonoBehaviour
 
     public void Knockback(float _force, float _angle = 0f)
     {
+        CanWalk = false;
         float _tempAngle = _angle;
         if (_tempAngle == 0f) _tempAngle = 45f;
-        Vector2 _knockbackForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * _tempAngle) * 5f, Mathf.Sin(Mathf.Deg2Rad * _tempAngle)) * _force;
+        Vector2 _knockbackForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * _tempAngle) * _force * 2f, Mathf.Sin(Mathf.Deg2Rad * _tempAngle)) * _force;
         PlayerRigidbody.AddForce(_knockbackForce, ForceMode2D.Impulse);
+        Invoke("EnableWalking", 0.5f);
     }
 
     /// IEnumerator for dashing that can be called with StartCoroutine().
@@ -340,6 +345,11 @@ public class Movement : MonoBehaviour
             GoingLeft = false;
         }
 
+    }
+
+    private void EnableWalking()
+    {
+        CanWalk = true;
     }
 
     ///Allows the player to jump
