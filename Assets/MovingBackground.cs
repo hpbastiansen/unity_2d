@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingBackground : MonoBehaviour
 {
     private float _movedDistance;
-    [SerializeField] private float _speed;
+    public float Speed;
     public bool Triggered = false;
     private Vector3 _initialPosition;
     private bool _disabledParallax = false;
@@ -27,8 +27,8 @@ public class MovingBackground : MonoBehaviour
             _initialPosition = transform.position;
         }
 
-        transform.position = new Vector3(transform.position.x + (_speed * Time.deltaTime), transform.position.y, transform.position.z);
-        _movedDistance += _speed * Time.deltaTime;
+        transform.position = new Vector3(transform.position.x + (Speed * Time.deltaTime), transform.position.y, transform.position.z);
+        _movedDistance += Speed * Time.deltaTime;
 
         if(_movedDistance >= 10f)
         {

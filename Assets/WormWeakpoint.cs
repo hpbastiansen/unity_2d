@@ -17,6 +17,7 @@ public class WormWeakpoint : MonoBehaviour
         if (_health <= 0)
         {
             Destroy(gameObject);
+            GameObject.Find("CutsceneManager").GetComponent<CutsceneManager>().Activate();
             // Trigger cutscene with worm
         }
     }

@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _enemyAnimator;
     private Transform _firePoint;
+    private Weapon_Enemy _enemyWeapon;
 
     // Public booleans affecting movement.
     public bool Running = false;
@@ -15,10 +16,13 @@ public class EnemyMovement : MonoBehaviour
     public bool MovingRight = false;
     public bool MovingLeft = false;
     public bool Jumping = false;
+    public bool FacingRight = true;
 
-    // Ground and roof check
+    // Trigger checks
     [HideInInspector] public bool IsTouchingGround = true;
     [HideInInspector] public bool IsCloseToRoof = false;
+    [HideInInspector] public bool BlockedInFront = false;
+    [HideInInspector] public bool GapInFront = false;
 
     // Speed and jump values
     [SerializeField] private float _speed = 2.5f;
@@ -29,23 +33,29 @@ public class EnemyMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _enemyAnimator = GetComponentInChildren<Animator>();
         _firePoint = transform.Find("Visuals/Arm/Weapon/FirePoint");
+        _enemyWeapon = transform.Find("Visuals/Arm/Weapon").GetComponent<Weapon_Enemy>();
     }
 
     private void Update()
     {
-        // Swap sprite and firing point to face direction of movement
-        if (_rb.velocity.x > 0.01f)
+        if(_enemyWeapon.Target != null)
         {
-            _firePoint.eulerAngles = new Vector3(0, 0, 0);
-            transform.localScale = new Vector3(1, 1, 1);
+            if (_enemyWeapon.Target.transform.position.x < transform.position.x && FacingRight) FlipEnemy();
+            else if (_enemyWeapon.Target.transform.position.x > transform.position.x && !FacingRight) FlipEnemy();
         }
-        else if (_rb.velocity.x < -0.01f) 
+        else
         {
-            _firePoint.eulerAngles = new Vector3(0, 0, 180);
-            transform.localScale = new Vector3(-1, 1, 1); 
+            if (_rb.velocity.x > 0 && !FacingRight) FlipEnemy();
+            else if (_rb.velocity.x < 0 && FacingRight) FlipEnemy();
         }
 
         _enemyAnimator.SetBool("Running", MovingRight || MovingLeft || Jumping);
+    }
+
+    private void FlipEnemy()
+    {
+        FacingRight = !FacingRight;
+        transform.Rotate(0, 180f, 0);
     }
 
     void FixedUpdate()
@@ -74,6 +84,4 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
-
-
 }

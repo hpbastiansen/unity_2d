@@ -5,9 +5,9 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-    enum AIPhase { Undetected, Pursuit, Searching, Alert };
+    public enum AIPhase { Undetected, Pursuit, Searching, Alert };
     enum Direction { Left, Right };
-    private AIPhase _currentPhase = AIPhase.Undetected;
+    public AIPhase CurrentPhase = AIPhase.Undetected;
     private Direction _currentDirection = Direction.Left;
 
     [HideInInspector] public GameObject EnemyPoint;
@@ -27,33 +27,33 @@ public class EnemyAI : MonoBehaviour
     private Vector3 _searchPosition;
 
     [Header("Pathfinding settings")]
-    [SerializeField] private float _nextWaypointDistance = 1f;
+    [SerializeField] private float _nextWaypointDistance;
 
     [Header("Patrol radius")]
-    [SerializeField] private float _radiusUndetected = 10f;
-    [SerializeField] private float _radiusAlert = 20f;
-    [SerializeField] private float _radiusSearch = 20f;
+    [SerializeField] private float _radiusUndetected;
+    [SerializeField] private float _radiusAlert;
+    [SerializeField] private float _radiusSearch;
 
     [Header("Line of sight settings")]
-    [SerializeField] private float _lineOfSightUndetected = 5f;
-    [SerializeField] private float _lineOfSightAlert = 10f;
-    [SerializeField] private float _detectionTimeUndetected = 2f;
-    [SerializeField] private float _detectionTimeAlert = 1f;
-    [SerializeField] private float _pursuitTime = 4f;
-    [SerializeField] private float _searchTime = 10f;
+    [SerializeField] private float _lineOfSightUndetected;
+    [SerializeField] private float _lineOfSightAlert;
+    [SerializeField] private float _detectionTimeUndetected;
+    [SerializeField] private float _detectionTimeAlert;
+    [SerializeField] private float _pursuitTime;
+    [SerializeField] private float _searchTime;
     [SerializeField] private LayerMask _rayColliders;
     private float _lineOfSightTimer = 0f;
-    [SerializeField] private float _shootRange = 5f;
+    [SerializeField] private float _maintainRange;
 
     [Header("Walking length")]
-    [SerializeField] private float _minWalkLength = 2f;
-    [SerializeField] private float _maxWalkLength = 5f;
+    [SerializeField] private float _minWalkLength;
+    [SerializeField] private float _maxWalkLength;
 
     [Header("Waiting time")]
     private float _waitTimer = 0f;
     private float _waitLength;
-    [SerializeField] private float _minWaitLength = 3f;
-    [SerializeField] private float _maxWaitLength = 5f;
+    [SerializeField] private float _minWaitLength;
+    [SerializeField] private float _maxWaitLength;
 
     // Start is called before the first frame update
     void Start()
@@ -70,8 +70,8 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckLineOfSight();
-        if (_currentPhase == AIPhase.Undetected)
+        CheckDetection();
+        if (CurrentPhase == AIPhase.Undetected)
         {
             _enemyMovement.Running = false;
             if (_reachedEndOfPath)
@@ -88,16 +88,23 @@ public class EnemyAI : MonoBehaviour
 
             FollowPath();
         }
-        else if (_currentPhase == AIPhase.Pursuit)
+        else if (CurrentPhase == AIPhase.Pursuit)
         {
             _enemyMovement.Running = true;
             if(_reachedEndOfPath) return;
 
-            if (_distanceToPlayer > _shootRange) FollowPath();
-            else return;
+            if (_distanceToPlayer > _maintainRange || _lineOfSightTimer > 0)
+            {
+                FollowPath();
+            }
+            else
+            {
+                _enemyMovement.MovingLeft = false;
+                _enemyMovement.MovingRight = false;
+            }
             
         }
-        else if (_currentPhase == AIPhase.Searching)
+        else if (CurrentPhase == AIPhase.Searching)
         {
             // Generate random paths around the players last known position
             _enemyMovement.Running = false;
@@ -106,7 +113,7 @@ public class EnemyAI : MonoBehaviour
 
             FollowPath();
         }
-        else if (_currentPhase == AIPhase.Alert)
+        else if (CurrentPhase == AIPhase.Alert)
         {
             _enemyMovement.Running = true;
             if(_reachedEndOfPath)
@@ -129,12 +136,12 @@ public class EnemyAI : MonoBehaviour
     private void FollowPath()
     {
         Vector3 _nextWaypoint = _path.vectorPath[_currentWaypoint];
-        if (transform.position.x - _nextWaypoint.x > 0.4f)
+        if (transform.position.x - _nextWaypoint.x > 0.1f)
         {
             _enemyMovement.MovingRight = false;
             _enemyMovement.MovingLeft = true;
         }
-        else if (transform.position.x - _nextWaypoint.x < -0.4f)
+        else if (transform.position.x - _nextWaypoint.x < -0.1f)
         {
             _enemyMovement.MovingLeft = false;
             _enemyMovement.MovingRight = true;
@@ -145,15 +152,19 @@ public class EnemyAI : MonoBehaviour
             _enemyMovement.MovingRight = false;
         }
 
-        if (transform.position.y - _nextWaypoint.y < -0.5f)
+        if(_enemyMovement.BlockedInFront)
         {
             _enemyMovement.Jumping = true;
         }
+        else if(_enemyMovement.GapInFront && transform.position.y - _nextWaypoint.y < -0.1f )
+        {
+            _enemyMovement.Jumping = true;
+        } 
         else
         {
             _enemyMovement.Jumping = false;
         }
-
+        
         // Use next waypoint if close enough
         if (Vector3.Distance(transform.position, _path.vectorPath[_currentWaypoint]) < _nextWaypointDistance)
         {
@@ -232,22 +243,24 @@ public class EnemyAI : MonoBehaviour
 
     void OnPathComplete(Path _p)
     {
-        if(_p.error)
-        {
-            Debug.LogError(_p.error);
-        } else
+        if(!_p.error)
         {
             _reachedEndOfPath = false;
             _currentWaypoint = 0;
             _path = _p;
-            if(_currentPhase == AIPhase.Pursuit) _searchPosition = _path.vectorPath[_path.vectorPath.Count - 1];
+            if(CurrentPhase == AIPhase.Pursuit) _searchPosition = _path.vectorPath[_path.vectorPath.Count - 1];
         }
     }
 
-    private void CheckLineOfSight()
+    private void CheckDetection()
     {
         _distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
-        if(_currentPhase == AIPhase.Undetected)
+        float _deltaX = transform.position.x - _player.transform.position.x;
+        if(_distanceToPlayer < 1f || (_deltaX > 0 && !_enemyMovement.FacingRight && _distanceToPlayer < 5f) || (_deltaX < 0 && _enemyMovement.FacingRight && _distanceToPlayer < 5f))
+        {
+            CurrentPhase = AIPhase.Pursuit;
+        }
+        if(CurrentPhase == AIPhase.Undetected)
         {
             if(_distanceToPlayer < _lineOfSightUndetected)
             {
@@ -258,7 +271,7 @@ public class EnemyAI : MonoBehaviour
                 if (_raycast.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     _lineOfSightTimer += Time.deltaTime;
-                    if (_lineOfSightTimer > _detectionTimeUndetected) _currentPhase = AIPhase.Pursuit;
+                    if (_lineOfSightTimer > _detectionTimeUndetected) CurrentPhase = AIPhase.Pursuit;
                 }
                 else
                 {
@@ -274,11 +287,12 @@ public class EnemyAI : MonoBehaviour
             Vector3 _rayStart = transform.position;
             Vector3 _direction = (_player.transform.position - transform.position).normalized;
             RaycastHit2D _raycast = Physics2D.Raycast(_rayStart, _direction, _lineOfSightAlert, _rayColliders);
-            if(_currentPhase == AIPhase.Pursuit)
+            if (CurrentPhase == AIPhase.Pursuit)
             {
                 if(!(_raycast.collider.gameObject.layer == LayerMask.NameToLayer("Player")))
                 {
-                    if (_isCreatingPath)
+                    _enemyWeapon.Target = null;
+                    if (_isCreatingPath && _lineOfSightTimer > 3f)
                     {
                         CancelInvoke();
                         _isCreatingPath = false;
@@ -287,7 +301,7 @@ public class EnemyAI : MonoBehaviour
                     if(_lineOfSightTimer > _pursuitTime)
                     {
                         _lineOfSightTimer = 0f;
-                        _currentPhase = AIPhase.Searching;
+                        CurrentPhase = AIPhase.Searching;
                         _path = null;
                         GenerateSearchPath();
                     }
@@ -295,8 +309,8 @@ public class EnemyAI : MonoBehaviour
                 else
                 {
                     // Player in range and in line of sight; aim and shoot.
-                    _enemyWeapon.AimAt(_player.transform);
-                    _enemyWeapon.Shoot();
+                    _enemyWeapon.Target = _player;
+                    
                     if (!_isCreatingPath)
                     {
                         InvokeRepeating("GeneratePursuitPath", 0f, 0.5f);
@@ -305,7 +319,7 @@ public class EnemyAI : MonoBehaviour
                     _lineOfSightTimer = 0f;
                 }
             }
-            else if(_currentPhase == AIPhase.Searching)
+            else if(CurrentPhase == AIPhase.Searching)
             {
                 if(!(_raycast.collider.gameObject.layer == LayerMask.NameToLayer("Player")))
                 {
@@ -313,17 +327,17 @@ public class EnemyAI : MonoBehaviour
                     if(_lineOfSightTimer > _searchTime)
                     {
                         _lineOfSightTimer = 0f;
-                        _currentPhase = AIPhase.Alert;
+                        CurrentPhase = AIPhase.Alert;
                         _path = null;
                         GenerateHomePath();
                     }
                 } 
                 else
                 {
-                    _currentPhase = AIPhase.Pursuit;
+                    CurrentPhase = AIPhase.Pursuit;
                 }
             }
-            else if(_currentPhase == AIPhase.Alert)
+            else if(CurrentPhase == AIPhase.Alert)
             {
                 if(_raycast.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
@@ -331,7 +345,7 @@ public class EnemyAI : MonoBehaviour
                     if(_lineOfSightTimer > _detectionTimeAlert)
                     {
                         _lineOfSightTimer = 0f;
-                        _currentPhase = AIPhase.Pursuit;
+                        CurrentPhase = AIPhase.Pursuit;
                     }
                 } else
                 {
@@ -341,8 +355,9 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            if(_currentPhase == AIPhase.Pursuit)
+            if(CurrentPhase == AIPhase.Pursuit)
             {
+                _enemyWeapon.Target = null;
                 if (_isCreatingPath)
                 {
                     CancelInvoke();
@@ -352,23 +367,23 @@ public class EnemyAI : MonoBehaviour
                 if(_lineOfSightTimer > _pursuitTime)
                 {
                     _lineOfSightTimer = 0f;
-                    _currentPhase = AIPhase.Searching;
+                    CurrentPhase = AIPhase.Searching;
                     _path = null;
                     GenerateSearchPath();
                 }
             }
-            else if(_currentPhase == AIPhase.Searching)
+            else if(CurrentPhase == AIPhase.Searching)
             {
                 _lineOfSightTimer += Time.deltaTime;
                 if(_lineOfSightTimer > _searchTime)
                 {
                     _lineOfSightTimer = 0f;
-                    _currentPhase = AIPhase.Alert;
+                    CurrentPhase = AIPhase.Alert;
                     _path = null;
                     GenerateHomePath();
                 }
             }
-            else if(_currentPhase == AIPhase.Alert)
+            else if(CurrentPhase == AIPhase.Alert)
             {
                 _lineOfSightTimer = 0f;
             }

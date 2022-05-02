@@ -8,16 +8,21 @@ public class Weapon_Enemy : MonoBehaviour
 {
     public Transform FirePoint;
     public GameObject Bullet;
-    public int Damage;
-    public float Speedofbullet = 1f;
-    public float MinVecticalSpread = 0f;
-    public float MaxVerticalSpread = 0f;
+    public GameObject Target = null;
+    
+    [SerializeField] private int _damage;
+    [SerializeField] private float _bulletSpeed = 1f;
+    [SerializeField] private float _minVecticalSpread;
+    [SerializeField] private float _maxVerticalSpread;
 
-    public int Ammo = 1;
-    public bool MaxAmmo;
-    public float Firerate;
-    public float FirerateCounter = 0;
+    private bool _reloading = false;
 
+    [SerializeField] private int _magazineAmmo;
+    private int _currentAmmo;
+    [SerializeField] private float _reloadTime;
+    [SerializeField] private float _firerate;
+    private float _firerateTimer = 0;
+    
     public float CameraShakeStrength = 1;
     public Animator MuzzleFlashAnimation;
     public string MuzzleAnimationName;
@@ -25,84 +30,70 @@ public class Weapon_Enemy : MonoBehaviour
 
     public AudioSource ShootSoundSource;
 
-    ///This is basically the same script as the Player weapon script. All necessary documentation should be in there.
     private void Start()
     {
-        // ShootFullAuto();
+        _currentAmmo = _magazineAmmo;
     }
 
-    void LateUpdate()
+    private void Update()
     {
-        if (MaxAmmo == true)
+        if(_reloading)
         {
-            Ammo = 100000;
+            transform.parent.localRotation = Quaternion.Euler(0, 0, -45f);
+        }
+        else if(Target != null)
+        {
+            AimAt(Target.transform);
+            Shoot();
+        }
+        else
+        {
+            transform.parent.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        if (FirerateCounter >= 0)
-        {
-            FirerateCounter -= Time.deltaTime;
-        }
+        if (_firerateTimer >= 0) _firerateTimer -= Time.deltaTime;
     }
     
     public void AimAt(Transform _target)
     {
-        Vector3 _targetDirection = Quaternion.Euler(0, 0, 90) * (_target.position - transform.parent.position);
-        Quaternion _aimDirection = Quaternion.LookRotation(forward: Vector3.forward, upwards: _targetDirection);
-        transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, _aimDirection, 5);
-        FirePoint.rotation = Quaternion.RotateTowards(transform.parent.rotation, _aimDirection, 5);
+        Vector3 _direction = transform.root.position - _target.transform.position;
+        float _angle = Vector3.Angle(-transform.root.right, _direction);
+        if (_target.transform.position.y - transform.root.position.y < 0) _angle = -_angle;
+        transform.parent.localEulerAngles = new Vector3(0, 0, _angle);
     }
 
     public void Shoot()
     {
-        if (Ammo > 0 && FirerateCounter < 0)
+        if (_reloading) return;
+
+        if (_firerateTimer < 0)
         {
             MuzzleFlashAnimation.Play(MuzzleAnimationName);
 
-            Ammo -= 1;
-            float _randomSpread = Random.Range(MinVecticalSpread, MaxVerticalSpread);
+            _currentAmmo -= 1;
+            float _randomSpread = Random.Range(_minVecticalSpread, _maxVerticalSpread);
             GameObject _theBullet = Instantiate(Bullet, FirePoint.position, FirePoint.rotation);
             _theBullet.transform.Rotate(0, 0, _randomSpread);
             _theBullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
             _theBullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
-            _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
+            _theBullet.GetComponent<Bullet>().BulletSpeed = _bulletSpeed;
             _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
             _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
-            _theBullet.GetComponent<Bullet>().Damage = Damage;
+            _theBullet.GetComponent<Bullet>().Damage = _damage;
             _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
             ShootSoundSource.Play();
-            FirerateCounter = Firerate;
+            _firerateTimer = _firerate;
         }
-    }
-    public void ShootFullAuto()
-    {
-        if (Ammo > 0)
+        if (_currentAmmo <= 0)
         {
-            MuzzleFlashAnimation.Play(MuzzleAnimationName);
-
-            Ammo -= 1;
-            float _randomSpread = Random.Range(MinVecticalSpread, MaxVerticalSpread);
-            GameObject _theBullet = Instantiate(Bullet, FirePoint.position, FirePoint.rotation);
-            _theBullet.transform.Rotate(0, 0, _randomSpread);
-            _theBullet.GetComponent<Bullet>().CameraShakeStrength = CameraShakeStrength;
-            _theBullet.GetComponent<Bullet>().WhatToHit = WhatToHit;
-            _theBullet.GetComponent<Bullet>().BulletSpeed = Speedofbullet;
-            _theBullet.GetComponent<Bullet>().IsEnemyBullet = true;
-            _theBullet.GetComponent<Bullet>().TimeToLive = 2f;
-            _theBullet.GetComponent<Bullet>().Damage = Damage;
-            _theBullet.GetComponent<Bullet>().EnemyShooterObject = transform.root.gameObject;
-            ShootSoundSource.Play();
-
-
+            Invoke("Reload", _reloadTime);
+            _reloading = true;
         }
-        StartCoroutine(FullAutoCooldown());
-
     }
 
-    IEnumerator FullAutoCooldown()
+    private void Reload()
     {
-        FirerateCounter = Firerate;
-        yield return new WaitForSeconds(Firerate);
-        ShootFullAuto();
+        _currentAmmo = _magazineAmmo;
+        _reloading = false;
     }
-
 }

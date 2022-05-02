@@ -75,6 +75,7 @@ public class Bullet : MonoBehaviour
 
             if (_enemyHealth != null)
             {
+                other.gameObject.GetComponent<EnemyAI>().CurrentPhase = EnemyAI.AIPhase.Pursuit;
                 _enemyHealth.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 ScreenShakeController.Instance.StartShake(.05f, .03f);

@@ -43,12 +43,14 @@ public class Weapon : MonoBehaviour
     public AudioSource ShootAudioSource;
     public AudioSource ReloadAudioSource;
 
+    private Movement _playerMovement;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
     /*! In the Start function several variables are set, and script, components and objects are found and assigned.*/
     void Start()
     {
+        _playerMovement = transform.root.GetComponent<Movement>();
         TokenManagerScript = GameObject.Find("GameManager").GetComponent<TokenManager>();
         LifeSteal = TokenManagerScript.GunLifeStealAmount;
         AmmoText = GameObject.Find("AmmoTextUI").GetComponent<Text>();
@@ -62,8 +64,9 @@ public class Weapon : MonoBehaviour
     /** LateUpdate is called after all Update functions have been called. This is useful to order script execution.*/
     /*! The Late Update allows for shooting in both FullAuto and SemiAutomatic. 
     The Late Update also makes sure to update the Ammo UI text at the end, and reloads the gun if the bullets hit 0 and the UseClip is true*/
-    async void LateUpdate()
+    void LateUpdate()
     {
+        if (_playerMovement.NoControl) return;
         if (FullAuto == true)
         {
             if (Input.GetMouseButton(0) && Time.time >= FirerateCounter && _checkUI.IsPointerOverUIElement() == false)

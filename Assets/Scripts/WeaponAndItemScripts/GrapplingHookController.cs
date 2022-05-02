@@ -118,26 +118,24 @@ This means that is a game run on higher frames per second the update function wi
             _targetPosition = _grapplingHookGun.ClosestGrapplingPoint.transform.position;
 
             _hit = Physics2D.Raycast(transform.position, _targetPosition - transform.position, Distance, WhatToHit);
-            if (_hit.collider != null && _hit.collider.gameObject.GetComponent<Rigidbody2D>() != null && _hit.distance < MaxDistance)
-            {
-                HookAudioSource.Play();
-                IsHooked = true;
-                HookedPoint = _grapplingHookGun.ClosestGrapplingPoint;
-                _joint.enabled = true;
-                Vector2 connectPoint = _hit.point - new Vector2(_hit.collider.transform.position.x, _hit.collider.transform.position.y);
-                connectPoint.x = connectPoint.x / _hit.collider.transform.localScale.x;
-                connectPoint.y = connectPoint.y / _hit.collider.transform.localScale.y;
-                _joint.connectedAnchor = connectPoint;
+            HookAudioSource.Play();
+            IsHooked = true;
+            HookedPoint = _grapplingHookGun.ClosestGrapplingPoint;
+            MaxDistance = HookedPoint.GetComponent<GrapplingPoint>().MaxDistance;
+            _joint.enabled = true;
+            Vector2 connectPoint = _hit.point - new Vector2(_hit.collider.transform.position.x, _hit.collider.transform.position.y);
+            connectPoint.x = connectPoint.x / _hit.collider.transform.localScale.x;
+            connectPoint.y = connectPoint.y / _hit.collider.transform.localScale.y;
+            _joint.connectedAnchor = connectPoint;
 
-                _joint.connectedBody = _hit.collider.gameObject.GetComponent<Rigidbody2D>();
-                _joint.distance = Vector2.Distance(transform.position, _hit.point);
+            _joint.connectedBody = _hit.collider.gameObject.GetComponent<Rigidbody2D>();
+            _joint.distance = Vector2.Distance(transform.position, _hit.point);
 
-                LineObject.enabled = true;
-                LineObject.SetPosition(0, transform.position);
-                LineObject.SetPosition(1, _hit.point);
+            LineObject.enabled = true;
+            LineObject.SetPosition(0, transform.position);
+            LineObject.SetPosition(1, _hit.point);
 
-                LineObject.GetComponent<RopeRatio>().PositionToHook = _hit.point;
-            }
+            LineObject.GetComponent<RopeRatio>().PositionToHook = _hit.point;
         }
         LineObject.SetPosition(1, _joint.connectedBody.transform.TransformPoint(_joint.connectedAnchor));
 

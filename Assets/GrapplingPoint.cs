@@ -13,6 +13,7 @@ public class GrapplingPoint : MonoBehaviour
     [SerializeField] private float _offset;
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _collider;
+    public float MaxDistance;
 
     // Start is called before the first frame update
     void Start()

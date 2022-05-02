@@ -31,6 +31,7 @@ public class ArmPivot : MonoBehaviour
     We also check if the player is flipped or not. If the player is flipped (See FlipPlayer() function in Movement script) we have to flip the object aswell and use the negative value of the angle*/
     public void Update()
     {
+        if (PlayerMovementScript.NoControl) return;
         //http://answers.unity.com/answers/130142/view.html
         _mousePosition = Input.mousePosition;
         _mousePosition.z = 5.23f; //The distance between the camera and object

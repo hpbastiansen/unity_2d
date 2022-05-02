@@ -17,7 +17,7 @@ public class WeaponController : MonoBehaviour
     public GameObject ShieldObject;
     public float ShieldRechargeTimer;
     private TokenManager _tokenManager;
-
+    private Movement _playerMovement;
 
     /// Start methods run once when enabled.
     /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -26,6 +26,7 @@ public class WeaponController : MonoBehaviour
     Then we set the first gun as the current gun, and activates it, and deactivates all the others.*/
     void Start()
     {
+        _playerMovement = GetComponent<Movement>();
         UsingShield = false;
         _totalWeapons = WeaponHolderObject.transform.childCount;
         Weapons = new GameObject[_totalWeapons];
@@ -54,6 +55,7 @@ This means that is a game run on higher frames per second the update function wi
     Lastly we allow the player to switch between using the weapons and the shield.*/
     void Update()
     {
+        if (_playerMovement.NoControl) return;
         ////////////////////////////////////////////////////////////////
         // https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
         ////////////////////////////////////////////////////////////////
