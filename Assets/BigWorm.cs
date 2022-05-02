@@ -20,6 +20,7 @@ public class BigWorm : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+            ScreenShakeController.Instance.StartShake(1f, 0.07f, true);
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(0, 40, 135);
         }
     }

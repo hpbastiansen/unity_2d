@@ -23,7 +23,6 @@ public class WormPath : MonoBehaviour
     [Header("Gizmos")]
     [SerializeField] private bool _drawPath = true;
     [SerializeField] private bool _drawControlPoints = true;
-
     private Rigidbody2D _rb;
 
     /// Start methods run once when enabled.
@@ -36,7 +35,7 @@ public class WormPath : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(_drawPath)
+        if(_drawPath && _points.Count > 0)
         {
             Gizmos.color = Color.green;
             foreach (Vector2 _point in _points)
@@ -44,7 +43,7 @@ public class WormPath : MonoBehaviour
                 Gizmos.DrawWireSphere(_point, 0.1f);
             }
         }
-        if(_drawControlPoints)
+        if(_drawControlPoints && _points.Count > 0)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(StartPoint, 0.2f);

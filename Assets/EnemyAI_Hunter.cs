@@ -38,6 +38,7 @@ public class EnemyAI_Hunter : MonoBehaviour
     {
         CheckLineOfSight();
         if (_reachedEndOfPath) return;
+        if (_path == null) return;
         if (_distanceToPlayer > _maintainRange || !_lineOfSight)
         {
             FollowPath();
@@ -117,7 +118,12 @@ public class EnemyAI_Hunter : MonoBehaviour
         Vector3 _rayStart = transform.position;
         Vector3 _direction = (_player.transform.position - transform.position).normalized;
         RaycastHit2D _raycast = Physics2D.Raycast(_rayStart, _direction, 30f, _rayColliders);
-        if(_raycast.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if(_raycast.collider == null)
+        {
+            _lineOfSight = false;
+            _enemyWeapon.Target = null;
+        }
+        else if(_raycast.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             _lineOfSight = true;
             _enemyWeapon.Target = _player;

@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1417855145, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
       propertyPath: m_InstanceId
-      value: -1424476
+      value: -497530
       objectReference: {fileID: 0}
     - target: {fileID: 320407801253565257, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
@@ -81,7 +81,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6989972888561001228, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
 --- !u!1 &133702461719043290 stripped
 GameObject:
@@ -101,3 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95500b475828464e885f55ef29602ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nextWaypointDistance: 1
+  _maintainRange: 5
+  _rayColliders:
+    serializedVersion: 2
+    m_Bits: 2560

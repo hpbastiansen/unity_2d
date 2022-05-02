@@ -10,6 +10,7 @@ public class WormBody : MonoBehaviour
 {
     private WormCollision _wormCollision;
     private LineRenderer _lineRend;
+    [SerializeField] private GameObject _bodySegment;
 
     [Header("Body Length")]
     [SerializeField] private int _minLength = 4;
@@ -21,6 +22,8 @@ public class WormBody : MonoBehaviour
     [SerializeField] private float _targetDist;
     [SerializeField] private float _smoothSpeed;
     [SerializeField] private float _trailSpeed;
+    [SerializeField] private Transform _tailEnd;
+    private List<Transform> _bodySegments;
 
     [Header("Wiggle")]
     [SerializeField] private Transform _wiggleDir;
@@ -41,6 +44,7 @@ public class WormBody : MonoBehaviour
         _lineRend.positionCount = _length;
         _segmentPoses = new Vector3[_length];
         _segmentV = new Vector3[_length];
+        CreateBodySprites();
         ResetPos();
     }
 
@@ -63,6 +67,10 @@ public class WormBody : MonoBehaviour
             _segmentPoses[_i] = Vector3.SmoothDamp(_segmentPoses[_i], _segmentPoses[_i - 1] + _targetDir.right * _targetDist, ref _segmentV[_i], _smoothSpeed + _i / _trailSpeed);
         }
         _lineRend.SetPositions(_segmentPoses);
+
+        SetBodySprites();
+        SetTailSprite();
+        
         _wormCollision.SetCollision(_segmentPoses, _length, _lineRend.startWidth);
     }
 
@@ -75,5 +83,40 @@ public class WormBody : MonoBehaviour
             _segmentPoses[_i] = _segmentPoses[_i - 1] + _targetDir.right * _targetDist;
         }
         _lineRend.SetPositions(_segmentPoses);
+    }
+
+    private void SetBodySprites()
+    {
+        for(int _i = 1; _i < _length-1; _i++)
+        {
+            _bodySegments[_i].position = _segmentPoses[_i];
+            Vector2 _segmentDirection = _segmentPoses[_i - 1] - _bodySegments[_i].position;
+            float _angle = Vector2.Angle(transform.root.right, _segmentDirection);
+            _bodySegments[_i].localEulerAngles = new Vector3(0, 0, _angle - 90f);
+            // Rotate
+        }
+    }
+
+    private void SetTailSprite()
+    {
+        _tailEnd.position = _segmentPoses[_segmentPoses.Length - 1];
+        Vector2 _tailDirection = _segmentPoses[_segmentPoses.Length - 2] - _tailEnd.position;
+
+        float _angle = Vector2.Angle(transform.root.right, _tailDirection);
+        _tailEnd.localEulerAngles = new Vector3(0, 0, _angle - 90f);
+
+        //float _angle = Mathf.Atan2(_tailDirection.y, _tailDirection.x) * Mathf.Rad2Deg;
+        //Quaternion _rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+        //_tailEnd.rotation = Quaternion.Slerp(_tailEnd.rotation, _rotation, 10f * Time.deltaTime);
+    }
+
+    private void CreateBodySprites()
+    {
+        _bodySegments = new List<Transform>();
+        for(int _i = 0; _i < _length; _i++)
+        {
+            GameObject _segment = Instantiate(_bodySegment, transform);
+            _bodySegments.Add(_segment.transform);
+        }
     }
 }

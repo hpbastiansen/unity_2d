@@ -26,7 +26,7 @@ public class MovingFloor : MonoBehaviour
             GetComponent<TilemapRenderer>().enabled = true;
         }
 
-        transform.position = new Vector3(transform.position.x + (Speed * Time.deltaTime), transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x - (Speed * Time.deltaTime), transform.position.y, transform.position.z);
         _movedDistance += Speed * Time.deltaTime;
 
         if (_movedDistance >= 2f)

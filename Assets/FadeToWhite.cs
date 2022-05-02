@@ -25,7 +25,6 @@ public class FadeToWhite : MonoBehaviour
 
     public void FadeIn(float _time)
     {
-        Debug.Log("Called FadeIn");
         _targetOpacity = 1f;
         _changeOpacityAmount = 1f / _time;
         _isActive = true;
@@ -33,7 +32,6 @@ public class FadeToWhite : MonoBehaviour
 
     public void FadeOut(float _time)
     {
-        Debug.Log("Called FadeOut");
         _targetOpacity = 0;
         _changeOpacityAmount = 1f / _time;
         _isActive = true;
@@ -48,7 +46,6 @@ public class FadeToWhite : MonoBehaviour
             float _opacity = _color.a;
             if(_targetOpacity == 1f)
             {
-                Debug.Log("Fade in. Adding opacity.");
                 _opacity += _changeOpacityAmount * Time.deltaTime;
                 if(_opacity > _targetOpacity)
                 {
@@ -58,7 +55,6 @@ public class FadeToWhite : MonoBehaviour
             }
             else
             {
-                Debug.Log("Fade out. Removing opacity.");
                 _opacity -= _changeOpacityAmount * Time.deltaTime;
                 if(_opacity < 0)
                 {

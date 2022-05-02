@@ -69,13 +69,15 @@ public class Bullet : MonoBehaviour
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer && other.isTrigger == false) //http://answers.unity.com/answers/1394106/view.html
         {
             EnemyHealth _enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            EnemyAI _enemyAI = other.gameObject.GetComponent<EnemyAI>();
             PlayerHealth _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             ShieldHP _shieldHP = other.gameObject.GetComponent<ShieldHP>();
             WormWeakpoint _wormWeakpoint = other.gameObject.GetComponent<WormWeakpoint>();
+            CrackedBlock _crackedBlock = other.gameObject.GetComponent<CrackedBlock>();
 
             if (_enemyHealth != null)
             {
-                other.gameObject.GetComponent<EnemyAI>().CurrentPhase = EnemyAI.AIPhase.Pursuit;
+                if(_enemyAI != null) other.gameObject.GetComponent<EnemyAI>().CurrentPhase = EnemyAI.AIPhase.Pursuit;
                 _enemyHealth.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 ScreenShakeController.Instance.StartShake(.05f, .03f, true);
@@ -121,6 +123,13 @@ public class Bullet : MonoBehaviour
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 PlayerHealthScript.CurrentHP += LifeSteal;
+                Destroy(gameObject);
+            }
+            else if(_crackedBlock != null)
+            {
+                _crackedBlock.OnHit();
+                Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
+                ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 Destroy(gameObject);
             }
             else

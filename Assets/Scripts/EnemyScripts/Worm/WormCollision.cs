@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WormCollision : MonoBehaviour
 {
-    [SerializeField] private float _damage = 1f;
-    [SerializeField] private float _knockback;
+    [SerializeField] private float _damage;
+    [SerializeField] private float _force;
     private PolygonCollider2D _polygonCollider;
     private RectTransform _wormHead;
 
@@ -73,7 +73,8 @@ public class WormCollision : MonoBehaviour
     {
         if (_other.tag == "Player")
         {
-            _other.GetComponent<PlayerHealth>().TakeDamage(_damage, _knockback);
+            float _deltaX = transform.position.x - _other.transform.position.x;
+            _other.GetComponent<PlayerHealth>().TakeDamage(_damage, _force, _deltaX > 0 ? 135f : 45f);
         }
     }
 }

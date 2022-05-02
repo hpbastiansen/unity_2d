@@ -27,7 +27,7 @@ public class MovingBackground : MonoBehaviour
             _initialPosition = transform.position;
         }
 
-        transform.position = new Vector3(transform.position.x + (Speed * Time.deltaTime), transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x - (Speed * Time.deltaTime), transform.position.y, transform.position.z);
         _movedDistance += Speed * Time.deltaTime;
 
         if(_movedDistance >= 10f)
