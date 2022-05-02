@@ -13,6 +13,10 @@ public class Parallax : MonoBehaviour
     public float Strength;
 
     Vector2 _travelDistance => (Vector2)MainCamera.transform.position - _startPosition;
+    public bool FollowXAxis;
+    public bool FollowYAxis;
+
+
 
 
     /// Start methods run once when enabled.
@@ -30,6 +34,21 @@ This means that is a game run on higher frames per second the update function wi
     /*!Inside the Update funtion the postition of the gameObject is determined by it's start position, travel position and desired strength of the parallax.*/
     public void Update()
     {
-        transform.position = _startPosition + _travelDistance * Strength;
+        if (FollowXAxis && FollowXAxis)
+        {
+            transform.position = _startPosition + _travelDistance * Strength;
+        }
+        if (FollowXAxis && FollowYAxis == false)
+        {
+            transform.position = new Vector2(_startPosition.x + _travelDistance.x * Strength, transform.position.y);
+        }
+        if (FollowXAxis == false && FollowYAxis)
+        {
+            transform.position = new Vector2(transform.position.x, _startPosition.y + _travelDistance.y * Strength);
+        }
+        if (FollowXAxis == false && FollowYAxis == false)
+        {
+            transform.position = _startPosition + _travelDistance * Strength;
+        }
     }
 }

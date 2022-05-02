@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
+    [Header("Tutorial")]
+    public bool IsTutorialDone;
+
     [Header("World 1")]
     public int W1C1;
     public string W1C1Scenename;

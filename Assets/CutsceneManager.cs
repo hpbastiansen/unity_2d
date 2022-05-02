@@ -65,6 +65,6 @@ public class CutsceneManager : MonoBehaviour
 
     private void ScreenShake()
     {
-        ScreenShakeController.Instance.StartShake(.05f, _screenShakePower);
+        ScreenShakeController.Instance.StartShake(.05f, _screenShakePower, true);
     }
 }

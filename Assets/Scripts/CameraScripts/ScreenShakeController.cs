@@ -8,7 +8,8 @@ public class ScreenShakeController : MonoBehaviour
 {
     public static ScreenShakeController Instance;
     private float _shakeTimeRemaining, _shakePower, _shakeFadeTime, _shakeRotation;
-    public float RotationMultiplier = 15f;
+    public float RotationMultiplier = 100f;
+    private bool _rotationShake;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -34,16 +35,27 @@ public class ScreenShakeController : MonoBehaviour
             _shakePower = Mathf.MoveTowards(_shakePower, 0f, _shakeFadeTime * Time.deltaTime);
             _shakeRotation = Mathf.MoveTowards(_shakeRotation, 0f, _shakeFadeTime * RotationMultiplier * Time.deltaTime);
         }
-        transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, transform.rotation.z + (_shakeRotation * Random.Range(-1f, -1f)));
+        if (_rotationShake)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, transform.rotation.z + (_shakeRotation * Random.Range(-1f, -1f)));
+        }
     }
 
     ///StartShake is a public function that can be called from anywhere to initiate a screen shake.
     /** The StartShake function takes two parameters, and can be called from any script in the game. When the necessary variables is changed it will trigger the LateUpdate and result in a screen shake */
-    public void StartShake(float length, float power)
+    public void StartShake(float length, float power, bool _rotShake)
     {
         _shakeTimeRemaining = length;
         _shakePower = power;
         _shakeFadeTime = power / length;
         _shakeRotation = power * RotationMultiplier;
+        if (_rotShake)
+        {
+            _rotationShake = true;
+        }
+        else
+        {
+            _rotationShake = false;
+        }
     }
 }

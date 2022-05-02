@@ -19,7 +19,6 @@ public class SetSoundValue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         if (Music) _audioSource.volume = MaxVolume * _soundManager.MusicValue;
         if (SFX) _audioSource.volume = MaxVolume * _soundManager.SFXValue;
     }

@@ -66,7 +66,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         float _distance = Vector3.Distance(PlayerHealthScript.transform.position, transform.position);
-        if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer) //http://answers.unity.com/answers/1394106/view.html
+        if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer && other.isTrigger == false) //http://answers.unity.com/answers/1394106/view.html
         {
             EnemyHealth _enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             PlayerHealth _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
@@ -78,7 +78,7 @@ public class Bullet : MonoBehaviour
                 other.gameObject.GetComponent<EnemyAI>().CurrentPhase = EnemyAI.AIPhase.Pursuit;
                 _enemyHealth.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-                ScreenShakeController.Instance.StartShake(.05f, .03f);
+                ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 PlayerHealthScript.CurrentHP += LifeSteal;
                 Destroy(gameObject);
             }
@@ -95,7 +95,7 @@ public class Bullet : MonoBehaviour
                     Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                     if (_distance < 10)
                     {
-                        ScreenShakeController.Instance.StartShake(.2f, .1f);
+                        ScreenShakeController.Instance.StartShake(.2f, .1f, true);
                     }
                     Destroy(gameObject);
                 }
@@ -111,7 +111,7 @@ public class Bullet : MonoBehaviour
                 }
                 if (_distance < 10)
                 {
-                    ScreenShakeController.Instance.StartShake(.2f, .1f);
+                    ScreenShakeController.Instance.StartShake(.2f, .1f, true);
                 }
                 Destroy(gameObject);
             }
@@ -119,7 +119,7 @@ public class Bullet : MonoBehaviour
             {
                 _wormWeakpoint.TakeDamage(Damage);
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
-                ScreenShakeController.Instance.StartShake(.05f, .03f);
+                ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 PlayerHealthScript.CurrentHP += LifeSteal;
                 Destroy(gameObject);
             }
@@ -127,7 +127,7 @@ public class Bullet : MonoBehaviour
             {
                 if (_distance < 10)
                 {
-                    ScreenShakeController.Instance.StartShake(.05f, .03f);
+                    ScreenShakeController.Instance.StartShake(.05f, .03f, true);
                 }
                 Instantiate(HitEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 Destroy(gameObject);

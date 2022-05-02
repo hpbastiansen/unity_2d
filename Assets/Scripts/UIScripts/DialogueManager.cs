@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+
 
 ///The DialogueManager script is a script that only exist once in a scene. This script lets other scripts start a new dialogue, display next sentences, and end a dialogue.
 public class DialogueManager : MonoBehaviour
@@ -16,6 +18,8 @@ public class DialogueManager : MonoBehaviour
     private Queue<string> Sentences;
     public bool InDialogue;
     private UIManager _myUIManager;
+    public bool RunFunctionAfter;
+    public UnityEvent EventToRun;
 
 
     /// Start methods run once when enabled.
@@ -25,9 +29,9 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         Sentences = new Queue<string>();
+        RunFunctionAfter = false;
         //DialogueAnimator.SetBool("IsOpen", false);
         _myUIManager = GameObject.FindObjectOfType<UIManager>();
-
 
     }
     ///Update is called every frame.
@@ -84,10 +88,13 @@ This means that is a game run on higher frames per second the update function wi
     {
         if (Sentences.Count == 0)
         {
+            if (RunFunctionAfter)
+            {
+                EventToRun.Invoke();
+            }
             EndDialogue();
             return;
         }
-
         string sentence = Sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
