@@ -91,7 +91,7 @@ public class TokenManager : MonoBehaviour
         _checkUI = Object.FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
-
+        
         foreach (GameObject tokens in TokensOwned)
         {
             tokens.SetActive(false);

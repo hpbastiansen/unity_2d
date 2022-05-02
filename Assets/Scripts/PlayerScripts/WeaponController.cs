@@ -18,6 +18,7 @@ public class WeaponController : MonoBehaviour
     public float ShieldRechargeTimer;
     private TokenManager _tokenManager;
     private Movement _playerMovement;
+    public bool GottenGrapplingHook = false;
 
     /// Start methods run once when enabled.
     /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -58,7 +59,7 @@ This means that is a game run on higher frames per second the update function wi
         // https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
         ////////////////////////////////////////////////////////////////
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && GottenGrapplingHook == true)
         {
             //next Weapon
             if (CurrentWeaponIndex == 0)
