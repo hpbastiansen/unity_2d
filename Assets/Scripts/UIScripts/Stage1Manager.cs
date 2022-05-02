@@ -5,8 +5,9 @@ using UnityEngine;
 public class Stage1Manager : MonoBehaviour
 {
     public bool GottenGrapplingHook;
-    public GameObject HoleKillzone;
+    public GameObject EndScene;
     public GameObject HoleDiaTrigger;
+    public GameObject GrapplingHook;
     public WeaponController WeaponControllerScript;
 
 
@@ -14,15 +15,18 @@ public class Stage1Manager : MonoBehaviour
     void Start()
     {
         GottenGrapplingHook = false;
-        HoleKillzone.SetActive(true);
+        EndScene.SetActive(false);
         HoleDiaTrigger.SetActive(false);
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
+        GrapplingHook.SetActive(true);
     }
     public void GiveGrapplingHook()
     {
         GottenGrapplingHook = true;
-        HoleKillzone.SetActive(true);
+        EndScene.SetActive(true);
         HoleDiaTrigger.SetActive(true);
         WeaponControllerScript.GottenGrapplingHook = true;
+        GrapplingHook.SetActive(false);
+
     }
 }

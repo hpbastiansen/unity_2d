@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetSoundValue : MonoBehaviour
 {
-    [HideInInspector] public AudioSource _audioSource;
+    public AudioSource _audioSource;
     [HideInInspector] public SoundManager _soundManager;
     public float MaxVolume;
     public bool SFX;

@@ -71,7 +71,7 @@ public class GrapplingHookController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.S))
             {
-                if(_joint.distance < MaxDistance) _joint.distance += UpDownSpeed;
+                if (_joint.distance < MaxDistance) _joint.distance += UpDownSpeed;
             }
         }
         if (_joint.distance < .05f)
@@ -149,6 +149,15 @@ This means that is a game run on higher frames per second the update function wi
     ///If the gameObject is disabled we make sure we set the connected distance joint to be a object we know always will exist in the scene.
     private void OnDisable()
     {
+        _joint.connectedBody = TempJoint;
+    }
+    public void ExternalUnhook()
+    {
+        IsHooked = false;
+        HookedPoint = null;
+        _joint.enabled = false;
+        LineObject.enabled = false;
+        gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
         _joint.connectedBody = TempJoint;
     }
 }
