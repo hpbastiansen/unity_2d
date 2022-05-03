@@ -24,15 +24,15 @@ public class MovingBackground : MonoBehaviour
         {
             GetComponent<Parallax>().enabled = false;
             _disabledParallax = true;
-            _initialPosition = transform.position;
+            _initialPosition = transform.localPosition;
         }
 
-        transform.position = new Vector3(transform.position.x - (Speed * Time.deltaTime), transform.position.y, transform.position.z);
+        transform.localPosition = new Vector3(transform.localPosition.x - (Speed * Time.deltaTime), transform.localPosition.y, transform.localPosition.z);
         _movedDistance += Speed * Time.deltaTime;
 
         if(_movedDistance >= 10f)
         {
-            transform.position = _initialPosition;
+            transform.localPosition = _initialPosition;
             _movedDistance = 0f;
         }
     }
