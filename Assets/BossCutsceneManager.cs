@@ -10,6 +10,7 @@ public class BossCutsceneManager : MonoBehaviour
     private FadeToWhite _fadeToWhite;
     [SerializeField] private Transform _knockOffPoint;
     [SerializeField] private Transform _jumpUpPoint;
+    [SerializeField] private Transform _teleportAfter;
     [SerializeField] private float _timeToMove;
     private float _t;
     [SerializeField] private float _speed;
@@ -120,7 +121,7 @@ public class BossCutsceneManager : MonoBehaviour
     void FullyFaded()
     {
         CancelInvoke();
-        _playerMovement.transform.position = _knockOffPoint.position;
+        _playerMovement.transform.position = _teleportAfter.position;
         _bossController.OnKnockedOff();
         Destroy(GameObject.Find("Boss"));
         Invoke("FadeOut", 1.5f);
@@ -129,12 +130,25 @@ public class BossCutsceneManager : MonoBehaviour
     void FadeOut()
     {
         _fadeToWhite.FadeOut(1f);
+        Invoke("HideBlackBars", 0.5f);
+        Invoke("ReturnControl", 1f);
+        Invoke("DisableUI", 1f);
+    }
+
+    private void DisableUI()
+    {
+        _blackBars.gameObject.SetActive(false);
+        _fadeToWhite.gameObject.SetActive(false);
+    }
+
+    private void HideBlackBars()
+    {
+        _blackBars.Hide(0.5f);
     }
 
     void ReturnControl()
     {
         _playerMovement.DashAnimation.SetActive(false);
-        _movePlayer = false;
         _playerMovement.NoControl = false;
         _playerMovement.transform.GetComponent<Rigidbody2D>().simulated = true;
     }
