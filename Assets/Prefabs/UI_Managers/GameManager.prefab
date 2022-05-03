@@ -338,7 +338,8 @@ MonoBehaviour:
   WormToken: {fileID: 0}
   WormTokenActive: 0
   TokenUIactive: 0
-  TokensOwned: []
+  TokensOwned:
+  - {fileID: 0}
   TokensActive: 
   ShortInfo: 
   DashInfo: 
@@ -419,7 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsTutorialDone: 0
   W1C1: 0
-  W1C1Scenename: LEVEL1
+  W1C1Scenename: EXTLVL1
   W1C2: 0
   W1C2Scenename: BOXSCENE
   W1C3: 0
@@ -431,7 +432,7 @@ MonoBehaviour:
   W1C6: 0
   W1C6Scenename: 
   W1Scenes:
-  - LEVEL1_NOT
+  - EXTLVL1
   W2Scenes: []
   W3Scenes: []
   AmmoAndHealth: {fileID: 0}
