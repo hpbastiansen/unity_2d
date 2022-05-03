@@ -11,6 +11,7 @@ public class WormBody : MonoBehaviour
     private WormCollision _wormCollision;
     private LineRenderer _lineRend;
     [SerializeField] private GameObject _bodySegment;
+    [SerializeField] private Sprite[] _bodySprites;
 
     [Header("Body Length")]
     [SerializeField] private int _minLength = 4;
@@ -113,9 +114,11 @@ public class WormBody : MonoBehaviour
     private void CreateBodySprites()
     {
         _bodySegments = new List<Transform>();
-        for(int _i = 0; _i < _length; _i++)
+        for (int _i = 0; _i < _length; _i++)
         {
             GameObject _segment = Instantiate(_bodySegment, transform);
+            Sprite _randomSprite = _bodySprites[Random.Range(0, _bodySprites.Length)];
+            _segment.GetComponent<SpriteRenderer>().sprite = _randomSprite;
             _bodySegments.Add(_segment.transform);
         }
     }

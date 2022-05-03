@@ -14,7 +14,7 @@ public class MovingFloor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _initialPosition = transform.position;
+        _initialPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -26,12 +26,12 @@ public class MovingFloor : MonoBehaviour
             GetComponent<TilemapRenderer>().enabled = true;
         }
 
-        transform.position = new Vector3(transform.position.x - (Speed * Time.deltaTime), transform.position.y, transform.position.z);
+        transform.localPosition = new Vector3(transform.localPosition.x - (Speed * Time.deltaTime), transform.localPosition.y, transform.localPosition.z);
         _movedDistance += Speed * Time.deltaTime;
 
         if (_movedDistance >= 9.5f)
         {
-            transform.position = _initialPosition;
+            transform.localPosition = _initialPosition;
             _movedDistance = 0f;
         }
     }

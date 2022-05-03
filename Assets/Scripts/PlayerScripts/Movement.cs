@@ -273,7 +273,7 @@ public class Movement : MonoBehaviour
         if (_tempAngle == 0f) _tempAngle = 45f;
         Vector2 _knockbackForce = new Vector2(Mathf.Cos(Mathf.Deg2Rad * _tempAngle) * _force * 2f, Mathf.Sin(Mathf.Deg2Rad * _tempAngle)) * _force;
         PlayerRigidbody.AddForce(_knockbackForce, ForceMode2D.Impulse);
-        Invoke("EnableWalking", 0.5f);
+        Invoke("EnableWalking", 0.2f);
     }
 
     /// IEnumerator for dashing that can be called with StartCoroutine().

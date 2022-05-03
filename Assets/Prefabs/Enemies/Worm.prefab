@@ -109,7 +109,7 @@ MonoBehaviour:
   - {x: -0.098303795, y: 0.25050592, z: 0}
   m_ShapePathHash: 2144903029
   m_Mesh: {fileID: 0}
-  m_InstanceId: 398736
+  m_InstanceId: 50156
 --- !u!114 &3769172236211256347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,6 +819,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bodySegment: {fileID: 442757233391173127, guid: abd02260d73bab8459064997a7be794d,
     type: 3}
+  _bodySprites:
+  - {fileID: -897107974938402584, guid: 7953092378cea7e409d86e1fe34fcbd0, type: 3}
+  - {fileID: 3333537666500559670, guid: 7953092378cea7e409d86e1fe34fcbd0, type: 3}
   _minLength: 6
   _maxLength: 10
   _targetDir: {fileID: 5221436915948666308}
