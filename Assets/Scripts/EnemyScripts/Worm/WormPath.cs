@@ -81,7 +81,7 @@ public class WormPath : MonoBehaviour
             if (_currentPoint >= _points.Count)
             {
                 _pathSet = false;
-                StartCoroutine(MarkForDeletion());
+                Invoke("DeleteSelf", 2f);
             }
         }
     }
@@ -135,9 +135,8 @@ public class WormPath : MonoBehaviour
     }
 
     ///Destroy the worm object after 3 seconds of reaching path. This allows the worms body to get into the ground before deletion.
-    private IEnumerator MarkForDeletion()
+    private void DeleteSelf()
     {
-        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
 }

@@ -9,7 +9,6 @@ public class NoRotation : MonoBehaviour
     /*! In the Update function we contantly set the rotation to 0 degrees on all axes.*/
     void Update()
     {
-        transform.eulerAngles = Vector3.zero;
-        transform.localScale = new Vector3(transform.root.localScale.x == -1 ? -1 : 1, 1, 1);
+        //transform.eulerAngles = Vector3.zero;
     }
 }

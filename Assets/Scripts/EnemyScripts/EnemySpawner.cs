@@ -13,8 +13,9 @@ public class EnemySpawner : MonoBehaviour
     {
         for(int _i = 1; _i <= _enemiesAmt; _i++)
         {
+            int _enemyType = Random.Range(0, _enemies.Length);
             float _distance = _enemyDistance * (_i % 2 == 0 ? -1 * _i : _i);
-            GameObject _spawned = Instantiate(_enemies[0], new Vector3(transform.position.x + _distance, transform.position.y), Quaternion.identity);
+            GameObject _spawned = Instantiate(_enemies[_enemyType], new Vector3(transform.position.x + _distance, transform.position.y), Quaternion.identity);
             _spawned.GetComponent<EnemyAI>().EnemyPoint = gameObject;
         }
     }

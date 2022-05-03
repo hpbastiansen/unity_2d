@@ -220,5 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemiesAmt: 1
-  _enemies: []
+  _enemies:
+  - {fileID: 3799245476893451395, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
+  - {fileID: 1749255072304835763, guid: d5ce68aedef40304bb2c8a4bed454dce, type: 3}
   _enemyDistance: 1

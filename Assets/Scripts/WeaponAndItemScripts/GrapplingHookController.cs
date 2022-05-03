@@ -28,6 +28,7 @@ public class GrapplingHookController : MonoBehaviour
     public AudioSource HookAudioSource;
     public AudioSource JumpBoostAudioSource;
     public float MaxDistance = 5f;
+    private float _maintainDistance;
 
 
     /// Start methods run once when enabled.
@@ -57,6 +58,7 @@ public class GrapplingHookController : MonoBehaviour
     {
         if (_joint.distance > .05f && IsHooked == true)
         {
+            //_joint.distance = _maintainDistance;
             if (Input.GetKey(KeyCode.W))
             {
                 _joint.distance -= UpDownSpeed;
@@ -87,6 +89,19 @@ public class GrapplingHookController : MonoBehaviour
             LineObject.enabled = false;
             _joint.enabled = false;
         }
+    }
+
+    public void ReleaseGrapple()
+    {
+        if (IsHooked == true)
+        {
+            HookedPoint = null;
+            IsHooked = false;
+            gameObject.GetComponent<Movement>().DashAnimation.SetActive(false);
+            JumpBoostAudioSource.Play();
+        }
+        LineObject.enabled = false;
+        _joint.enabled = false;
     }
 
     ///Update is called every frame.
@@ -130,6 +145,7 @@ This means that is a game run on higher frames per second the update function wi
 
             _joint.connectedBody = _hit.collider.gameObject.GetComponent<Rigidbody2D>();
             _joint.distance = Vector2.Distance(transform.position, _hit.point);
+            //_maintainDistance = _joint.distance;
 
             LineObject.enabled = true;
             LineObject.SetPosition(0, transform.position);

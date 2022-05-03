@@ -75,6 +75,10 @@ public class WormCollision : MonoBehaviour
         {
             float _deltaX = transform.position.x - _other.transform.position.x;
             _other.GetComponent<PlayerHealth>().TakeDamage(_damage, _force, _deltaX > 0 ? 135f : 45f);
+            if(_other.GetComponent<GrapplingHookController>().IsHooked)
+            {
+                _other.GetComponent<GrapplingHookController>().ReleaseGrapple();
+            }
         }
     }
 }

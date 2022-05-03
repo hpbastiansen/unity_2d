@@ -8,8 +8,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1417855145, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417855145, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
       propertyPath: m_InstanceId
-      value: -497530
+      value: -728388
       objectReference: {fileID: 0}
     - target: {fileID: 320407801253565257, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
@@ -49,7 +53,7 @@ PrefabInstance:
     - target: {fileID: 3799245476893451396, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3799245476893451396, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
@@ -59,7 +63,7 @@ PrefabInstance:
     - target: {fileID: 3799245476893451396, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3799245476893451396, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
@@ -74,7 +78,7 @@ PrefabInstance:
     - target: {fileID: 3799245476893451396, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3799245476893451396, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
@@ -103,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextWaypointDistance: 1
-  _maintainRange: 5
+  _maintainRange: 8
   _rayColliders:
     serializedVersion: 2
     m_Bits: 2560
