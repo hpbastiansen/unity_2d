@@ -91,7 +91,7 @@ public class TokenManager : MonoBehaviour
         _checkUI = Object.FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
-        
+
         foreach (GameObject tokens in TokensOwned)
         {
             tokens.SetActive(false);
@@ -253,7 +253,10 @@ This means that is a game run on higher frames per second the update function wi
 
     public void AddTokens(GameObject token)
     {
-        TokensOwned.Add(token);
+        if (TokensOwned.Contains(token) == false)
+        {
+            TokensOwned.Add(token);
+        }
     }
 
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/

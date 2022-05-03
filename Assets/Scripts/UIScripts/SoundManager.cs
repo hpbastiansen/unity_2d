@@ -29,11 +29,14 @@ public class SoundManager : MonoBehaviour
     public Slider MusicSlider;
     public Text MusicText;
     public float MusicValue;
+    public SetSoundValue[] _setSoundValue;
 
     private void Awake()
     {
         MusicValue = MusicSlider.value;
         SFXValue = SFXSlider.value;
+        _setSoundValue = Object.FindObjectsOfType<SetSoundValue>();
+
     }
     private void Start()
     {
@@ -59,7 +62,6 @@ public class SoundManager : MonoBehaviour
         SFXValue = SFXSlider.value;
         SFXText.text = (SFXValue * 100).ToString("0") + "%";
 
-        SetSoundValue[] _setSoundValue = Object.FindObjectsOfType<SetSoundValue>();
         foreach (var sound in _setSoundValue)
         {
             if (sound.Music) sound._audioSource.volume = sound.MaxVolume * MusicValue;
