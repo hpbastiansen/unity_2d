@@ -9,6 +9,7 @@ public class SaveManager : MonoBehaviour
     public TokenManager TokenManagerScript;
     public Slider SFXSoundSettings;
     public Slider MusicSoundSettings;
+    public WeaponController WeaponControllerScript;
 
 
     [Header("Default variables")]
@@ -32,6 +33,7 @@ public class SaveManager : MonoBehaviour
         ES3.Save("SFXSoundVolume", SFXSoundSettings.value);
         ES3.Save("MusicSoundVolume", MusicSoundSettings.value);
         ES3.Save("Tutorial", CheckPointManagerScript.IsTutorialDone);
+        ES3.Save("GrapplingHook", WeaponControllerScript.GottenGrapplingHook);
 
     }
 
@@ -43,7 +45,7 @@ public class SaveManager : MonoBehaviour
         SFXSoundSettings.value = ES3.Load("SFXSoundVolume", SFXSoundSettings.value);
         MusicSoundSettings.value = ES3.Load("MusicSoundVolume", MusicSoundSettings.value);
         CheckPointManagerScript.IsTutorialDone = ES3.Load("Tutorial", false);
-
+        WeaponControllerScript.GottenGrapplingHook = ES3.Load("GrapplingHook", false);
     }
     private void OnApplicationQuit()
     {

@@ -21,6 +21,8 @@ public class Puzzle1 : MonoBehaviour
     public DialogueTrigger GeneratorDiaTrigger;
     public DialogueTrigger OverrideKeyDiaTrigger;
     public DialogueTrigger FinaleDiaTrigger;
+    public GameObject PostFinaleDia;
+    public GameObject PreFinaleDia;
     public float GeneratorPowerValue;
     public int AccessOverrideCode;
     private bool _startedOnGenerator;
@@ -144,10 +146,14 @@ public class Puzzle1 : MonoBehaviour
           && System.IO.File.Exists(GamePath + "WormPosition/PPOO/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/IAFAR/" + "Position.txt"))
         {
             IsBossHackDone = true;
+            PostFinaleDia.SetActive(true);
+            PreFinaleDia.SetActive(false);
         }
         else
         {
             IsBossHackDone = false;
+            PostFinaleDia.SetActive(false);
+            PreFinaleDia.SetActive(true);
         }
     }
     public void OpenDoor1()

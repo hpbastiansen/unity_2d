@@ -32,8 +32,6 @@ public class CutsceneManager : MonoBehaviour
     private void Start()
     {
         _playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>();
-        _fadeToWhite = GameObject.Find("FadeToWhite").GetComponent<FadeToWhite>();
-        _blackBars = GameObject.Find("BlackBars").GetComponent<CinematicBars>();
     }
 
     private void Update()
@@ -57,6 +55,12 @@ public class CutsceneManager : MonoBehaviour
 
     public void Activate()
     {
+        _blackBars = Resources.FindObjectsOfTypeAll(typeof(CinematicBars))[0] as CinematicBars;
+        _fadeToWhite = Resources.FindObjectsOfTypeAll(typeof(FadeToWhite))[0] as FadeToWhite;
+
+        _blackBars.gameObject.SetActive(true);
+        _fadeToWhite.gameObject.SetActive(true);
+
         foreach(GameObject _object in _objectsToDisable)
         {
             if (_object.activeSelf) _object.SetActive(false);
@@ -113,6 +117,8 @@ public class CutsceneManager : MonoBehaviour
         // TODO: Activate crosshair
         _playerMovement.NoControl = false;
         _playerMovement.transform.GetComponent<Rigidbody2D>().simulated = true;
+        _blackBars.gameObject.SetActive(false);
+        _fadeToWhite.gameObject.SetActive(false);
     }
 
     private void ScreenShake()
