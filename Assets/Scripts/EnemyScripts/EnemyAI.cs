@@ -193,12 +193,14 @@ public class EnemyAI : MonoBehaviour
         if (_currentDirection == Direction.Right)
         {
             _currentDirection = Direction.Left;
-            _seeker.StartPath(transform.position, transform.position + transform.right * _walkLength);
+            GraphNode _nearestNode = AstarPath.active.GetNearest(transform.position + transform.right * _walkLength).node;
+            _seeker.StartPath(transform.position, (Vector3)_nearestNode.position);
         }
         else
         {
             _currentDirection = Direction.Right;
-            _seeker.StartPath(transform.position, transform.position + transform.right * -_walkLength);
+            GraphNode _nearestNode = AstarPath.active.GetNearest(transform.position + transform.right * -_walkLength).node;
+            _seeker.StartPath(transform.position, (Vector3)_nearestNode.position);
         }
     }
 
@@ -209,22 +211,22 @@ public class EnemyAI : MonoBehaviour
         else if (_currentDirection == Direction.Right && _distanceFromEnemyPoint > _radiusAlert) _currentDirection = Direction.Left;
 
         // Select a random walk length and create a path in the current direction.
-        float _walkLength = Random.Range(_minWalkLength*2, _maxWalkLength*2);
+        float _walkLength = Random.Range(_minWalkLength, _maxWalkLength);
         if (_currentDirection == Direction.Right)
         {
             _currentDirection = Direction.Left;
-            _seeker.StartPath(transform.position, transform.position + transform.right * _walkLength);
+            if (_seeker.IsDone()) _seeker.StartPath(transform.position, transform.position + transform.right * _walkLength);
         }
         else
         {
             _currentDirection = Direction.Right;
-            _seeker.StartPath(transform.position, transform.position + transform.right * -_walkLength);
+            if (_seeker.IsDone()) _seeker.StartPath(transform.position, transform.position + transform.right * -_walkLength);
         }
     }
 
     void GeneratePursuitPath()
     {
-        GraphNode _playerNode = AstarPath.active.GetNearest(_player.transform.position, NNConstraint.Default).node;
+        GraphNode _playerNode = AstarPath.active.GetNearest(_player.transform.position).node;
         if (_seeker.IsDone()) _seeker.StartPath(transform.position, (Vector3)_playerNode.position);
     }
 
