@@ -34,7 +34,6 @@ public class SaveManager : MonoBehaviour
         ES3.Save("MusicSoundVolume", MusicSoundSettings.value);
         ES3.Save("Tutorial", CheckPointManagerScript.IsTutorialDone);
         ES3.Save("GrapplingHook", WeaponControllerScript.GottenGrapplingHook);
-
     }
 
     public void Load()
@@ -42,8 +41,8 @@ public class SaveManager : MonoBehaviour
         CheckPointManagerScript.W1Scenes = ES3.Load("W1Scenes", defaultListForCheckpointsW1);
         TokenManagerScript.TokensOwned = ES3.Load("TokensOwned", TokenManagerScript.TokensOwned);
         TokenManagerScript.ActivateDefaultToken();
-        SFXSoundSettings.value = ES3.Load("SFXSoundVolume", SFXSoundSettings.value);
-        MusicSoundSettings.value = ES3.Load("MusicSoundVolume", MusicSoundSettings.value);
+        SFXSoundSettings.value = ES3.Load("SFXSoundVolume", 0.5f);
+        MusicSoundSettings.value = ES3.Load("MusicSoundVolume", 0.5f);
         CheckPointManagerScript.IsTutorialDone = ES3.Load("Tutorial", false);
         WeaponControllerScript.GottenGrapplingHook = ES3.Load("GrapplingHook", false);
     }
