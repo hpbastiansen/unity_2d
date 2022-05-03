@@ -1371,8 +1371,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2560
   _maintainRange: 8
-  _minWalkLength: 2
-  _maxWalkLength: 5
+  _minWalkLength: 1
+  _maxWalkLength: 2
   _minWaitLength: 3
   _maxWaitLength: 5
 --- !u!114 &2090284537474562027
@@ -1388,6 +1388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 20
+  _knockback: 10
 --- !u!114 &5370397347053839294
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -262,5 +262,6 @@ public class Puzzle1 : MonoBehaviour
         }
 
         FinaleStarted = true;
+        GameObject.Find("Wave Controller").GetComponent<WaveController>().Trigger();
     }
 }

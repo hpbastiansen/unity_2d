@@ -19,9 +19,8 @@ public class WaveController : MonoBehaviour
     void Start()
     {
         _enemiesToEnable = new List<GameObject>();
-        Trigger();
     }
-    void Trigger()
+    public void Trigger()
     {
         if (_hasBeenTriggered) return;
         _hasBeenTriggered = true;
