@@ -39,6 +39,8 @@ public class BossController : MonoBehaviour
     [SerializeField] private int _health;
     [SerializeField] private int _damageMin;
     [SerializeField] private int _damageMax;
+    public bool IsPlayerDebuffed;
+    private Stage5Manager _stage5Manager;
 
     public void OnKnockedOff()
     {
@@ -52,9 +54,10 @@ public class BossController : MonoBehaviour
 
     private void Start()
     {
+        _stage5Manager = Object.FindObjectOfType<Stage5Manager>();
         _cutsceneManager = GameObject.Find("CutsceneManager").GetComponent<BossCutsceneManager>();
         _player = GameObject.Find("Main_Character");
-        foreach(Transform _segment in GameObject.Find("Segments").transform)
+        foreach (Transform _segment in GameObject.Find("Segments").transform)
         {
             _bossSegments.Add(_segment.gameObject);
         }
@@ -87,13 +90,13 @@ public class BossController : MonoBehaviour
         _bossMovement.Speed = _wormSpeed;
         FightStarted = false;
 
-        if(_health > 0) Invoke("ExternalPuzzleDone", 5f);
+        if (_health > 0) Invoke("ExternalPuzzleDone", 5f);
     }
 
     private void AddRandomSection()
     {
         GameObject[] setPiece = _setPieces[Random.Range(0, _setPieces.Length)].Segments;
-        foreach(GameObject segment in setPiece)
+        foreach (GameObject segment in setPiece)
         {
             _bossSegmentsBuffer.Add(segment);
         }
@@ -109,7 +112,7 @@ public class BossController : MonoBehaviour
 
     private void PopulateBuffer()
     {
-        while(_bossSegmentsBuffer.Count < 2)
+        while (_bossSegmentsBuffer.Count < 2)
         {
             _bossSegmentsBuffer.Add(_bossSegmentBase);
         }
@@ -135,7 +138,7 @@ public class BossController : MonoBehaviour
 
     public void WeakpointDestroyed()
     {
-        int _damage = Random.Range(_damageMin, _damageMax + 1);
+        int _damage = Random.Range(_damageMin, _damageMax + 1) * (IsPlayerDebuffed ? 1 : 2);
         _health -= _damage;
 
         if (_health <= 0)
@@ -163,7 +166,7 @@ public class BossController : MonoBehaviour
 
         if (ReadyForNextSection)
         {
-            if(_nextIsWeakpoint)
+            if (_nextIsWeakpoint)
             {
                 Debug.Log("Next is weakpoint, adding");
                 AddWeakPointSection();
@@ -178,12 +181,13 @@ public class BossController : MonoBehaviour
         PopulateBuffer();
         _playerMoved += _player.transform.position.x - _previousPosition;
 
-        if(_playerMoved >= _segmentLength)
+        if (_playerMoved >= _segmentLength)
         {
             NewSegment();
             _playerMoved -= _segmentLength;
         }
 
         _previousPosition = _player.transform.position.x;
+        IsPlayerDebuffed = _stage5Manager.IsDebuffed;
     }
 }

@@ -17,12 +17,12 @@ public class Stage4Manager : MonoBehaviour
         GamePath += "AIS/";
         ReadyToRun = true;
         FinaleBlock.SetActive(true);
-        if (System.IO.File.Exists(GamePath + "Crip.bat") || System.IO.File.Exists(GamePath + "CripSuc.txt"))
+        if (System.IO.File.Exists(GamePath + "Slow_Down_Worm.bat") || System.IO.File.Exists(GamePath + "Slow_Down_Worm_Success.txt"))
         {
             try
             {
-                File.Delete(GamePath + "Crip.bat");
-                File.Delete(GamePath + "CripSuc.txt");
+                File.Delete(GamePath + "Slow_Down_Worm.bat");
+                File.Delete(GamePath + "Slow_Down_Worm_Success.txt");
             }
             catch (IOException)
             {
@@ -36,7 +36,7 @@ public class Stage4Manager : MonoBehaviour
     void Update()
     {
 
-        if (System.IO.File.Exists(GamePath + "CripSuc.txt") && ReadyToRun == true)
+        if (System.IO.File.Exists(GamePath + "Slow_Down_Worm_Success.txt") && ReadyToRun == true)
         {
             ReadyToRun = false;
             RunCMD();
@@ -64,19 +64,19 @@ public class Stage4Manager : MonoBehaviour
     }
     public void MakeFile()
     {
-        if (System.IO.File.Exists(GamePath + "Crip.bat") || System.IO.File.Exists(GamePath + "CripSuc.txt"))
+        if (System.IO.File.Exists(GamePath + "Slow_Down_Worm.bat") || System.IO.File.Exists(GamePath + "Slow_Down_Worm_Success.txt"))
         {
             try
             {
-                File.Delete(GamePath + "Crip.bat");
-                File.Delete(GamePath + "CripSuc.txt");
+                File.Delete(GamePath + "Slow_Down_Worm.bat");
+                File.Delete(GamePath + "Slow_Down_Worm_Success.txt");
             }
             catch (IOException)
             {
 
             }
         }
-        System.IO.File.WriteAllText(GamePath + "Crip.bat", "echo Sweet >>CripSuc.txt");
+        System.IO.File.WriteAllText(GamePath + "Slow_Down_Worm.bat", "echo 0x36183AFH67g#14_sdr >>Slow_Down_Worm_Success.txt");
         Application.OpenURL("file:///" + GamePath);
     }
 }

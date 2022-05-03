@@ -22,6 +22,7 @@ public class BossCutsceneManager : MonoBehaviour
     private Vector3 _moveTo;
 
     private bool _movePlayer = false;
+    public bool IsDown;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class BossCutsceneManager : MonoBehaviour
         _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         _playerMovement = GameObject.Find("Main_Character").GetComponent<Movement>();
         _bossController = GameObject.Find("BossController").GetComponent<BossController>();
+        IsDown = false;
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class BossCutsceneManager : MonoBehaviour
 
         _playerMovement.transform.position = Vector3.MoveTowards(_playerMovement.transform.position, _moveTo, Time.deltaTime * _speed);
 
-        if(Vector3.Distance(_playerMovement.transform.position, _moveTo) < 0.1f)
+        if (Vector3.Distance(_playerMovement.transform.position, _moveTo) < 0.1f)
         {
             _movePlayer = false;
             ReturnControl();
@@ -61,6 +63,8 @@ public class BossCutsceneManager : MonoBehaviour
         _moveFrom = _playerMovement.transform.position;
         _moveTo = _knockOffPoint.position;
         _movePlayer = true;
+        IsDown = true;
+        Object.FindObjectOfType<Stage5Manager>().Debuffplayer();
     }
 
     public void JumpOnBoss()
@@ -75,6 +79,7 @@ public class BossCutsceneManager : MonoBehaviour
         _moveFrom = _playerMovement.transform.position;
         _moveTo = _jumpUpPoint.position;
         _movePlayer = true;
+        IsDown = false;
     }
 
     public void BossDeath()
