@@ -48,8 +48,8 @@ public class CutsceneManager : MonoBehaviour
         {
             _playerMovement.transform.position = _playerPositionBefore.position;
             _playerMovement.transform.eulerAngles = new Vector3(_floor.transform.eulerAngles.x, _floor.transform.eulerAngles.y, _floor.transform.eulerAngles.z + Time.deltaTime);
-            _floor.transform.eulerAngles = new Vector3(_floor.transform.eulerAngles.x, _floor.transform.eulerAngles.y, _floor.transform.eulerAngles.z + Time.deltaTime * 0.3f);
-            _bigWorm.transform.eulerAngles = new Vector3(_bigWorm.transform.eulerAngles.x, _bigWorm.transform.eulerAngles.y, _bigWorm.transform.eulerAngles.z + Time.deltaTime);
+            //_floor.transform.eulerAngles = new Vector3(_floor.transform.eulerAngles.x, _floor.transform.eulerAngles.y, _floor.transform.eulerAngles.z + Time.deltaTime);
+            _bigWorm.transform.eulerAngles = new Vector3(_bigWorm.transform.eulerAngles.x, _bigWorm.transform.eulerAngles.y, _bigWorm.transform.eulerAngles.z + (Time.deltaTime * 4f));
         }
     }
 

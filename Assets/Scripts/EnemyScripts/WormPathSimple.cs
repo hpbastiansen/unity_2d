@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WormPathSimple : MonoBehaviour
 {
-    [HideInInspector] public Vector2 StartPoint;
-    [HideInInspector] public Vector2 EndPoint;
+    public Vector2 StartPoint;
+    public Vector2 EndPoint;
     private Vector2 _direction;
     private Rigidbody2D _rb;
     private bool _pathSet = false;
