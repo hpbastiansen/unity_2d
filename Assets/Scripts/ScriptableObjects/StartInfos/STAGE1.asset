@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: STAGE1
   m_EditorClassIdentifier: 
   StartPosition: {x: -20, y: 5}
-  Ammo: 100
-  Health: 100
+  Ammo: 250
+  Health: 150

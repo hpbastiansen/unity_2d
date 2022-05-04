@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LEVEL1
   m_EditorClassIdentifier: 
   StartPosition: {x: -9.53125, y: -3.4375}
-  Ammo: 100
-  Health: 100
+  Ammo: 250
+  Health: 150

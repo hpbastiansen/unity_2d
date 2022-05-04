@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EXTLVL1
   m_EditorClassIdentifier: 
   StartPosition: {x: -20, y: 0}
-  Ammo: 1000
-  Health: 100
+  Ammo: 250
+  Health: 150
