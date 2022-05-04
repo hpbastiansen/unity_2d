@@ -807,7 +807,7 @@ MonoBehaviour:
   - {x: -0.40005636, y: 0.37428522, z: 0}
   m_ShapePathHash: -1429148193
   m_Mesh: {fileID: 0}
-  m_InstanceId: 517034
+  m_InstanceId: 368112
 --- !u!1 &1749255072304835763
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,7 +975,7 @@ MonoBehaviour:
   BlockedInFront: 0
   GapInFront: 0
   _speed: 2.5
-  _jumpForce: 50000
+  _jumpForce: 25000
 --- !u!114 &8117688310555032191
 MonoBehaviour:
   m_ObjectHideFlags: 0

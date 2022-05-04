@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class SoundManager : MonoBehaviour
         MusicValue = MusicSlider.value;
         SFXValue = SFXSlider.value;
         _setSoundValue = Object.FindObjectsOfType<SetSoundValue>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
     private void Start()
@@ -54,6 +56,7 @@ public class SoundManager : MonoBehaviour
             BackgroundMusicSource.clip = BackgroundMusicList[_randomMusic];
             BackgroundMusicSource.Play();
         }
+
     }
     public void ChangeValue()
     {
@@ -66,6 +69,18 @@ public class SoundManager : MonoBehaviour
         {
             if (sound.Music) sound._audioSource.volume = sound.MaxVolume * MusicValue;
             if (sound.SFX) sound._audioSource.volume = sound.MaxVolume * SFXValue;
+        }
+    }
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "STAGE5")
+        {
+            BackgroundMusicSource.pitch = 1.2f;
+        }
+        else
+        {
+            BackgroundMusicSource.pitch = 0.6f;
         }
     }
 }

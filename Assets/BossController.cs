@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossController : MonoBehaviour
 {
@@ -48,6 +49,9 @@ public class BossController : MonoBehaviour
     public bool IsPlayerDebuffed;
     private Stage5Manager _stage5Manager;
     [SerializeField] private Transform _movementBoundary;
+
+    public Slider HealthBar;
+    public Text HealthText;
 
     public void OnKnockedOff()
     {
@@ -184,7 +188,7 @@ public class BossController : MonoBehaviour
         if (Health <= 0) return;
         PopulateBuffer();
         IsPlayerDebuffed = _stage5Manager.IsDebuffed;
-        if(_movementBoundary.position.x - _player.transform.position.x > 0)
+        if (_movementBoundary.position.x - _player.transform.position.x > 0)
         {
             _movementBoundary.position = new Vector3(_movementBoundary.position.x - _segmentLength, _movementBoundary.position.y, _movementBoundary.position.z);
         }
@@ -195,7 +199,7 @@ public class BossController : MonoBehaviour
         if (!OnWorm)
         {
             _bossMoved += _boss.position.x - _previousBossPosition;
-            if(_bossMoved >= _segmentLength)
+            if (_bossMoved >= _segmentLength)
             {
                 NewSegmentBack();
                 _bossMoved -= _segmentLength;
@@ -233,5 +237,8 @@ public class BossController : MonoBehaviour
 
             _previousPlayerPosition = _player.transform.position.x;
         }
+        HealthBar.maxValue = MaxHealth;
+        HealthBar.value = Health;
+        HealthText.text = (Health.ToString("F0") + " / " + MaxHealth.ToString("F0")).ToString();
     }
 }
