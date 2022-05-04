@@ -87,7 +87,9 @@ public class Bullet : MonoBehaviour
             }
             else if (_playerHealth != null)
             {
-                _playerHealth.TakeDamage(Damage);
+                float _angle = _playerHealth.transform.position.x - transform.position.x > 0 ? 45f : 135f;
+
+                _playerHealth.TakeDamage(Damage, 10f, _angle);
                 if (_playerHealth.IsBlocking == true)
                 {
                     Instantiate(BlockEffect, transform.position, BlockEffect.transform.rotation);
