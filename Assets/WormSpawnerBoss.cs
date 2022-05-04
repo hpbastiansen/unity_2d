@@ -41,8 +41,6 @@ public class WormSpawnerBoss : MonoBehaviour
         Vector3 _direction = new Vector3(Mathf.Cos(_angle), Mathf.Sin(_angle), 0);
         _pointTo = transform.position + (_direction * 50f);
 
-        Debug.Log("Spawning worm. Direction: " + _direction.ToString());
-
         GameObject _spawnedWorm = Instantiate(_worm, transform.position, Quaternion.Euler(0, 0, 0));
         WormPathSimple _path = _spawnedWorm.GetComponent<WormPathSimple>();
         _path.StartPoint = transform.position;
