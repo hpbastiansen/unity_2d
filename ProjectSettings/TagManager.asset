@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Shield
+  - Worm
+  - WormSpawn
+  - Ground
+  - OneWay
   layers:
   - Default
   - TransparentFX
@@ -13,16 +18,16 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Env
+  - Ground
+  - Background
+  - Player
+  - Enemy
+  - Shield
+  - NormalGround
+  - Foreground
+  - GRAPPABLEOBJECTS
+  - Bullet
   - 
   - 
   - 
@@ -40,4 +45,37 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3760291581
+    locked: 0
+  - name: BackgroundTiles
+    uniqueID: 616200297
+    locked: 0
+  - name: Enemy
+    uniqueID: 423111043
+    locked: 0
+  - name: Ground
+    uniqueID: 193805239
+    locked: 0
+  - name: Ground
+    uniqueID: 193805239
+    locked: 0
+  - name: Player
+    uniqueID: 2970385247
+    locked: 0
+  - name: Jumpable
+    uniqueID: 1836183137
+    locked: 0
+  - name: VFX
+    uniqueID: 4223598083
+    locked: 0
+  - name: Foreground
+    uniqueID: 1648033373
+    locked: 0
+  - name: NORMALGROUND
+    uniqueID: 1362824945
+    locked: 0
+  - name: cursor
+    uniqueID: 2976990365
     locked: 0
