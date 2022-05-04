@@ -35,6 +35,8 @@ public class SaveManager : MonoBehaviour
         ES3.Save("Tutorial", CheckPointManagerScript.IsTutorialDone);
         ES3.Save("GrapplingHook", WeaponControllerScript.GottenGrapplingHook);
         ES3.Save("CactiInt", TokenManagerScript.CactiDestoyed);
+        ES3.Save("ShrubsInt", TokenManagerScript.ShrubsDestoyed);
+
 
     }
 
@@ -48,6 +50,8 @@ public class SaveManager : MonoBehaviour
         CheckPointManagerScript.IsTutorialDone = ES3.Load("Tutorial", false);
         WeaponControllerScript.GottenGrapplingHook = ES3.Load("GrapplingHook", false);
         TokenManagerScript.CactiDestoyed = ES3.Load("CactiInt", 0);
+        TokenManagerScript.ShrubsDestoyed = ES3.Load("ShrubsInt", 0);
+
     }
     private void OnApplicationQuit()
     {

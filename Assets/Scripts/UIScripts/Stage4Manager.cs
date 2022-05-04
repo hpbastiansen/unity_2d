@@ -8,10 +8,12 @@ public class Stage4Manager : MonoBehaviour
     public string GamePath;
     public bool ReadyToRun;
     public GameObject FinaleBlock;
-
+    public GameObject GiveWormToken;
+    public TokenManager TokenManagerScript;
     // Start is called before the first frame update
     void Start()
     {
+        TokenManagerScript = Object.FindObjectOfType<TokenManager>();
         GamePath = Application.dataPath;
         GamePath += "/../";
         GamePath += "AIS/";
@@ -35,13 +37,20 @@ public class Stage4Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (TokenManagerScript.ShrubsDestoyed >= 50 || TokenManagerScript.TokensOwned.Contains(TokenManagerScript.WormToken) == true)
+        {
+            GiveWormToken.SetActive(false);
+        }
+        else
+        {
+            GiveWormToken.SetActive(true);
+        }
 
         if (System.IO.File.Exists(GamePath + "Slow_Down_Worm_Success.txt") && ReadyToRun == true)
         {
             ReadyToRun = false;
             RunCMD();
         }
-
     }
 
     public void RunCMD()

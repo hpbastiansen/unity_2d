@@ -250,14 +250,13 @@ This means that is a game run on higher frames per second the update function wi
     public void AddShrubsTokenInt()
     {
         ShrubsDestoyed += 1;
-        if (ShrubsDestoyed == 5)
+        if (ShrubsDestoyed == 50)
         {
             AddTokens(WormToken);
             OnEnableDialogueManager _dialogue = Object.FindObjectOfType<OnEnableDialogueManager>();
             _dialogue.Dialogues.SentencesToSpeak.Clear();
             _dialogue.Dialogues.SentencesToSpeak.Add("You earned the Worm Token! Check it out in the Token Menu!");
             _dialogue.ActivateDialogue();
-
         }
     }
     public void RevolverTokenDash()
@@ -313,7 +312,7 @@ This means that is a game run on higher frames per second the update function wi
         CustomPlayerJumpHeight = 10000;
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
-        GunLifeStealAmount = 1;
+        GunLifeStealAmount = .5f;
         CurrentWeapon.BulletTimeToLive = 1f;
         CurrentWeapon.Firerate = 10;
         CurrentWeapon.MinVerticalSpread = -1;
@@ -469,7 +468,7 @@ This means that is a game run on higher frames per second the update function wi
         CustomPlayerJumpHeight = 10000;
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
-        GunLifeStealAmount = 1;
+        GunLifeStealAmount = .6f;
         CurrentWeapon.BulletTimeToLive = 1f;
         CurrentWeapon.Firerate = 10;
         CurrentWeapon.MinVerticalSpread = -3;
