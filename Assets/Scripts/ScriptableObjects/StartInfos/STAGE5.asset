@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPosition: {x: 0, y: 8}
   Ammo: 100
-  Health: 100
+  Health: 300
