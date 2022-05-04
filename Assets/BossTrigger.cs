@@ -13,7 +13,7 @@ public class BossTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!_bossController.FightStarted)
+        if(!_bossController.OnWorm)
         {
             _bossController.Trigger();
         }

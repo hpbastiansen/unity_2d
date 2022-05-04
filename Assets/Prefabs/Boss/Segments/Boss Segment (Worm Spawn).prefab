@@ -65,7 +65,191 @@ PrefabInstance:
     - target: {fileID: 9221045747796905500, guid: 55d61fa81f191d24d82a2f36b0c98055,
         type: 3}
       propertyPath: m_Name
-      value: Boss Segment (Base)
+      value: Boss Segment (Worm Spawn)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55d61fa81f191d24d82a2f36b0c98055, type: 3}
+--- !u!4 &8405208380685594296 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8539316909435430918, guid: 55d61fa81f191d24d82a2f36b0c98055,
+    type: 3}
+  m_PrefabInstance: {fileID: 154515473705469630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1060316322347251011
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8405208380685594296}
+    m_Modifications:
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _angleMax
+      value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _angleMin
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _spawnTimeMax
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _spawnTimeMin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366013021515409786, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_Name
+      value: Worm Spawner (Boss)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9baf7f9277889b45b4a53561bd7b549, type: 3}
+--- !u!1001 &1973680277412742285
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8405208380685594296}
+    m_Modifications:
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2282303346111231450, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _angleMax
+      value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _angleMin
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _spawnTimeMax
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909355934842057091, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: _spawnTimeMin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366013021515409786, guid: c9baf7f9277889b45b4a53561bd7b549,
+        type: 3}
+      propertyPath: m_Name
+      value: Worm Spawner (Boss) (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9baf7f9277889b45b4a53561bd7b549, type: 3}
