@@ -64,6 +64,8 @@ public class TokenManager : MonoBehaviour
     [Header("CactusToken")]
     public GameObject CactusSplinter;
     public WeaponController WeaponControllerScript;
+    public bool ReadyToGiveToken;
+    public int CactiDestoyed;
 
 
 
@@ -80,6 +82,7 @@ public class TokenManager : MonoBehaviour
         _myUIManager = GameObject.FindObjectOfType<UIManager>();
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
         _uiManager = Object.FindObjectOfType<UIManager>();
+        ReadyToGiveToken = true;
     }
 
     /// Start methods run once when enabled.
@@ -228,6 +231,19 @@ This means that is a game run on higher frames per second the update function wi
             }
         }
     }
+    public void AddCactusTokenInt()
+    {
+        CactiDestoyed += 1;
+        if (CactiDestoyed == 50)
+        {
+            AddTokens(CactusToken);
+            OnEnableDialogueManager _dialogue = Object.FindObjectOfType<OnEnableDialogueManager>();
+            _dialogue.Dialogues.SentencesToSpeak.Clear();
+            _dialogue.Dialogues.SentencesToSpeak.Add("You earned the Cactus Token! Check it out in the Token Menu!");
+            _dialogue.ActivateDialogue();
+
+        }
+    }
     public void RevolverTokenDash()
     {
         CurrentWeapon.InstantReload();
@@ -244,7 +260,8 @@ This means that is a game run on higher frames per second the update function wi
     }
     public void WormTokenCounter()
     {
-        Collider2D[] hitCollidersS = Physics2D.OverlapCircleAll(_playerHealth.transform.position, 10f, 1 << LayerMask.NameToLayer("Enemy"));
+        EnemyHealth[] hitCollidersS = FindObjectsOfType(typeof(EnemyHealth)) as EnemyHealth[];
+        //Collider2D[] hitCollidersS = Physics2D.OverlapCircleAll(_playerHealth.transform.position, 10f, 1 << LayerMask.NameToLayer("Enemy"));
         foreach (var hitCollider in hitCollidersS)
         {
             hitCollider.GetComponent<EnemyHealth>().Debuff();
@@ -280,7 +297,7 @@ This means that is a game run on higher frames per second the update function wi
         CustomPlayerJumpHeight = 10000;
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
-        GunLifeStealAmount = 0;
+        GunLifeStealAmount = 1;
         CurrentWeapon.BulletTimeToLive = 1f;
         CurrentWeapon.Firerate = 10;
         CurrentWeapon.MinVerticalSpread = -1;
@@ -291,7 +308,7 @@ This means that is a game run on higher frames per second the update function wi
         CurrentWeapon.IsHoming = false;
 
         CustomDashSpeed = 15;
-        CustomDashDuration = 0.2f;
+        CustomDashDuration = 0.3f;
         CustomDashCooldown = 1;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
@@ -306,8 +323,8 @@ This means that is a game run on higher frames per second the update function wi
 
         ShieldLifeSteal = 0;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
-        _shieldHP.MaxHP = 30;
-        _shieldHP.HP = 30;
+        _shieldHP.MaxHP = 12;
+        _shieldHP.HP = 12;
 
         _weaponAccuracy = "decent";
     }
@@ -323,42 +340,42 @@ This means that is a game run on higher frames per second the update function wi
         ShortInfo = "When dashing projectiles shoot out in the direction of the momentum. Bullets split into 8 after traveling the maximum distance. When blocking succesfully it shoots out 3 thorns, which homes to the nearest enemy. " +
         "Shield gives the player touch damage.";
 
-        CustomPlayerMoveSpeed = 10f;
+        CustomPlayerMoveSpeed = 5f;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
         CustomPlayerJumpHeight = 10000;
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
-        GunLifeStealAmount = 0.2f;
-        CurrentWeapon.BulletTimeToLive = .2f;
+        GunLifeStealAmount = 0;
+        CurrentWeapon.BulletTimeToLive = .08f;
         CurrentWeapon.Firerate = 3;
         CurrentWeapon.MinVerticalSpread = 0;
         CurrentWeapon.MaxVerticalSpread = 0;
         CurrentWeapon.UseClipSize = false;
-        CurrentWeapon.Damage = 10;
-        CurrentWeapon.BulletSpeed = 30;
+        CurrentWeapon.Damage = 6;
+        CurrentWeapon.BulletSpeed = 60;
         CurrentWeapon.IsHoming = false;
 
 
-        CustomDashSpeed = 20;
-        CustomDashDuration = 0.6f;
-        CustomDashCooldown = 1;
+        CustomDashSpeed = 10;
+        CustomDashDuration = 0.5f;
+        CustomDashCooldown = 2;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
         PlayerMovement.DashCooldown = CustomDashCooldown;
 
-        CustomBlockLifeSteal = 3;
+        CustomBlockLifeSteal = 1;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
-        CustomBlockLifeStealCooldown = 2;
+        CustomBlockLifeStealCooldown = 3;
         _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
         CustomBlockLifeStealActiveTime = 1;
         _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
 
-        ShieldLifeSteal = 1;
+        ShieldLifeSteal = 2;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
-        _shieldHP.MaxHP = 30;
-        _shieldHP.HP = 30;
+        _shieldHP.MaxHP = 18;
+        _shieldHP.HP = 18;
 
         _weaponAccuracy = "Perfect";
 
@@ -376,47 +393,45 @@ This means that is a game run on higher frames per second the update function wi
         ShortInfo = "The Revlover tokens allows the gun can to shoot 6 times in rapid succession. When dashing the your gun is reloaded. If you successfully counter/block another bullet it adds one more ammo to the current clip."
         + " Shield has however lower health.";
 
-        CustomPlayerMoveSpeed = 10f;
+        CustomPlayerMoveSpeed = 5f;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
-        CustomPlayerJumpHeight = 10000;
+        CustomPlayerJumpHeight = 11000;
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
-        GunLifeStealAmount = 0.3f;
-        CurrentWeapon.BulletTimeToLive = 3f;
+        GunLifeStealAmount = 0;
+        CurrentWeapon.BulletTimeToLive = 1f;
         CurrentWeapon.Firerate = 20;
-        CurrentWeapon.MinVerticalSpread = -5;
-        CurrentWeapon.MaxVerticalSpread = 5;
+        CurrentWeapon.MinVerticalSpread = -7;
+        CurrentWeapon.MaxVerticalSpread = 7;
         CurrentWeapon.UseClipSize = true;
-        CurrentWeapon.MaxClipSize = 6;
-        CurrentWeapon.ReloadTime = 2f;
-        CurrentWeapon.Damage = 50;
-        CurrentWeapon.BulletSpeed = 30;
+        CurrentWeapon.Damage = 8;
+        CurrentWeapon.BulletSpeed = 60;
         CurrentWeapon.IsHoming = false;
+        CurrentWeapon.MaxClipSize = 6;
+        CurrentWeapon.ReloadTime = 1.5f;
 
-
-
-        CustomDashSpeed = 100;
-        CustomDashDuration = 0.1f;
+        CustomDashSpeed = 20;
+        CustomDashDuration = 0.3f;
         CustomDashCooldown = 2;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
         PlayerMovement.DashCooldown = CustomDashCooldown;
 
-        CustomBlockLifeSteal = 1;
+        CustomBlockLifeSteal = 0;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
-        CustomBlockLifeStealCooldown = 2;
+        CustomBlockLifeStealCooldown = 3;
         _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
         CustomBlockLifeStealActiveTime = 1;
         _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
 
-        ShieldLifeSteal = 1;
-        _shieldHP.MaxHP = 10;
-        _shieldHP.HP = 10;
+        ShieldLifeSteal = 0;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
+        _shieldHP.MaxHP = 6;
+        _shieldHP.HP = 6;
 
-        _weaponAccuracy = "Decent";
+        _weaponAccuracy = "bad";
     }
 
     ///The ActivateWormToken function activates the Worm token, and deacitvates every other token. Then different variables to match it's unique trait.
@@ -429,46 +444,44 @@ This means that is a game run on higher frames per second the update function wi
         WormTokenActive = true;
 
         //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
-        ShortInfo = "Can dash through walls and objects as long as there is open space behind it. Bullets are noe slow, homing bullets.";
+        ShortInfo = "Super fast dash! But can only dash if the cursor is not colliding with other objects! Bullets are now slow, homing bullets. The bullet will always seek the nearest enemy. So make sure they are not behind a wall! When countering or blocking with the shield enemies will be highlighted!";
 
-        CustomPlayerMoveSpeed = 5f;
+        CustomPlayerMoveSpeed = 6f;
         PlayerMovement.MoveSpeed = CustomPlayerMoveSpeed;
         PlayerMovement.ActiveMoveSpeed = CustomPlayerMoveSpeed;
 
         CustomPlayerJumpHeight = 10000;
         PlayerMovement.JumpForce = CustomPlayerJumpHeight;
 
-        GunLifeStealAmount = 0f;
-        CurrentWeapon.BulletTimeToLive = 3f;
+        GunLifeStealAmount = 1;
+        CurrentWeapon.BulletTimeToLive = 1f;
         CurrentWeapon.Firerate = 10;
-        CurrentWeapon.MinVerticalSpread = 0;
-        CurrentWeapon.MaxVerticalSpread = 0;
+        CurrentWeapon.MinVerticalSpread = -3;
+        CurrentWeapon.MaxVerticalSpread = 3;
         CurrentWeapon.UseClipSize = false;
-        CurrentWeapon.MaxClipSize = 6;
-        CurrentWeapon.ReloadTime = 2f;
-        CurrentWeapon.Damage = 5;
-        CurrentWeapon.BulletSpeed = 10;
+        CurrentWeapon.Damage = 7;
+        CurrentWeapon.BulletSpeed = 7;
         CurrentWeapon.IsHoming = true;
 
-        CustomDashSpeed = 0;
-        CustomDashDuration = 0;
-        CustomDashCooldown = 3;
+        CustomDashSpeed = 100;
+        CustomDashDuration = 0.07f;
+        CustomDashCooldown = 2;
         PlayerMovement.DashLength = CustomDashDuration;
         PlayerMovement.DashSpeed = CustomDashSpeed;
         PlayerMovement.DashCooldown = CustomDashCooldown;
 
-        CustomBlockLifeSteal = 1;
+        CustomBlockLifeSteal = 0;
         _playerHealth.BlockLifeSteal = CustomBlockLifeSteal;
-        CustomBlockLifeStealCooldown = 2;
+        CustomBlockLifeStealCooldown = 3;
         _playerHealth.BlockCooldownTime = CustomBlockLifeStealCooldown;
         CustomBlockLifeStealActiveTime = 1;
         _playerHealth.BlockActiveTime = CustomBlockLifeStealActiveTime;
 
-        ShieldLifeSteal = 3;
-        _shieldHP.MaxHP = 10;
-        _shieldHP.HP = 10;
+        ShieldLifeSteal = 1;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
+        _shieldHP.MaxHP = 21;
+        _shieldHP.HP = 21;
 
-        _weaponAccuracy = "EPIC";
+        _weaponAccuracy = "OK";
     }
 }

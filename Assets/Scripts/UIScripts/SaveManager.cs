@@ -34,6 +34,8 @@ public class SaveManager : MonoBehaviour
         ES3.Save("MusicSoundVolume", MusicSoundSettings.value);
         ES3.Save("Tutorial", CheckPointManagerScript.IsTutorialDone);
         ES3.Save("GrapplingHook", WeaponControllerScript.GottenGrapplingHook);
+        ES3.Save("CactiInt", TokenManagerScript.CactiDestoyed);
+
     }
 
     public void Load()
@@ -45,6 +47,7 @@ public class SaveManager : MonoBehaviour
         MusicSoundSettings.value = ES3.Load("MusicSoundVolume", 0.5f);
         CheckPointManagerScript.IsTutorialDone = ES3.Load("Tutorial", false);
         WeaponControllerScript.GottenGrapplingHook = ES3.Load("GrapplingHook", false);
+        TokenManagerScript.CactiDestoyed = ES3.Load("CactiInt", 0);
     }
     private void OnApplicationQuit()
     {

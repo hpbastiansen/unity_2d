@@ -223,7 +223,7 @@ public class Movement : MonoBehaviour
                 var _insideCollider = _mouseOverCollider.CheckForCollider();
                 if (_insideCollider == false)
                 {
-                    _tokenManager.WormTokenDash();
+                    //_tokenManager.WormTokenDash();
                     StartCoroutine(Dash());
                 }
             }

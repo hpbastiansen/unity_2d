@@ -807,7 +807,7 @@ MonoBehaviour:
   - {x: -0.40005636, y: 0.37428522, z: 0}
   m_ShapePathHash: -1429148193
   m_Mesh: {fileID: 0}
-  m_InstanceId: 303968
+  m_InstanceId: 517034
 --- !u!1 &1749255072304835763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,7 +1372,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 0
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 144.0574
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

@@ -16,7 +16,7 @@ public class Killzone : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if(!_canGrappleThrough || !_player.GetComponent<GrapplingHookController>().IsHooked)
+            if (!_canGrappleThrough || !_player.GetComponent<GrapplingHookController>().IsHooked)
             {
                 _player.GetComponent<PlayerHealth>().TakeDamage(9999, 0);
             }
