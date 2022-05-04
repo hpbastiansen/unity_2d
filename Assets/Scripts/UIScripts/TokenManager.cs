@@ -67,6 +67,9 @@ public class TokenManager : MonoBehaviour
     public bool ReadyToGiveToken;
     public int CactiDestoyed;
 
+    [Header("WormToken")]
+    public int ShrubsDestoyed;
+
 
 
     ///Awake is called when the script instance is being loaded.
@@ -240,6 +243,19 @@ This means that is a game run on higher frames per second the update function wi
             OnEnableDialogueManager _dialogue = Object.FindObjectOfType<OnEnableDialogueManager>();
             _dialogue.Dialogues.SentencesToSpeak.Clear();
             _dialogue.Dialogues.SentencesToSpeak.Add("You earned the Cactus Token! Check it out in the Token Menu!");
+            _dialogue.ActivateDialogue();
+
+        }
+    }
+    public void AddShrubsTokenInt()
+    {
+        ShrubsDestoyed += 1;
+        if (ShrubsDestoyed == 5)
+        {
+            AddTokens(WormToken);
+            OnEnableDialogueManager _dialogue = Object.FindObjectOfType<OnEnableDialogueManager>();
+            _dialogue.Dialogues.SentencesToSpeak.Clear();
+            _dialogue.Dialogues.SentencesToSpeak.Add("You earned the Worm Token! Check it out in the Token Menu!");
             _dialogue.ActivateDialogue();
 
         }
