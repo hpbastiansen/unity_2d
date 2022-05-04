@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class SaveManager : MonoBehaviour
 {
     public CheckPointManager CheckPointManagerScript;
@@ -21,6 +21,7 @@ public class SaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         defaultListForCheckpointsW1.Add("STAGE1");
         defaultListForTokensOwned.Add(TokenManagerScript.DefaultToken);
         Load();
@@ -54,6 +55,10 @@ public class SaveManager : MonoBehaviour
 
     }
     private void OnApplicationQuit()
+    {
+        Save();
+    }
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Save();
     }
