@@ -7,9 +7,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1390146332, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
+      propertyPath: _firerate
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1417855145, guid: 7255372a57df1f64dadf0b3b1aa336e0, type: 3}
       propertyPath: m_InstanceId
-      value: -903016
+      value: -30904
       objectReference: {fileID: 0}
     - target: {fileID: 73334822832635633, guid: 7255372a57df1f64dadf0b3b1aa336e0,
         type: 3}
@@ -110,4 +114,4 @@ MonoBehaviour:
   _rayColliders:
     serializedVersion: 2
     m_Bits: 2560
-  _detectionDistance: 6
+  _detectionDistance: 8
