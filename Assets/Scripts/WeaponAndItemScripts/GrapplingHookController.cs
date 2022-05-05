@@ -28,7 +28,8 @@ public class GrapplingHookController : MonoBehaviour
     public AudioSource HookAudioSource;
     public AudioSource JumpBoostAudioSource;
     public float MaxDistance = 5f;
-    private float _maintainDistance;
+    private LineOfSight _lineOfSight;
+    private GameObject _lastHookedPoint = null;
 
 
     /// Start methods run once when enabled.
@@ -44,6 +45,7 @@ public class GrapplingHookController : MonoBehaviour
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
         MovementScript = Object.FindObjectOfType<Movement>();
         _grapplingHookGun = transform.Find("Arm/WeaponHolder/Grapplinghook").GetComponent<GrapplingHookGun>();
+        _lineOfSight = transform.Find("Arm/WeaponHolder/Grapplinghook/LineOfSight").GetComponent<LineOfSight>();
     }
 
     ///Fixed Update is called based on a fixed frame rate.
@@ -89,6 +91,17 @@ public class GrapplingHookController : MonoBehaviour
             LineObject.enabled = false;
             _joint.enabled = false;
         }
+
+        if(IsHooked)
+        {
+            
+
+            if(PlayerRigidbody.position.y > HookedPoint.transform.position.y && PlayerRigidbody.velocity.y > 0)
+            {
+                PlayerRigidbody.velocity = new Vector2(PlayerRigidbody.velocity.x, 0);
+                //PlayerRigidbody.AddForce(Vector2.down);
+            }
+        }
     }
 
     public void ReleaseGrapple()
@@ -121,6 +134,7 @@ This means that is a game run on higher frames per second the update function wi
         if ((Input.GetMouseButtonDown(0) && IsHooked == true && IsUsingGrapplingHookGun == true) || (IsHooked && IsUsingGrapplingHookGun == false && Input.GetKeyDown(KeyCode.G)))
         {
             IsHooked = false;
+            _lastHookedPoint = HookedPoint;
             HookedPoint = null;
             _joint.enabled = false;
             LineObject.enabled = false;
@@ -128,14 +142,14 @@ This means that is a game run on higher frames per second the update function wi
             _joint.connectedBody = TempJoint;
 
         }
-        if (Input.GetMouseButtonDown(0) && IsUsingGrapplingHookGun == true && DialogueManagerScript.InDialogue == false && _grapplingHookGun.ClosestGrapplingPoint)
+        if (Input.GetMouseButtonDown(0) && IsUsingGrapplingHookGun == true && DialogueManagerScript.InDialogue == false && _lineOfSight.ClosestGrapplingPoint && _lastHookedPoint != _lineOfSight.ClosestGrapplingPoint)
         {
-            _targetPosition = _grapplingHookGun.ClosestGrapplingPoint.transform.position;
+            _targetPosition = _lineOfSight.ClosestGrapplingPoint.transform.position;
 
             _hit = Physics2D.Raycast(transform.position, _targetPosition - transform.position, Distance, WhatToHit);
             HookAudioSource.Play();
             IsHooked = true;
-            HookedPoint = _grapplingHookGun.ClosestGrapplingPoint;
+            HookedPoint = _lineOfSight.ClosestGrapplingPoint;
             MaxDistance = HookedPoint.GetComponent<GrapplingPoint>().MaxDistance;
             _joint.enabled = true;
             Vector2 connectPoint = _hit.point - new Vector2(_hit.collider.transform.position.x, _hit.collider.transform.position.y);
@@ -160,6 +174,7 @@ This means that is a game run on higher frames per second the update function wi
             LineObject.SetPosition(0, transform.position);
         }
 
+        _lastHookedPoint = null;
     }
 
     ///If the gameObject is disabled we make sure we set the connected distance joint to be a object we know always will exist in the scene.
