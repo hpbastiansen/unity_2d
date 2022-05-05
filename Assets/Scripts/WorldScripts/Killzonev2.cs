@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Killzonev2 : MonoBehaviour
 {
+    public bool Kill;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,8 +14,16 @@ public class Killzonev2 : MonoBehaviour
             //_playerHP.TakeDamage(99999, 0);
             GameObject _player = GameObject.Find("Main_Character");
             StageCheckPointManager _checkpointManager = Object.FindObjectOfType<StageCheckPointManager>();
-            _player.transform.position = _checkpointManager.CheckPoints[_checkpointManager.CheckPoints.Count - 1].transform.position;
+            if (Kill)
+            {
+                _player.GetComponent<PlayerHealth>().TakeDamage(9999, 0);
+            }
+            if (Kill == false)
+            {
+                _player.transform.position = _checkpointManager.CheckPoints[_checkpointManager.CheckPoints.Count - 1].transform.position;
+            }
             //_checkpointManager.CheckPoints[_checkpointManager.CheckPoints.Count - 1].GetComponent<AddCheckPoint>().enabled = false;
+
         }
     }
 }

@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &6292556956718657096
 MonoBehaviour:
@@ -73,6 +73,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resetPosition: 0
   _resetRotation: 0
+  _resetVelocity: 0
+  _resetAngularVelocity: 0
   _puzzleObjects: []
   _activatedSprite: {fileID: 2938754312882585861, guid: 17ecc5586dcd8354797de40da191efa5,
     type: 3}

@@ -44,6 +44,8 @@ public class WeaponController : MonoBehaviour
 
         _tokenManager = Object.FindObjectOfType<TokenManager>();
         _tokenManager.CurrentWeapon = CurrentGun.GetComponent<Weapon>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
 
     ///Update is called every frame.
@@ -112,5 +114,13 @@ This means that is a game run on higher frames per second the update function wi
         Weapons[0].SetActive(true);
         CurrentGun = Weapons[0];
         CurrentWeaponIndex = 0;
+    }
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "STAGE1")
+        {
+            GottenGrapplingHook = false;
+        }
     }
 }
