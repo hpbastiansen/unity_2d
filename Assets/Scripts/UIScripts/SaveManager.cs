@@ -40,7 +40,7 @@ public class SaveManager : MonoBehaviour
     public void Load()
     {
         CheckPointManagerScript.W1Scenes = ES3.Load("W1Scenes", defaultListForCheckpointsW1);
-        TokenManagerScript.TokensOwned = ES3.Load("TokensOwned", TokenManagerScript.TokensOwned);
+        //TokenManagerScript.TokensOwned = ES3.Load("TokensOwned", TokenManagerScript.TokensOwned);
         TokenManagerScript.ActivateDefaultToken();
         SFXSoundSettings.value = ES3.Load("SFXSoundVolume", 0.5f);
         MusicSoundSettings.value = ES3.Load("MusicSoundVolume", 0.5f);
