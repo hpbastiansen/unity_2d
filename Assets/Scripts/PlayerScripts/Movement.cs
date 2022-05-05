@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 ///The Movement script is an overall collection of player movement.
 public class Movement : MonoBehaviour
@@ -60,11 +61,21 @@ public class Movement : MonoBehaviour
         _grapplingHookController = GetComponent<GrapplingHookController>();
         DashAnimation.SetActive(false);
         CanWalk = true;
-        NoControl = false;
+        NoControl = true;
         _tokenManager = Object.FindObjectOfType<TokenManager>();
         _mouseOverCollider = Object.FindObjectOfType<MousePositionOverCollider>();
         DontDestroyOnLoad(gameObject);
 
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        NoControl = false;
     }
 
     ///Fixed Update is called based on a fixed frame rate.
@@ -104,7 +115,10 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    PlayerRigidbody.AddForce(Vector2.right * 4f, ForceMode2D.Impulse);
+                    if(PlayerRigidbody.position.y < _grapplingHookController.HookedPoint.transform.position.y)
+                    {
+                        PlayerRigidbody.AddForce(Vector2.right * 4f, ForceMode2D.Impulse);
+                    }
                 }
                 else
                 {
@@ -124,7 +138,10 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    PlayerRigidbody.AddForce(Vector2.left * 4f, ForceMode2D.Impulse);
+                    if(PlayerRigidbody.position.y < _grapplingHookController.HookedPoint.transform.position.y)
+                    {
+                        PlayerRigidbody.AddForce(Vector2.left * 4f, ForceMode2D.Impulse);
+                    }
                 }
                 else
                 {
