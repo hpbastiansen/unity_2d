@@ -21,6 +21,7 @@ public class Stage1Manager : MonoBehaviour
     }
     public void GiveGrapplingHook()
     {
+        GottenGrapplingHook = true;
         EndScene.SetActive(true);
         HoleDiaTrigger.SetActive(true);
         WeaponControllerScript.GottenGrapplingHook = true;
