@@ -18,6 +18,7 @@ public class TokenManager : MonoBehaviour
     public bool WormTokenActive;
     public bool TokenUIactive;
     public List<GameObject> TokensOwned;
+
     public List<bool> TokensActive;
     private UIManager _myUIManager;
     public string ShortInfo;
@@ -86,7 +87,9 @@ public class TokenManager : MonoBehaviour
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
         _uiManager = Object.FindObjectOfType<UIManager>();
         ReadyToGiveToken = true;
+
     }
+
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -97,7 +100,6 @@ public class TokenManager : MonoBehaviour
         _checkUI = Object.FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
-        TokensOwned = ES3.Load("TokensOwned", TokensOwned);
         foreach (GameObject tokens in TokensOwned)
         {
             tokens.SetActive(false);
@@ -106,7 +108,6 @@ public class TokenManager : MonoBehaviour
         TokensOwned[TokenIndex].SetActive(true);
         UsingTokenMenu = true;
         UsingTokenMenu = false;
-
     }
 
     ///Update is called every frame.
@@ -474,7 +475,7 @@ This means that is a game run on higher frames per second the update function wi
         CurrentWeapon.MinVerticalSpread = -3;
         CurrentWeapon.MaxVerticalSpread = 3;
         CurrentWeapon.UseClipSize = false;
-        CurrentWeapon.Damage = 7;
+        CurrentWeapon.Damage = 6;
         CurrentWeapon.BulletSpeed = 7;
         CurrentWeapon.IsHoming = true;
 
