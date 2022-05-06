@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7978730702568970960}
   - component: {fileID: 3974858322965797006}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3531959248804814398}
   - component: {fileID: 3053837663437149740}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8898644567587426188}
   - component: {fileID: 6456916323702543081}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3562796352525292393}
   - component: {fileID: 9106529623447333735}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8513110861118085505}
   - component: {fileID: 4393764265699649365}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5771383669038408932}
   - component: {fileID: 7690019929948586911}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Light (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 8539316909435430918}
   - component: {fileID: 7196544963146773776}
   - component: {fileID: 1789892893733956257}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Boss Segment (Base)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

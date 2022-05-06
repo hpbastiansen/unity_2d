@@ -1305,7 +1305,7 @@ MonoBehaviour:
     - {fileID: 6816627969165032733, guid: e71c3fbb997699c4fb305014c8705f28, type: 3}
     - {fileID: 257536616848278841, guid: 227d25e0defb66a4896adb86ae0e2276, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
-    - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
+    - {fileID: 6497368341982811541, guid: c0961de887962c741b27cefff9476898, type: 3}
     - {fileID: 257536616848278841, guid: 227d25e0defb66a4896adb86ae0e2276, type: 3}
     - {fileID: 6816627969165032733, guid: e71c3fbb997699c4fb305014c8705f28, type: 3}
     - {fileID: 257536616848278841, guid: 227d25e0defb66a4896adb86ae0e2276, type: 3}
@@ -1321,10 +1321,10 @@ MonoBehaviour:
   - Segments:
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
-    - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
-    - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
   - Segments:
@@ -1336,6 +1336,16 @@ MonoBehaviour:
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
     - {fileID: 257536616848278841, guid: 227d25e0defb66a4896adb86ae0e2276, type: 3}
     - {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae, type: 3}
+  - Segments:
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
+    - {fileID: 9022444814191013151, guid: 26054273d1437bf439cf3fe8659638ed, type: 3}
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
+    - {fileID: 9022444814191013151, guid: 26054273d1437bf439cf3fe8659638ed, type: 3}
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
+    - {fileID: 9022444814191013151, guid: 26054273d1437bf439cf3fe8659638ed, type: 3}
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
+    - {fileID: 9022444814191013151, guid: 26054273d1437bf439cf3fe8659638ed, type: 3}
+    - {fileID: 1115526218062468646, guid: 4d4fe70631e1c7440aeb70f0f129dca3, type: 3}
   _bossSegmentBase: {fileID: 9221045747796905500, guid: 55d61fa81f191d24d82a2f36b0c98055,
     type: 3}
   _bossSegmentBase2: {fileID: 3290947548278142422, guid: 7662bb7002c4de84e9cef037d1272bb9,
@@ -1344,11 +1354,15 @@ MonoBehaviour:
     type: 3}
   _bossSegmentSpike2: {fileID: 6816627969165032733, guid: e71c3fbb997699c4fb305014c8705f28,
     type: 3}
+  _bossSegmentSpike3Grapple: {fileID: 9022444814191013151, guid: 26054273d1437bf439cf3fe8659638ed,
+    type: 3}
   _bossSegmentWormspawn: {fileID: 9066677618330011810, guid: 8dc7a492c40ff414d981a3bedcc39aae,
     type: 3}
   _bossSegmentWeakpoint: {fileID: 2742630997259110868, guid: ca42676c3deda8345b09aa6f266f19d0,
     type: 3}
   _bossSegmentSectionDone: {fileID: 4242356521724141752, guid: 41da274295a22d14aaff300fc4094c25,
+    type: 3}
+  _bossSegmentEnemySpawn: {fileID: 6497368341982811541, guid: c0961de887962c741b27cefff9476898,
     type: 3}
   OnWorm: 0
   _floor: {fileID: 631500161}
@@ -1364,6 +1378,8 @@ MonoBehaviour:
   _damageMax: 210
   IsPlayerDebuffed: 0
   _movementBoundary: {fileID: 1735641220}
+  _movementBoundaryRightCollider: {fileID: 225476187}
+  _movementBoundaryLeftCollider: {fileID: 225476188}
   HealthBar: {fileID: 405788382}
   HealthText: {fileID: 377279519}
 --- !u!4 &672652741
