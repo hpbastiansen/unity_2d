@@ -3903,31 +3903,16 @@ MonoBehaviour:
     - "Here it is, our chance. \r\nDo your best.\r"
     - Seems the worm has planted something in our system to weaken you, after we
       find the weakspots try to see if you can find and delete the debuff.
-    - 'Also, I gave you a new token :D
-
-      Check it out!'
   AutoOpen: 1
   CanStartDialogue: 0
   GoToWorldObject: 0
   GoToWorldScript: {fileID: 0}
   TriggerAnyDistace: 0
   IsDone: 0
-  RunFunctionAfter: 1
+  RunFunctionAfter: 0
   FunctionToRun:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 235222062}
-        m_TargetAssemblyTypeName: GiveTokens, Assembly-CSharp
-        m_MethodName: GiveWormToken
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   TriggerOnlyOnce: 0
 --- !u!61 &1433015673
 BoxCollider2D:

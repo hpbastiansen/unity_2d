@@ -48,3 +48,5 @@ MonoBehaviour:
   _spawnTimeMin: 1
   _spawnTimeMax: 2
   _worm: {fileID: 4705148666270465120, guid: 9ef03e6fc41dfcc4fa3d931480eab840, type: 3}
+  _particles: {fileID: 7581815517321467634, guid: 4241f2c762875b840b0c78bf9f5df22a,
+    type: 3}
