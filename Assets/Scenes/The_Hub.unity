@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGround
       objectReference: {fileID: 0}
+    - target: {fileID: 5552832367671134066, guid: 73b2eb4e1cca5674791b2f5a87567629,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5552832367671134067, guid: 73b2eb4e1cca5674791b2f5a87567629,
         type: 3}
       propertyPath: m_RootOrder
@@ -1134,8 +1139,8 @@ MonoBehaviour:
     NameOfSpeaker: AI NAME
     ImageOfSpeaker: {fileID: 21300000, guid: 2225af0adf8f8f34c848b39b9f85d869, type: 3}
     SentencesToSpeak:
-    - Hello player! Continue to choose which phase of World 1 you wish to go to.
-      (Use 1-9 keys to choose desired phase.)
+    - Hello player! Press RIGHT mouse button to choose which phase of World 1 you
+      wish to go to. (Use 1-9 keys to choose desired phase.)
     - 
   Hub: 0
   World1: 1

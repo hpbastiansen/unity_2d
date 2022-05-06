@@ -138,5 +138,9 @@ This means that is a game run on higher frames per second the update function wi
         {
             GottenGrapplingHook = false;
         }
+        else
+        {
+            GottenGrapplingHook = true;
+        }
     }
 }

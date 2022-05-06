@@ -314,7 +314,7 @@ This means that is a game run on higher frames per second the update function wi
 
         GunLifeStealAmount = .5f;
         CurrentWeapon.BulletTimeToLive = 1f;
-        CurrentWeapon.Firerate = 10;
+        CurrentWeapon.Firerate = 8;
         CurrentWeapon.MinVerticalSpread = -1;
         CurrentWeapon.MaxVerticalSpread = 5;
         CurrentWeapon.UseClipSize = false;
@@ -417,11 +417,11 @@ This means that is a game run on higher frames per second the update function wi
 
         GunLifeStealAmount = 0;
         CurrentWeapon.BulletTimeToLive = 1f;
-        CurrentWeapon.Firerate = 20;
+        CurrentWeapon.Firerate = 15;
         CurrentWeapon.MinVerticalSpread = -7;
         CurrentWeapon.MaxVerticalSpread = 7;
         CurrentWeapon.UseClipSize = true;
-        CurrentWeapon.Damage = 8;
+        CurrentWeapon.Damage = 12;
         CurrentWeapon.BulletSpeed = 60;
         CurrentWeapon.IsHoming = false;
         CurrentWeapon.MaxClipSize = 6;
