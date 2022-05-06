@@ -8769,7 +8769,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7448234663743748648, guid: dffbee85afd54ed4d8ffe667607de9cf,
+  m_Sprite: {fileID: 7489694851862202395, guid: dffbee85afd54ed4d8ffe667607de9cf,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -9168,7 +9168,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 0.8
-  m_Text: Use Y to clear all checkpoints for a level
+  m_Text: Use O to clear all checkpoints for a level
 --- !u!1 &6214231278423526813
 GameObject:
   m_ObjectHideFlags: 0
@@ -11317,7 +11317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &592676309158375673
 RectTransform:
   m_ObjectHideFlags: 0

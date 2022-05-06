@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour
     public bool GoingRight;
     public AudioSource JumpAudioSource;
     public AudioSource FallHitGroundAudioSource;
+    public float _waitTimer = 2f;
 
     [Header("GroundCheck")]
 
@@ -65,7 +66,7 @@ public class Movement : MonoBehaviour
         _tokenManager = Object.FindObjectOfType<TokenManager>();
         _mouseOverCollider = Object.FindObjectOfType<MousePositionOverCollider>();
         DontDestroyOnLoad(gameObject);
-
+        _waitTimer = 2f;
     }
 
     private void OnEnable()
@@ -84,6 +85,7 @@ public class Movement : MonoBehaviour
     /*! The FixedUpdate function controls the overall movements that the player can do. This includes Walking/Running, Dashing, Jumping, Checking when to flip the player, and Animations related to this.*/
     void FixedUpdate()
     {
+        _waitTimer -= 1 * Time.fixedDeltaTime;
         if (NoControl) return;
         //Get the mouse position to screen position.
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -96,11 +98,11 @@ public class Movement : MonoBehaviour
         //Only allow walking if player is not hooked with grapplinghook.
         if (_grapplingHookController.IsHooked == false)
         {
-            if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && CanWalk == true && IsDashing == false)
+            if (((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && CanWalk == true && IsDashing == false) && _waitTimer <= 0)
             {
                 PlayerRigidbody.AddForce(Vector2.right * 2f * x, ForceMode2D.Impulse);
             }
-            if ((Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) && IsTouchingGround == false)
+            if (((Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) && IsTouchingGround == false) && _waitTimer <= 0)
             {
                 PlayerRigidbody.velocity = new Vector2(PlayerRigidbody.velocity.x / 1.5f, PlayerRigidbody.velocity.y);
             }
@@ -115,7 +117,7 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    if(PlayerRigidbody.position.y < _grapplingHookController.HookedPoint.transform.position.y)
+                    if (PlayerRigidbody.position.y < _grapplingHookController.HookedPoint.transform.position.y)
                     {
                         PlayerRigidbody.AddForce(Vector2.right * 4f, ForceMode2D.Impulse);
                     }
@@ -138,7 +140,7 @@ public class Movement : MonoBehaviour
             {
                 if (IsTouchingGround == false)
                 {
-                    if(PlayerRigidbody.position.y < _grapplingHookController.HookedPoint.transform.position.y)
+                    if (PlayerRigidbody.position.y < _grapplingHookController.HookedPoint.transform.position.y)
                     {
                         PlayerRigidbody.AddForce(Vector2.left * 4f, ForceMode2D.Impulse);
                     }
@@ -184,12 +186,12 @@ public class Movement : MonoBehaviour
         PlayerAnimator.SetFloat("yVelocity", PlayerRigidbody.velocity.y);
 
         //Set Running animations, and change position of arm when running
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) && IsTouchingGround == true && IsDashing == false)
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) && IsTouchingGround == true && IsDashing == false) && _waitTimer <= 0)
         {
             PlayerAnimator.SetBool("Running", true);
             ArmPivotGameObject.transform.localPosition = new Vector2(-0.0625f, -0.0625f);
         }
-        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        else if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) && _waitTimer <= 0)
         {
             ArmPivotGameObject.transform.localPosition = new Vector2(-0.125f, -0.09375f);
             PlayerAnimator.SetBool("Running", false);
@@ -215,17 +217,17 @@ public class Movement : MonoBehaviour
             _tryingToJump = false;
         }
         //Allow player to increase the falling speed if key "S" is pressed.
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && _waitTimer <= 0)
         {
             PlayerRigidbody.gravityScale = 20;
         }
-        if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S) && _waitTimer <= 0)
         {
             PlayerRigidbody.gravityScale = NormalGravity;
 
         }
         //Start Dash if Left Shift is pressed.
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _waitTimer <= 0)
         {
             if (DashCooldownCounter <= 0 && _tokenManager.WormTokenActive == false)
             {
@@ -235,7 +237,7 @@ public class Movement : MonoBehaviour
                 }
                 StartCoroutine(Dash());
             }
-            else if (_tokenManager.WormTokenActive && DashCooldownCounter <= 0)
+            else if (_tokenManager.WormTokenActive && DashCooldownCounter <= 0 && _waitTimer <= 0)
             {
                 var _insideCollider = _mouseOverCollider.CheckForCollider();
                 if (_insideCollider == false)
@@ -381,5 +383,4 @@ public class Movement : MonoBehaviour
             PlayerRigidbody.AddForce(new Vector2(0, JumpForce), ForceMode2D.Force);
         }
     }
-
 }

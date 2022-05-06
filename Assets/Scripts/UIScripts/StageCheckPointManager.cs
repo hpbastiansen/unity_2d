@@ -21,6 +21,8 @@ public class StageCheckPointManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             ClearCheckPoints();
+            ES3AutoSaveMgr.Current.Save();
+
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
