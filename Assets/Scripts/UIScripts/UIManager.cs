@@ -22,8 +22,6 @@ public class UIManager : MonoBehaviour
     public GameObject Settings;
     public GameObject ReturnToHub;
     public GameObject ExitGame;
-
-
     private void Start()
     {
         IsToken = false;

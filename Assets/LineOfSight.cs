@@ -11,8 +11,7 @@ public class LineOfSight : MonoBehaviour
     private GameObject _player;
     private GrapplingHookController _grapplingHookController;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         _losCollider = GetComponent<PolygonCollider2D>();
         _player = transform.root.gameObject;
@@ -109,4 +108,5 @@ public class LineOfSight : MonoBehaviour
             }
         }
     }
+
 }

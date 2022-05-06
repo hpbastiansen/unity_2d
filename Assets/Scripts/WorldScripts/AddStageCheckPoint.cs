@@ -13,12 +13,11 @@ public class AddStageCheckPoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player") && CanAddCheckPoint)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            CanAddCheckPoint = false;
             StageCheckPointManager _checkpointManager = Object.FindObjectOfType<StageCheckPointManager>();
             _checkpointManager.AddCheckpoint(this.gameObject);
-            GetComponent<AddCheckPoint>().enabled = false;
+            gameObject.SetActive(false);
         }
     }
 }

@@ -22,7 +22,6 @@ public class StageCheckPointManager : MonoBehaviour
         {
             ClearCheckPoints();
             ES3AutoSaveMgr.Current.Save();
-
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -34,10 +33,18 @@ public class StageCheckPointManager : MonoBehaviour
     {
         CheckPoints.Add(gobject);
         ES3AutoSaveMgr.Current.Save();
+        foreach (var checkpoint in CheckPoints)
+        {
+            checkpoint.SetActive(false);
+        }
     }
 
     public void ClearCheckPoints()
     {
+        foreach (var checkpoint in CheckPoints)
+        {
+            checkpoint.SetActive(true);
+        }
         if (CheckPoints.Count > 1)
             CheckPoints.RemoveRange(1, CheckPoints.Count - 1);
     }

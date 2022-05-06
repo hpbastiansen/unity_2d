@@ -98,9 +98,7 @@ This means that is a game run on higher frames per second the update function wi
         if (Mathf.Round(CurrentHP) * 1 <= 0)
         {
             CurrentHP = MaxHP;
-            SetPlayerPositionAndStageInfo _startInfo = GameObject.Find("StartPosition").GetComponent<SetPlayerPositionAndStageInfo>();
             SceneManager.LoadScene("The_Hub");
-            _startInfo.SetInfo();
         }
     }
     ///Starts a timer for the block cool down.
