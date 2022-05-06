@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
     public float BlockActiveTime;
     public int BlockLifeSteal;
     public float BlockCooldownTime;
-    private float _tempBlockTimer;
+    public float TempBlockTimer;
     public bool UsingCactusToken;
     private TokenManager _tokenManager;
     [SerializeField] private float _invincibilitySeconds = 1f;
@@ -47,14 +47,14 @@ This means that is a game run on higher frames per second the update function wi
         }
 
         UsingCactusToken = _tokenManager.CactusTokenActive;
-        if (_tempBlockTimer > 0)
+        if (TempBlockTimer > 0)
         {
-            _tempBlockTimer -= Time.deltaTime;
+            TempBlockTimer -= Time.deltaTime;
         }
-        if (Input.GetMouseButtonDown(1) && _tempBlockTimer <= 0)
+        if (Input.GetMouseButtonDown(1) && TempBlockTimer <= 0 && !GameObject.Find("GameManager").GetComponent<UIManager>().IsDialogue)
         {
             IsBlocking = true;
-            _tempBlockTimer = BlockCooldownTime;
+            TempBlockTimer = BlockCooldownTime;
             StartCoroutine(BlockCoolDown());
 
         }
@@ -74,7 +74,7 @@ This means that is a game run on higher frames per second the update function wi
         if (IsBlocking == true)
         {
             CurrentHP += BlockLifeSteal;
-            _tempBlockTimer = BlockCooldownTime;
+            TempBlockTimer = BlockCooldownTime;
             if (UsingCactusToken == true)
             {
                 StartCoroutine(_tokenManager.CactusTokenCounter());
@@ -91,7 +91,7 @@ This means that is a game run on higher frames per second the update function wi
         else
         {
             CurrentHP -= x;
-            _tempBlockTimer = BlockCooldownTime;
+            TempBlockTimer = BlockCooldownTime;
             if (_knockback > 0f) PlayerMovement.Knockback(_knockback, _angle);
             _isInvulnerable = true;
         }

@@ -10,6 +10,7 @@ public class PlayerUIConnector : MonoBehaviour
     public Slider HealthBar;
     public Text HPText;
     public PlayerHealth PlayerHealthScript;
+    [SerializeField] private Slider _counterCooldown;
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -28,5 +29,7 @@ This means that is a game run on higher frames per second the update function wi
         HealthBar.maxValue = PlayerHealthScript.MaxHP;
         HealthBar.value = PlayerHealthScript.CurrentHP;
         HPText.text = (PlayerHealthScript.CurrentHP.ToString("F0") + " / " + PlayerHealthScript.MaxHP.ToString("F0")).ToString();
+        _counterCooldown.maxValue = PlayerHealthScript.BlockCooldownTime;
+        _counterCooldown.value = (PlayerHealthScript.TempBlockTimer > 0 ? PlayerHealthScript.TempBlockTimer : 0);
     }
 }

@@ -338,8 +338,8 @@ This means that is a game run on higher frames per second the update function wi
 
         ShieldLifeSteal = 0;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
-        _shieldHP.MaxHP = 12;
-        _shieldHP.HP = 12;
+        _shieldHP.MaxHP = 13;
+        _shieldHP.HP = 13;
 
         _weaponAccuracy = "decent";
     }
