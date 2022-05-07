@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TheHubManager : MonoBehaviour
 {
     public bool IsTutorialDone;
-    public Animator WorldDoorAnimator;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Door;
+    private void Start()
     {
-        IsTutorialDone = false;
-        IsTutorialDone = Object.FindObjectOfType<CheckPointManager>().IsTutorialDone;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
-    private void Update()
+    public void Update()
     {
         if (IsTutorialDone)
         {
-            WorldDoorAnimator.SetBool("IsOpen", true);
+            Door.SetActive(false);
         }
         else
         {
-            WorldDoorAnimator.SetBool("IsOpen", false);
+            Door.SetActive(true);
         }
+    }
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ES3.Save("Tutor", IsTutorialDone);
+        IsTutorialDone = ES3.Load("Tutor", false);
     }
 }

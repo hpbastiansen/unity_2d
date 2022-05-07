@@ -14,7 +14,7 @@ public class EnemyTouchDamage : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject == _player)
         {

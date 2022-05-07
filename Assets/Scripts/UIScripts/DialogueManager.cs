@@ -20,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     private UIManager _myUIManager;
     public bool RunFunctionAfter;
     public UnityEvent EventToRun;
+    public AudioSource MyAudioSource;
 
 
     /// Start methods run once when enabled.
@@ -86,6 +87,7 @@ This means that is a game run on higher frames per second the update function wi
     ///The DisplayNextSentence function will show the next specified sentence and call the coroutine to type it out.
     public void DisplayNextSentence()
     {
+
         if (Sentences.Count == 0)
         {
             if (RunFunctionAfter)
@@ -93,8 +95,10 @@ This means that is a game run on higher frames per second the update function wi
                 EventToRun.Invoke();
             }
             EndDialogue();
+            MyAudioSource.Stop();
             return;
         }
+        MyAudioSource.Play();
         string sentence = Sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
@@ -112,6 +116,7 @@ This means that is a game run on higher frames per second the update function wi
             yield return new WaitForSeconds(0.03f);
             yield return null;
         }
+        MyAudioSource.Stop();
     }
 
     ///The EndDialogue function lets other scripts end the dialogue.
@@ -119,6 +124,7 @@ This means that is a game run on higher frames per second the update function wi
     This can be called e.g. when the end sentence has been read, or if the player chose to walk away from the dialogue area.*/
     public void EndDialogue()
     {
+        MyAudioSource.Stop();
         InDialogue = false;
         DialogueAnimator.SetBool("IsOpen", false);
     }

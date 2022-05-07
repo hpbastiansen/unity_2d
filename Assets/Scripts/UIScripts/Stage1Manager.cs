@@ -14,7 +14,6 @@ public class Stage1Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GottenGrapplingHook = false;
         EndScene.SetActive(false);
         HoleDiaTrigger.SetActive(false);
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
@@ -27,6 +26,5 @@ public class Stage1Manager : MonoBehaviour
         HoleDiaTrigger.SetActive(true);
         WeaponControllerScript.GottenGrapplingHook = true;
         GrapplingHook.SetActive(false);
-
     }
 }

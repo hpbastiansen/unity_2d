@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 ///The Bullet script is a universal script used for a projectile, with means of hitting an enemy or player.
 public class Bullet : MonoBehaviour
@@ -19,6 +20,7 @@ public class Bullet : MonoBehaviour
     public bool IsEnemyBullet;
     public bool UsingCactusToken = false;
     public GameObject EnemyShooterObject;
+    private bool _triggered;
 
     [Header("Homing")]
     public bool IsHoming;
@@ -92,8 +94,11 @@ public class Bullet : MonoBehaviour
                 _playerHealth.TakeDamage(Damage, 10f, _angle);
                 if (_playerHealth.IsBlocking == true)
                 {
+                    if (_triggered) return;
+                    _triggered = true;
                     Instantiate(BlockEffect, transform.position, BlockEffect.transform.rotation);
                     Destroy(gameObject);
+                    if(SceneManager.GetActiveScene().name == "TUTORIAL") GameObject.Find("TutorialManager").GetComponent<TutorialManager>().ShotCountered();
                 }
                 else
                 {
@@ -107,6 +112,7 @@ public class Bullet : MonoBehaviour
             }
             else if (_shieldHP != null)
             {
+                if (SceneManager.GetActiveScene().name == "TUTORIAL") GameObject.Find("TutorialManager").GetComponent<TutorialManager>().ShotBlocked();
                 _shieldHP.TakeDamage(Damage);
                 Instantiate(HitShieldEffect, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0.0f, 360.0f)));
                 TokenManager _tokenManager = Object.FindObjectOfType<TokenManager>();

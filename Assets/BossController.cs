@@ -18,9 +18,11 @@ public class BossController : MonoBehaviour
     [SerializeField] private GameObject _bossSegmentBase2;
     [SerializeField] private GameObject _bossSegmentSpike1;
     [SerializeField] private GameObject _bossSegmentSpike2;
+    [SerializeField] private GameObject _bossSegmentSpike3Grapple;
     [SerializeField] private GameObject _bossSegmentWormspawn;
     [SerializeField] private GameObject _bossSegmentWeakpoint;
     [SerializeField] private GameObject _bossSegmentSectionDone;
+    [SerializeField] private GameObject _bossSegmentEnemySpawn;
     private List<GameObject> _bossSegments = new List<GameObject>();
     private List<GameObject> _bossSegmentsBuffer = new List<GameObject>();
     public bool OnWorm = false;
@@ -49,6 +51,8 @@ public class BossController : MonoBehaviour
     public bool IsPlayerDebuffed;
     private Stage5Manager _stage5Manager;
     [SerializeField] private Transform _movementBoundary;
+    [SerializeField] private BoxCollider2D _movementBoundaryRightCollider;
+    [SerializeField] private BoxCollider2D _movementBoundaryLeftCollider;
 
     public Slider HealthBar;
     public Text HealthText;
@@ -92,6 +96,7 @@ public class BossController : MonoBehaviour
         _bossMovement.Speed = 0;
         OnWorm = true;
         ReadyForNextSection = true;
+        _movementBoundaryRightCollider.enabled = false;
     }
 
     private void PlayerOffBoss()
@@ -101,6 +106,7 @@ public class BossController : MonoBehaviour
         _shouldFollow = false;
         _bossMovement.Speed = _wormSpeed;
         OnWorm = false;
+        _movementBoundaryRightCollider.enabled = true;
 
         if (Health > 0) Invoke("ExternalPuzzleDone", 5f);
     }
@@ -127,11 +133,15 @@ public class BossController : MonoBehaviour
     {
         while (_bossSegmentsBuffer.Count < 2)
         {
-            int randomBase = Random.Range(0, 20);
-            if (randomBase == 0) _bossSegmentsBuffer.Add(_bossSegmentBase2);
-            else if (randomBase < 4) _bossSegmentsBuffer.Add(_bossSegmentWormspawn);
-            else if (randomBase < 8) _bossSegmentsBuffer.Add(_bossSegmentSpike1);
-            else if (randomBase < 12) _bossSegmentsBuffer.Add(_bossSegmentSpike2);
+            int randomSegment = Random.Range(0, 20);
+            Debug.Log(randomSegment);
+
+            if (randomSegment <= 4) _bossSegmentsBuffer.Add(_bossSegmentEnemySpawn);
+            else if (randomSegment <= 8) _bossSegmentsBuffer.Add(_bossSegmentWormspawn);
+            else if (randomSegment <= 11) _bossSegmentsBuffer.Add(_bossSegmentSpike1);
+            else if (randomSegment <= 14) _bossSegmentsBuffer.Add(_bossSegmentSpike2);
+            else if (randomSegment <= 16) _bossSegmentsBuffer.Add(_bossSegmentSpike3Grapple);
+            else if (randomSegment <= 17) _bossSegmentsBuffer.Add(_bossSegmentBase2);
             else _bossSegmentsBuffer.Add(_bossSegmentBase);
         }
     }
@@ -234,6 +244,9 @@ public class BossController : MonoBehaviour
                 NewSegment();
                 _playerMoved -= _segmentLength;
             }
+
+            if (_player.transform.position.x > _previousPlayerPosition) _movementBoundaryLeftCollider.enabled = false;
+            else _movementBoundaryLeftCollider.enabled = true;
 
             _previousPlayerPosition = _player.transform.position.x;
         }

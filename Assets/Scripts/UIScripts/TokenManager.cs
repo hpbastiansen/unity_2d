@@ -18,6 +18,7 @@ public class TokenManager : MonoBehaviour
     public bool WormTokenActive;
     public bool TokenUIactive;
     public List<GameObject> TokensOwned;
+
     public List<bool> TokensActive;
     private UIManager _myUIManager;
     public string ShortInfo;
@@ -86,7 +87,9 @@ public class TokenManager : MonoBehaviour
         WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
         _uiManager = Object.FindObjectOfType<UIManager>();
         ReadyToGiveToken = true;
+
     }
+
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
@@ -97,7 +100,6 @@ public class TokenManager : MonoBehaviour
         _checkUI = Object.FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
-
         foreach (GameObject tokens in TokensOwned)
         {
             tokens.SetActive(false);
@@ -106,7 +108,6 @@ public class TokenManager : MonoBehaviour
         TokensOwned[TokenIndex].SetActive(true);
         UsingTokenMenu = true;
         UsingTokenMenu = false;
-
     }
 
     ///Update is called every frame.
@@ -314,7 +315,7 @@ This means that is a game run on higher frames per second the update function wi
 
         GunLifeStealAmount = .5f;
         CurrentWeapon.BulletTimeToLive = 1f;
-        CurrentWeapon.Firerate = 10;
+        CurrentWeapon.Firerate = 8;
         CurrentWeapon.MinVerticalSpread = -1;
         CurrentWeapon.MaxVerticalSpread = 5;
         CurrentWeapon.UseClipSize = false;
@@ -338,8 +339,8 @@ This means that is a game run on higher frames per second the update function wi
 
         ShieldLifeSteal = 0;
         _shieldHP.LifeStealAmount = ShieldLifeSteal;
-        _shieldHP.MaxHP = 12;
-        _shieldHP.HP = 12;
+        _shieldHP.MaxHP = 13;
+        _shieldHP.HP = 13;
 
         _weaponAccuracy = "decent";
     }
@@ -417,11 +418,11 @@ This means that is a game run on higher frames per second the update function wi
 
         GunLifeStealAmount = 0;
         CurrentWeapon.BulletTimeToLive = 1f;
-        CurrentWeapon.Firerate = 20;
+        CurrentWeapon.Firerate = 15;
         CurrentWeapon.MinVerticalSpread = -7;
         CurrentWeapon.MaxVerticalSpread = 7;
         CurrentWeapon.UseClipSize = true;
-        CurrentWeapon.Damage = 8;
+        CurrentWeapon.Damage = 12;
         CurrentWeapon.BulletSpeed = 60;
         CurrentWeapon.IsHoming = false;
         CurrentWeapon.MaxClipSize = 6;
@@ -474,7 +475,7 @@ This means that is a game run on higher frames per second the update function wi
         CurrentWeapon.MinVerticalSpread = -3;
         CurrentWeapon.MaxVerticalSpread = 3;
         CurrentWeapon.UseClipSize = false;
-        CurrentWeapon.Damage = 7;
+        CurrentWeapon.Damage = 6;
         CurrentWeapon.BulletSpeed = 7;
         CurrentWeapon.IsHoming = true;
 

@@ -8,17 +8,22 @@ public class EnemyTutorial : MonoBehaviour
     [SerializeField] private float _detectionDistance;
     private GameObject _player;
     private Weapon_Enemy _enemyWeapon;
+    private float _waitTime = 1f;
+    private bool _hasWaited = false;
 
     // Start is called before the first frame update
     void Start()
     {
         _enemyWeapon = transform.Find("Visuals/Arm/Weapon").GetComponent<Weapon_Enemy>();
         _player = GameObject.Find("Main_Character");
+        Invoke("Activate", _waitTime);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!_hasWaited) return;
+
         Vector3 _rayStart = transform.position;
         Vector3 _direction = (_player.transform.position - transform.position).normalized;
 
@@ -35,5 +40,10 @@ public class EnemyTutorial : MonoBehaviour
         {
             _enemyWeapon.Target = null;
         }
+    }
+
+    void Activate()
+    {
+        _hasWaited = true;
     }
 }

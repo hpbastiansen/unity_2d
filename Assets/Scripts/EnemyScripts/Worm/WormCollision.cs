@@ -12,8 +12,8 @@ public class WormCollision : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _wormHead = GetComponentInChildren<RectTransform>();
         _polygonCollider = GetComponent<PolygonCollider2D>();
+        _wormHead = GetComponentInChildren<RectTransform>();
     }
 
     ///Set up the Polygon Collider using the positions of the body segments. Called from WormBody script.

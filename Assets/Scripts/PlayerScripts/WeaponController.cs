@@ -20,12 +20,11 @@ public class WeaponController : MonoBehaviour
     private Movement _playerMovement;
     public bool GottenGrapplingHook = false;
 
-    /// Start methods run once when enabled.
-    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*! In the Start function we force the player not to start with the shield. 
+
+    /*! In the Awake function we force the player not to start with the shield.
     Next we are indexing all the weapons on the player. These can be found as child objects under the "WeaponHolderObject" gameObject. 
     Then we set the first gun as the current gun, and activates it, and deactivates all the others.*/
-    void Start()
+    private void Awake()
     {
         _playerMovement = GetComponent<Movement>();
         UsingShield = false;
@@ -44,6 +43,25 @@ public class WeaponController : MonoBehaviour
 
         _tokenManager = Object.FindObjectOfType<TokenManager>();
         _tokenManager.CurrentWeapon = CurrentGun.GetComponent<Weapon>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Weapons[CurrentWeaponIndex].SetActive(false);
+        CurrentWeaponIndex += 1;
+        Weapons[CurrentWeaponIndex].SetActive(true);
+        CurrentGun = Weapons[CurrentWeaponIndex];
+        Weapons[CurrentWeaponIndex].SetActive(false);
+        CurrentWeaponIndex = 0;
+        Weapons[CurrentWeaponIndex].SetActive(true);
+        CurrentGun = Weapons[CurrentWeaponIndex];
+    }
+
+    /// Start methods run once when enabled.
+    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
+    /*! In the Start function we force the player not to start with the shield. 
+    Next we are indexing all the weapons on the player. These can be found as child objects under the "WeaponHolderObject" gameObject. 
+    Then we set the first gun as the current gun, and activates it, and deactivates all the others.*/
+    void Start()
+    {
+
     }
 
     ///Update is called every frame.
@@ -112,5 +130,17 @@ This means that is a game run on higher frames per second the update function wi
         Weapons[0].SetActive(true);
         CurrentGun = Weapons[0];
         CurrentWeaponIndex = 0;
+    }
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "STAGE1")
+        {
+            GottenGrapplingHook = false;
+        }
+        else
+        {
+            GottenGrapplingHook = true;
+        }
     }
 }

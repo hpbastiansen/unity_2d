@@ -26,7 +26,12 @@ public class TutorialManager : MonoBehaviour
     [Header("Step5")]
     public bool Step5;
     public GameObject Step5Block;
-
+    private int _shotsBlocked = 0;
+    private int _shotsCountered = 0;
+    [SerializeField] private Door _enemyDoor;
+    [SerializeField] private GameObject _enemyPrefab;
+    [HideInInspector] public GameObject Enemy;
+    [SerializeField] private TutorialPanel _tutorialPanel;
 
     [Header("Step6")]
     public bool Step6;
@@ -74,5 +79,31 @@ public class TutorialManager : MonoBehaviour
     {
         Step6 = true;
         Object.FindObjectOfType<CheckPointManager>().IsTutorialDone = true;
+    }
+
+    public void ShotCountered()
+    {
+        if (_shotsCountered >= 3) return;
+        _shotsCountered++;
+        _tutorialPanel.SetCounterLights(_shotsCountered);
+        CheckShots();
+    }
+
+    public void ShotBlocked()
+    {
+        if (_shotsBlocked >= 3) return;
+        _shotsBlocked++;
+        _tutorialPanel.SetBlockedLights(_shotsBlocked);
+        CheckShots();
+    }
+
+    private void CheckShots()
+    {
+        if (_shotsBlocked >= 3 && _shotsCountered >= 3) _enemyDoor.Triggered = true;
+    }
+
+    public void SpawnEnemy()
+    {
+        Enemy = Instantiate(_enemyPrefab, GameObject.Find("EnemySpawnPoint").transform.position, Quaternion.identity);
     }
 }

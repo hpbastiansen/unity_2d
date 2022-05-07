@@ -358,4 +358,4 @@ MonoBehaviour:
   _switchingSprite: {fileID: 21300000, guid: 4e954d94ae5a69c41a8c863edcf44654, type: 3}
   _inactiveSprite: {fileID: 21300000, guid: fc80fa943b61cc247aea907b6d2c0813, type: 3}
   _offset: 0
-  MaxDistance: 5
+  MaxDistance: 6
