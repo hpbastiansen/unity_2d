@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 
+/// Manages external puzzles on stage 5: the debuff mechanic on the boss and the final sequence of the game after the boss is destroyed.
 public class Stage5Manager : MonoBehaviour
 {
     public string GamePath;
@@ -11,13 +11,18 @@ public class Stage5Manager : MonoBehaviour
     private BossCutsceneManager _bossCutsceneManager;
     public bool ReadyToRun;
 
-    void Start()
+    /// Called before the first frame.
+    /** The start function sets up the game path and clears out puzzle files from previous attempts if they exist. */
+    private void Start()
     {
         ReadyToRun = true;
         IsDebuffed = true;
+        _bossCutsceneManager = FindObjectOfType<BossCutsceneManager>();
+
         GamePath = Application.dataPath;
         GamePath += "/../";
         GamePath += "AIS/";
+
         if (System.IO.File.Exists(GamePath + "debuffed.txt"))
         {
             try
@@ -29,11 +34,12 @@ public class Stage5Manager : MonoBehaviour
 
             }
         }
+
         if (System.IO.Directory.Exists(GamePath + "AIS") == false)
         {
             Directory.CreateDirectory(GamePath + "AIS");
         }
-        _bossCutsceneManager = Object.FindObjectOfType<BossCutsceneManager>();
+
         if (System.IO.File.Exists(GamePath + "neutralize_0x12_worm.bat") || System.IO.File.Exists(GamePath + "neutralize_0x12_worm_success.txt"))
         {
             try
@@ -46,21 +52,26 @@ public class Stage5Manager : MonoBehaviour
 
             }
         }
-
     }
-    void Update()
+
+    /// Called every frame.
+    /** The update function removes the player's debuff if the debuffed.txt file is deleted while the player is on the ground. */
+    private void Update()
     {
         if (System.IO.File.Exists(GamePath + "debuffed.txt") == false && _bossCutsceneManager.IsDown == true)
         {
             IsDebuffed = false;
         }
+
         if (System.IO.File.Exists(GamePath + "neutralize_0x12_worm_success.txt") && ReadyToRun == true)
         {
             ReadyToRun = false;
             RunCMD();
         }
     }
-    public void Debuffplayer()
+
+    /// Applies player debuff, removes previous 'debuffed.txt' file if it exists and creates a new one.
+    public void DebuffPlayer()
     {
         IsDebuffed = true;
         if (System.IO.File.Exists(GamePath + "debuffed.txt"))
@@ -78,11 +89,13 @@ public class Stage5Manager : MonoBehaviour
         Application.OpenURL("file:///" + GamePath);
     }
 
+    /// Starts the 'StartCMDTimer' coroutine.
     public void RunCMD()
     {
-        string _path = Application.dataPath;
         StartCoroutine(StartCMDTimer());
     }
+
+    /// Deletes the 'neutralize worm'-files if they already exist from previous attempts, then creates them again.
     public void MakeFile()
     {
         if (System.IO.File.Exists(GamePath + "neutralize_0x12_worm.bat") || System.IO.File.Exists(GamePath + "neutralize_0x12_worm_success.txt"))
@@ -100,6 +113,8 @@ public class Stage5Manager : MonoBehaviour
         System.IO.File.WriteAllText(GamePath + "neutralize_0x12_worm.bat", "echo 0x991ss_ZdadrasUuJJG4456 >>neutralize_0x12_worm_success.txt");
         Application.OpenURL("file:///" + GamePath);
     }
+
+    /// Creates the finishing sequence of the game, opening command prompt windows with different colors and loading the 'The Hub'-scene after 10 seconds.
     IEnumerator StartCMDTimer()
     {
         string _path = Application.dataPath;

@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using UnityEngine.SceneManagement;
 
-///The Bullet script is a universal script used for a projectile, with means of hitting an enemy or player.
+/// The Bullet script is a universal script used for a projectile, with means of hitting various game objects.
 public class Bullet : MonoBehaviour
 {
     public float BulletSpeed = 20f;
@@ -31,9 +29,9 @@ public class Bullet : MonoBehaviour
     public PlayerHealth PlayerHealthScript;
 
     /// Start methods run once when enabled.
-    /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /**The Start function assigns the velocity and the direction of the bullet. Then starts the coroutine to destroy the bullet, which works as a independent timer.
-    And lastly finds and assigs the PlayerHealth script.*/
+    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time. */
+    /*! The Start function assigns the velocity and the direction of the bullet. Then starts the coroutine to destroy the bullet, which works as a independent timer.
+    And lastly finds and assigns the PlayerHealth script. */
     void Start()
     {
         if (IsHoming == false)
@@ -42,8 +40,11 @@ public class Bullet : MonoBehaviour
         }
         StartCoroutine(DestoryBullet());
         PlayerHealthScript = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
-        UsingCactusToken = Object.FindObjectOfType<TokenManager>().CactusTokenActive;
+        UsingCactusToken = FindObjectOfType<TokenManager>().CactusTokenActive;
     }
+
+    /// Called every frame.
+    /** If the bullet is set as homing and there is an enemy in range, move towards it. Otherwise, move forwards. */
     private void Update()
     {
         if (IsHoming == true)
@@ -59,12 +60,13 @@ public class Bullet : MonoBehaviour
             }
         }
     }
-    ///Function will run when an incoming collider makes contact with this object's collider.
-    /**In this function we check what the bullet hits. If the bullet hits another collider with a specific layer, we either;
-    Call the TakeDamage function on the player, enemy or shield. 
-    Either way the script instantiate (spawns/creates) a new hiteffect (explotion animation) as a gameobject based on a prefab. 
-    Then the StartShake function on the ScreenShakeController script is called to make the screen shake depending on what it hit (only if the player is in x distance, see _distance variable). 
-    Lastly we destroy the bullet, aka the gameObject that has this script attached to it.*/
+
+    /// Function will run when an incoming collider makes contact with this object's collider.
+    /** In this function we check what the bullet hits. If the bullet hits another collider with a specific layer, 
+        we call the TakeDamage function on the object hit. 
+        Either way the script instantiates (spawns/creates) a new hiteffect (explotion animation) as a gameobject based on a prefab. 
+        Then the StartShake function on the ScreenShakeController script is called to make the screen shake depending on what it hit (only if the player is in x distance, see _distance variable). 
+        Lastly we destroy the bullet that has this script attached to it. */
     private void OnTriggerEnter2D(Collider2D other)
     {
         float _distance = Vector3.Distance(PlayerHealthScript.transform.position, transform.position);
@@ -74,7 +76,7 @@ public class Bullet : MonoBehaviour
             EnemyAI _enemyAI = other.gameObject.GetComponent<EnemyAI>();
             PlayerHealth _playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             ShieldHP _shieldHP = other.gameObject.GetComponent<ShieldHP>();
-            WormWeakpoint _wormWeakpoint = other.gameObject.GetComponent<WormWeakpoint>();
+            BossWeakpointStage4 _wormWeakpoint = other.gameObject.GetComponent<BossWeakpointStage4>();
             CrackedBlock _crackedBlock = other.gameObject.GetComponent<CrackedBlock>();
             BossWeakpoint _bossWeakpoint = other.gameObject.GetComponent<BossWeakpoint>();
 
@@ -161,7 +163,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    ///An independent IEnumerator that is called in the Start function to destorys the gameobject after x seconds.
+    /// An independent IEnumerator that is called in the Start function to destroys the gameobject after an amount of seconds.
     IEnumerator DestoryBullet()
     {
         yield return new WaitForSeconds(TimeToLive);

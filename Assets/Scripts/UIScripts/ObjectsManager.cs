@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// Manages which UI objects are used.
 public class ObjectsManager : MonoBehaviour
 {
     [Header("UI")]

@@ -1,11 +1,9 @@
 // http://answers.unity.com/answers/1700931/view.html
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-///The WormPath script paths a quadratic bezier curve for the worm enemy to follow.
-
+/// The WormPath script paths a quadratic bezier curve for the worm enemy to follow.
 public class WormPath : MonoBehaviour
 {
     [HideInInspector] public Vector2 StartPoint;
@@ -26,13 +24,14 @@ public class WormPath : MonoBehaviour
     private Rigidbody2D _rb;
 
     /// Start methods run once when enabled.
-    /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*! In the Start function we get the Rigidbody2D component of the worm.*/
+    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time. */
+    /*! In the Start function we get the Rigidbody2D component of the worm. */
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
     }
 
+    /// If set, draw the worm's path and control points in the editor.
     private void OnDrawGizmos()
     {
         if(_drawPath && _points.Count > 0)
@@ -53,7 +52,7 @@ public class WormPath : MonoBehaviour
     }
 
     ///The Init method sets the worm's path.
-    /**This method is called by the Worm Spawner gameobject. Once path has been found the worm can start moving through it. */
+    /** This method is called by the Worm Spawner gameobject. Once path has been found the worm can start moving through it. */
     public void Init()
     {
         _bestMiddlePoint = CalculateBestMiddlePoint(StartPoint, EndPoint, PlayerPoint);
@@ -61,8 +60,8 @@ public class WormPath : MonoBehaviour
         _pathSet = true;
     }
 
-    ///FixedUpdate is called every physics step.
-    /**The FixedUpdate function is non-FPS dependent, and is executed exactly in sync with the physics engine.*/
+    /// FixedUpdate is called every physics step.
+    /** The FixedUpdate function is non-FPS dependent, and is executed exactly in sync with the physics engine. */
     /*! The FixedUpdate function moves and rotates the worm along the path set. When the worm is close to the current point, it changes to the next in the path. */
     private void FixedUpdate()
     {
@@ -134,7 +133,7 @@ public class WormPath : MonoBehaviour
         return _route;
     }
 
-    ///Destroy the worm object after 3 seconds of reaching path. This allows the worms body to get into the ground before deletion.
+    /// Destroy the worm object after 3 seconds of reaching path. This allows the worms body to get into the ground before deletion.
     private void DeleteSelf()
     {
         Destroy(gameObject);

@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// This script sets the worm's polygon collider. It is called every frame from the WormBody script.
 public class WormCollision : MonoBehaviour
 {
     [SerializeField] private float _damage;
@@ -9,14 +9,14 @@ public class WormCollision : MonoBehaviour
     private PolygonCollider2D _polygonCollider;
     private RectTransform _wormHead;
 
-    // Start is called before the first frame update
+    /// Called before the first frame.
     private void Start()
     {
         _polygonCollider = GetComponent<PolygonCollider2D>();
         _wormHead = GetComponentInChildren<RectTransform>();
     }
 
-    ///Set up the Polygon Collider using the positions of the body segments. Called from WormBody script.
+    /// Set up the Polygon Collider using the positions of the body segments. Called from WormBody script.
     public void SetCollision(Vector3[] _segmentPoses, int _length, float _width)
     {
         _polygonCollider.pathCount = _length;
@@ -45,7 +45,7 @@ public class WormCollision : MonoBehaviour
         }
     }
 
-    ///Calculates the points for the Polygon Collider given the start and end of the body segment.
+    /// Calculates the points for the Polygon Collider given the start and end of the body segment.
     /** Given a line and the line renderer's width, calculates the bounding rectangle for the collider. */
     private List<Vector2> CalculateColliderPoints(List<Vector2> _positions, float _width)
     {
@@ -69,6 +69,9 @@ public class WormCollision : MonoBehaviour
         return _colliderPositions;
     }
 
+    /// Called on a collider entering the trigger on the gameobject.
+    /** If the player touches the worm, damage the player and knock them back in the opposite direction.
+        If the player is hooked, release the grappling hook. */
     private void OnTriggerEnter2D(Collider2D _other)
     {
         if (_other.tag == "Player")

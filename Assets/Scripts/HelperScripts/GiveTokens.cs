@@ -1,22 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// This script is responsible for giving the player tokens when its methods are called.
 public class GiveTokens : MonoBehaviour
 {
     public TokenManager TokenManagerScript;
+
+    /// Called before the first frame.
     void Start()
     {
-        TokenManagerScript = Object.FindObjectOfType<TokenManager>();
+        TokenManagerScript = FindObjectOfType<TokenManager>();
     }
+
+    /// Add the cactus token to the player.
     public void GiveCactusToken()
     {
         TokenManagerScript.AddTokens(TokenManagerScript.CactusToken);
     }
-    public void GiveRevloverToken()
+
+    /// Add the revolver token to the player.
+    public void GiveRevolverToken()
     {
         TokenManagerScript.AddTokens(TokenManagerScript.RevloverToken);
     }
+
+    /// Add the worm token to the player.
     public void GiveWormToken()
     {
         TokenManagerScript.AddTokens(TokenManagerScript.WormToken);

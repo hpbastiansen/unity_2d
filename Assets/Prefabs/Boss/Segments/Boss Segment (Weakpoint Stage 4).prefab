@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2742630997259110868, guid: ca42676c3deda8345b09aa6f266f19d0,
         type: 3}
       propertyPath: m_Name
-      value: Boss Segment (Weakpoint)
+      value: Boss Segment (Weakpoint Stage 4)
       objectReference: {fileID: 0}
     - target: {fileID: 3420989007725064142, guid: ca42676c3deda8345b09aa6f266f19d0,
         type: 3}
@@ -67,5 +67,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1019381890383528389, guid: ca42676c3deda8345b09aa6f266f19d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ca42676c3deda8345b09aa6f266f19d0, type: 3}
+--- !u!1 &4342501472075850035 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 78891649764804660, guid: ca42676c3deda8345b09aa6f266f19d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4421388719241095431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4380658894403064331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4342501472075850035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e5a297ced5a62498acc5385647d007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 50

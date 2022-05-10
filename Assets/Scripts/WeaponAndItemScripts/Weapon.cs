@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using UnityEngine.UI;
 
-///The purpose of the Weapon script is to make a versatile template for most "normal" guns.
+/// The purpose of the Weapon script is to make a versatile template for most "normal" guns.
 public class Weapon : MonoBehaviour
 {
     public Transform FirePoint;
@@ -46,8 +44,8 @@ public class Weapon : MonoBehaviour
     private Movement _playerMovement;
 
     /// Start methods run once when enabled.
-    /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*! In the Start function several variables are set, and script, components and objects are found and assigned.*/
+    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time. */
+    /*! In the Start function several variables are set, and script, components and objects are found and assigned. */
     void Start()
     {
         _playerMovement = transform.root.GetComponent<Movement>();
@@ -55,15 +53,15 @@ public class Weapon : MonoBehaviour
         LifeSteal = TokenManagerScript.GunLifeStealAmount;
         AmmoText = GameObject.Find("AmmoTextUI").GetComponent<Text>();
         DialogueManagerScript = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
-        _checkUI = Object.FindObjectOfType<UITest>();
+        _checkUI = FindObjectOfType<UITest>();
         CanShoot = true;
         ShootAudioSource = GetComponent<AudioSource>();
     }
 
     /// LateUpdate is called every frame
-    /** LateUpdate is called after all Update functions have been called. This is useful to order script execution.*/
+    /** LateUpdate is called after all Update functions have been called. This is useful to order script execution. */
     /*! The Late Update allows for shooting in both FullAuto and SemiAutomatic. 
-    The Late Update also makes sure to update the Ammo UI text at the end, and reloads the gun if the bullets hit 0 and the UseClip is true*/
+    The Late Update also makes sure to update the Ammo UI text at the end, and reloads the gun if the bullets hit 0 and the UseClip is true */
     void LateUpdate()
     {
         if (_playerMovement.NoControl) return;
@@ -106,9 +104,9 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    ///This function is called when the object becomes enabled and active.
-    /**Whenever the weapon is enables it locates and changes the visual UI Image representation on the weapon and the current Ammo situation.
-    It also makes sure the gun is not already shooting.*/
+    /// This function is called when the object becomes enabled and active.
+    /** Whenever the weapon is enables it locates and changes the visual UI Image representation on the weapon and the current Ammo situation.
+    It also makes sure the gun is not already shooting. */
     private void OnEnable()
     {
         ImageUI = GameObject.Find("currentWepImg").GetComponent<Image>();
@@ -117,15 +115,14 @@ public class Weapon : MonoBehaviour
         AmmoText.text = Ammo.ToString();
     }
 
-
-    ///The Shoot function allows the gun to shoot.
-    /**The function checks if the weapon is having a limited clip size.
+    /// The Shoot function allows the gun to shoot.
+    /** The function checks if the weapon is having a limited clip size.
     If true, it only allows to shoot if the gun has bullets in the clip. If false it allows the player to shoot aslong as the weapons got bullets, 
     after that it gathers information about the current tokens lifesteal stats, subtracts one from the ammo value, generates a random vertical spread,
     plays a muzzleflash animation (light at the end of the gun when shooting), instantiates a bullet gameobject based on a prefab, 
     and set its correct location to be at the end of the gunbarrel.
     then it sets the rotation of the bullet to be equal the _randomSpread and lastly assigns necessary values to the bullet 
-    (e.g. lifesteal, camerashake strength, what it can hit, bulletspeed and damage).*/
+    (e.g. lifesteal, camerashake strength, what it can hit, bulletspeed and damage). */
     void Shoot()
     {
         if (UseClipSize)
@@ -172,11 +169,14 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    /// Stops the current reload coroutine if applicable, and starts it again.
     public void Reload()
     {
         StopAllCoroutines();
         StartCoroutine(ReloadClipTimer());
     }
+
+    /// Disable shooting and wait for the reload time before reloading the players gun.
     public IEnumerator ReloadClipTimer()
     {
         CanShoot = false;
@@ -186,6 +186,7 @@ public class Weapon : MonoBehaviour
         StopCoroutine(ReloadClipTimer());
     }
 
+    /// Instantly refill all ammo in the clip.
     public void InstantReload()
     {
         CanShoot = false;
@@ -198,6 +199,7 @@ public class Weapon : MonoBehaviour
         ReloadAudioSource.Play();
     }
 
+    /// Add a specific amount of ammo to the clip.
     public void AddAmmo(int _x)
     {
         if (CurrentAmmoInClip < MaxClipSize)

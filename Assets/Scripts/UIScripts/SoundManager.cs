@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// This script is responsible for managing background music and SFX volume.
 public class SoundManager : MonoBehaviour
 {
     [Header("Weapons")]
@@ -16,8 +16,6 @@ public class SoundManager : MonoBehaviour
 
     [Header("Hit effects")]
     public AudioClip HitWall;
-
-    /*[Header("Movement")]*/
 
     [Header("Music")]
     public List<AudioClip> BackgroundMusicList;
@@ -32,14 +30,19 @@ public class SoundManager : MonoBehaviour
     public float MusicValue;
     public SetSoundValue[] _setSoundValue;
 
+    /// Called at initialization, before all objects Start() methods.
+    /** Set music and SFX volume values. */
     private void Awake()
     {
         MusicValue = MusicSlider.value;
         SFXValue = SFXSlider.value;
-        _setSoundValue = Object.FindObjectsOfType<SetSoundValue>();
+        _setSoundValue = FindObjectsOfType<SetSoundValue>();
         SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
+
+    /// Called before the first frame.
+    /** Play a random background music track on startup. */
     private void Start()
     {
         int _randomMusic = Random.Range(0, BackgroundMusicList.Count);
@@ -48,6 +51,8 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    /// Called every frame.
+    /** If the background music track is finished, play a new track. */
     void Update()
     {
         if (BackgroundMusicSource.isPlaying == false)
@@ -58,6 +63,8 @@ public class SoundManager : MonoBehaviour
         }
 
     }
+
+    /// Set the music and SFX volume to what is selected in the UI.
     public void ChangeValue()
     {
         MusicValue = MusicSlider.value;
@@ -71,6 +78,8 @@ public class SoundManager : MonoBehaviour
             if (sound.SFX) sound._audioSource.volume = sound.MaxVolume * SFXValue;
         }
     }
+
+    /// Set the background music pitch on scene load. If it's the boss stage, pitch music up, otherwise pitch down.
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Scene currentScene = SceneManager.GetActiveScene();

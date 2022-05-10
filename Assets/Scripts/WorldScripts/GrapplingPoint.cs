@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// This script makes grappling points able to turn themselves on and off.
 public class GrapplingPoint : MonoBehaviour
 {
     private GrapplingHookController _grapplingHookController;
@@ -16,7 +15,9 @@ public class GrapplingPoint : MonoBehaviour
     private BoxCollider2D _collider;
     public float MaxDistance;
 
-    // Start is called before the first frame update
+    /// Called before the first frame.
+    /** In the Start method, we get the necessary components. 
+        If the point is timed, we set it to start deactivating 1 second before it should be turned off. */
     void Start()
     {
         _grapplingHookController = GameObject.Find("Main_Character").GetComponent<GrapplingHookController>();
@@ -28,6 +29,7 @@ public class GrapplingPoint : MonoBehaviour
         }
     }
 
+    /// This method switches the sprite of the grappling point every .2 seconds for 1 second until it is turned off.
     private void StartDeactivatePoint()
     {
         for(int i = 1; i <= 4; i++)
@@ -37,6 +39,7 @@ public class GrapplingPoint : MonoBehaviour
         Invoke("DeactivatePoint", 1f);
     }
 
+    /// This method turns off the grappling point. If the player is currently grappling to it, the grapple is released. After _timeInactive seconds, it turns on again.
     private void DeactivatePoint()
     {
         if (_grapplingHookController.HookedPoint == gameObject)
@@ -48,6 +51,7 @@ public class GrapplingPoint : MonoBehaviour
         Invoke("ActivatePoint", _timeInactive);
     }
 
+    /// This method activates the grappling point. After _timeActive-1 seconds, it starts turning off again.
     private void ActivatePoint()
     {
         _spriteRenderer.sprite = _activeSprite;
@@ -55,6 +59,7 @@ public class GrapplingPoint : MonoBehaviour
         Invoke("StartDeactivatePoint", _timeActive - 1);
     }
 
+    /// This method swtiches the sprite between the active sprite and the switching sprite.
     private void SwitchSprite()
     {
         if (_spriteRenderer.sprite == _activeSprite) _spriteRenderer.sprite = _switchingSprite;

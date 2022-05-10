@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2740680686458815108}
-  - component: {fileID: 8449341124121963894}
   m_Layer: 9
   m_Name: Worm_Stage4
   m_TagString: Untagged
@@ -32,18 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8449341124121963894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1079745015736013640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b819ce7cbd2fa314ab8d28d10620ceed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1646671693244865502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,25 +1203,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8105731699762871132}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5494094798573541999 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4342501472075850035, guid: d7229e09bfb07184a9679ea4eefbb003,
-    type: 3}
-  m_PrefabInstance: {fileID: 8105731699762871132}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8369600469996701713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5494094798573541999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0744698c8323dc48b1cae9966754239, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 50
 --- !u!1001 &8986335517064300896
 PrefabInstance:
   m_ObjectHideFlags: 0

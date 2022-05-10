@@ -1,12 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// This script manages the checkpoints for a stage. On touching a new checkpoint, the previous ones gets disabled.
 public class StageCheckPointManager : MonoBehaviour
 {
     public List<GameObject> CheckPoints;
 
-    // Start is called before the first frame update
+    /// Called before the first frame.
+    /** On load, sets the player's position to the current checkpoint. */
     void Start()
     {
         ES3AutoSaveMgr.Current.Load();
@@ -15,7 +16,8 @@ public class StageCheckPointManager : MonoBehaviour
         CheckPoints[CheckPoints.Count - 1].SetActive(false);
     }
 
-    // Update is called once per frame
+    /// Called every frame.
+    /** Listens for KeyDown events for O and X, clearing all checkpoints and resetting to the previous one respectively. */
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
@@ -29,16 +31,19 @@ public class StageCheckPointManager : MonoBehaviour
             _player.transform.position = CheckPoints[CheckPoints.Count - 1].transform.position;
         }
     }
-    public void AddCheckpoint(GameObject gobject)
+
+    /// Adds a new checkpoint to the checkpoint manager.
+    public void AddCheckpoint(GameObject _newCheckPoint)
     {
-        CheckPoints.Add(gobject);
+        CheckPoints.Add(_newCheckPoint);
         ES3AutoSaveMgr.Current.Save();
-        foreach (var checkpoint in CheckPoints)
+        foreach (GameObject _checkPoint in CheckPoints)
         {
-            checkpoint.SetActive(false);
+            _checkPoint.SetActive(false);
         }
     }
 
+    /// Clears all checkpoints except the first one.
     public void ClearCheckPoints()
     {
         foreach (var checkpoint in CheckPoints)

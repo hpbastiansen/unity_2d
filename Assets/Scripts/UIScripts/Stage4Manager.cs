@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+/// Manages the fourth stage of the game. Responsible for the external puzzle after completing the boss sequence.
 public class Stage4Manager : MonoBehaviour
 {
     public string GamePath;
@@ -10,7 +9,9 @@ public class Stage4Manager : MonoBehaviour
     public GameObject FinaleBlock;
     public GameObject GiveWormToken;
     public TokenManager TokenManagerScript;
-    // Start is called before the first frame update
+
+    /// Called before the first frame.
+    /** Set up the game path for external mechanics, and delete the 'Slow down'-files if they already exist from a previous attempt. */
     void Start()
     {
         TokenManagerScript = Object.FindObjectOfType<TokenManager>();
@@ -31,10 +32,11 @@ public class Stage4Manager : MonoBehaviour
 
             }
         }
-
     }
 
-    // Update is called once per frame
+    /// Called every frame.
+    /** If the player already has not already obtained the worm token, enable the trigger giving it the the player. 
+        If the player has run the external file, start the 'Slow down'-sequence. */
     void Update()
     {
         if (TokenManagerScript.ShrubsDestoyed >= 50 || TokenManagerScript.TokensOwned.Contains(TokenManagerScript.WormToken) == true)
@@ -53,6 +55,7 @@ public class Stage4Manager : MonoBehaviour
         }
     }
 
+    /// Run the 'Slowing down boss' sequence using the windows command prompt. Disables the collider blocking the player's path.
     public void RunCMD()
     {
         string _path = Application.dataPath;
@@ -71,6 +74,8 @@ public class Stage4Manager : MonoBehaviour
         process.Start();
         FinaleBlock.SetActive(false);
     }
+
+    /// Delete the 'Slow down worm'-file if it already exists from a previous attempt, and recreate it.
     public void MakeFile()
     {
         if (System.IO.File.Exists(GamePath + "Slow_Down_Worm.bat") || System.IO.File.Exists(GamePath + "Slow_Down_Worm_Success.txt"))

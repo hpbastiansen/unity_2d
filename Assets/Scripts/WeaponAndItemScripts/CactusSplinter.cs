@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
-using UnityEngine.Profiling;
 
-///The CactusSplinter script is a script based upon the Bullet script, but this is used for projectiles shot from the bullet when using the cactus token.
+/// The CactusSplinter script is a script based upon the Bullet script, but this is used for projectiles shot from the bullet when using the cactus token.
 public class CactusSplinter : MonoBehaviour
 {
     public float BulletSpeed = 20f;
@@ -22,9 +19,9 @@ public class CactusSplinter : MonoBehaviour
 
 
     /// Start methods run once when enabled.
-    /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /**The Start function assigns the velocity and the direction of the bullet. Then starts the coroutine to destroy the bullet, which works as a independent timer.
-    And lastly finds and assigs the Damage variable and TokenManger and PlayerHealth script.*/
+    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time. */
+    /*! The Start function assigns the velocity and the direction of the bullet. Then starts the coroutine to destroy the bullet, which works as a independent timer.
+        Lastly, it finds and assigns the Damage variable and TokenManger and PlayerHealth script. */
     void Start()
     {
         BulletRigidbody = GetComponent<Rigidbody2D>();
@@ -32,11 +29,14 @@ public class CactusSplinter : MonoBehaviour
         {
             BulletRigidbody.velocity = transform.right * BulletSpeed;
         }
-        _tokenManager = Object.FindObjectOfType<TokenManager>();
+        _tokenManager = FindObjectOfType<TokenManager>();
         StartCoroutine(DestoryBullet());
         PlayerHealthScript = GameObject.Find("Main_Character").GetComponent<PlayerHealth>();
         Damage = (_tokenManager.CurrentWeapon.Damage);
     }
+
+    /// Called every physics cycle, 50 times every second.
+    /** If the cactus splinter is set as homing and there is an enemy in range, move towards it. */
     private void FixedUpdate()
     {
         if (IsHoming == true)
@@ -49,12 +49,12 @@ public class CactusSplinter : MonoBehaviour
         }
     }
 
-    ///Function will run when an incoming collider makes contact with this object's collider.
-    /**In this function we check what the bullet hits. If the bullet hits another collider with a specific layer, we
-    call the TakeDamage function on the enemy. 
-    The script instantiate (spawns/creates) a new hiteffect (explotion animation) as a gameobject based on a prefab. 
-    Then the StartShake function on the ScreenShakeController script is called to make the screen shake depending on what it hit (only if the player is in x distance, see _distance variable). 
-    Lastly we destroy the bullet, aka the gameObject that has this script attached to it.*/
+    /// This method will run when an incoming collider makes contact with this object's collider.
+    /** In this function we check what the bullet hits. 
+        If the bullet hits another collider with a specific layer, we call the TakeDamage function on the enemy. 
+        The script instantiate (spawns/creates) a new hiteffect (explotion animation) as a gameobject based on a prefab. 
+        Then the StartShake function on the ScreenShakeController script is called to make the screen shake depending on what it hit (only if the player is in x distance, see _distance variable). 
+        Lastly we destroy the bullet, aka the gameObject that has this script attached to it. */
     private void OnTriggerEnter2D(Collider2D other)
     {
         float _distance = Vector3.Distance(PlayerHealthScript.transform.position, transform.position);
@@ -85,7 +85,7 @@ public class CactusSplinter : MonoBehaviour
         }
     }
 
-    ///An independent IEnumerator that is called in the Start function to destorys the gameobject after x seconds.
+    /// An independent IEnumerator that is called in the Start function to destroy the gameobject after an amount of seconds.
     IEnumerator DestoryBullet()
     {
         yield return new WaitForSeconds(TimeToLive);

@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-//https://www.youtube.com/watch?v=8PXPyyVu_6I&t=49s&ab_channel=gamesplusjames
+// https://www.youtube.com/watch?v=8PXPyyVu_6I&t=49s&ab_channel=gamesplusjames
 
-///The ScreenShakeController allows any script to start a screen shake effect.
+using UnityEngine;
+
+/// The ScreenShakeController allows any script to start a screen shake effect.
 public class ScreenShakeController : MonoBehaviour
 {
     public static ScreenShakeController Instance;
@@ -12,8 +11,8 @@ public class ScreenShakeController : MonoBehaviour
     private bool _rotationShake;
 
     /// Start methods run once when enabled.
-    /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*! In the Start function the Instance variable is set to a copy of the script itself which is applied to the camera object*/
+    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time. */
+    /*! In the Start function the Instance variable is set to a copy of the script itself which is applied to the camera object */
     void Start()
     {
         Instance = this;
@@ -21,9 +20,9 @@ public class ScreenShakeController : MonoBehaviour
 
     /// LateUpdate is called every frame
     /** LateUpdate is called after all Update functions have been called. This is useful to order script execution. 
-    The camera follow is implemented in LateUpdate because it tracks objects that might have moved inside Update.*/
+    The camera follow is implemented in LateUpdate because it tracks objects that might have moved inside Update. */
     /*! In the Late Update the script checks if the shake time remaining is bigger then zero. If it is that means it should shake. Inside the if statement it is constantly given
-    random x and y positions and rotations that is multiplied with the shake power, which we then use to move the camera to its locations. Thus giving it a randomized shake feeling.*/
+    random x and y positions and rotations that is multiplied with the shake power, which we then use to move the camera to its locations. Thus giving it a randomized shake feeling. */
     private void LateUpdate()
     {
         if (_shakeTimeRemaining > 0)
@@ -41,8 +40,8 @@ public class ScreenShakeController : MonoBehaviour
         }
     }
 
-    ///StartShake is a public function that can be called from anywhere to initiate a screen shake.
-    /** The StartShake function takes two parameters, and can be called from any script in the game. When the necessary variables is changed it will trigger the LateUpdate and result in a screen shake */
+    /// StartShake is a public function that can be called from anywhere to initiate a screen shake.
+    /** The StartShake function takes two parameters, and can be called from any script in the game. When the necessary variables is changed it will trigger the LateUpdate and result in a screen shake. */
     public void StartShake(float length, float power, bool _rotShake)
     {
         _shakeTimeRemaining = length;

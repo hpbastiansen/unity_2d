@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+// https://www.youtube.com/watch?v=-YISSX16NwE - Weapon switching
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-///The WeaponController keeps track of available weapons and which weapons player is currently using.
+/// The WeaponController keeps track of available weapons and which weapons player is currently using.
 public class WeaponController : MonoBehaviour
 {
     int _totalWeapons = 1;
@@ -20,10 +19,10 @@ public class WeaponController : MonoBehaviour
     private Movement _playerMovement;
     public bool GottenGrapplingHook = false;
 
-
+    /// Called at initialization, before all objects Start() methods.
     /*! In the Awake function we force the player not to start with the shield.
     Next we are indexing all the weapons on the player. These can be found as child objects under the "WeaponHolderObject" gameObject. 
-    Then we set the first gun as the current gun, and activates it, and deactivates all the others.*/
+    Then we set the first gun as the current gun, and activates it, and deactivates all the others. */
     private void Awake()
     {
         _playerMovement = GetComponent<Movement>();
@@ -41,7 +40,7 @@ public class WeaponController : MonoBehaviour
         CurrentGun = Weapons[0];
         CurrentWeaponIndex = 0;
 
-        _tokenManager = Object.FindObjectOfType<TokenManager>();
+        _tokenManager = FindObjectOfType<TokenManager>();
         _tokenManager.CurrentWeapon = CurrentGun.GetComponent<Weapon>();
         SceneManager.sceneLoaded += OnSceneLoaded;
         Weapons[CurrentWeaponIndex].SetActive(false);
@@ -54,32 +53,18 @@ public class WeaponController : MonoBehaviour
         CurrentGun = Weapons[CurrentWeaponIndex];
     }
 
-    /// Start methods run once when enabled.
-    /** Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*! In the Start function we force the player not to start with the shield. 
-    Next we are indexing all the weapons on the player. These can be found as child objects under the "WeaponHolderObject" gameObject. 
-    Then we set the first gun as the current gun, and activates it, and deactivates all the others.*/
-    void Start()
-    {
-
-    }
-
-    ///Update is called every frame.
-    /**The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
-This means that is a game run on higher frames per second the update function will also be called more often.*/
-    /*! In the Update function we are allowing the player to cycle between the weapons we just indexed. The player can increase the current weapon index with the key "3",
-    and decrease with the key "2".
-    Lastly we allow the player to switch between using the weapons and the shield.*/
+    /// Update is called every frame.
+    /** The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
+    This means that is a game run on higher frames per second the update function will also be called more often. */
+    /*! In the Update function we are allowing the player to cycle between the weapons we just indexed. The player can cycle their weapons with 'Q'.
+    Lastly we allow the player to switch between using the weapons and the shield using the middle mouse button. */
     void Update()
     {
         if (_playerMovement.NoControl) return;
-        ////////////////////////////////////////////////////////////////
-        // https://www.youtube.com/watch?v=-YISSX16NwE&ab_channel=TheGameGuy
-        ////////////////////////////////////////////////////////////////
 
         if (Input.GetKeyDown(KeyCode.Q) && GottenGrapplingHook == true)
         {
-            //next Weapon
+            // Next Weapon
             if (CurrentWeaponIndex == 0)
             {
                 Weapons[CurrentWeaponIndex].SetActive(false);
@@ -95,30 +80,31 @@ This means that is a game run on higher frames per second the update function wi
                 CurrentGun = Weapons[CurrentWeaponIndex];
             }
         }
-        //allow player to use shield instead of weapons.
+        // Allow player to use shield instead of weapons.
         if (Input.GetMouseButtonDown(2) && ShieldRechargeTimer <= 0)
         {
             UsingShield = !UsingShield;
         }
+
         if (UsingShield == true)
         {
             ShieldObject.SetActive(true);
             WeaponHolderObject.SetActive(false);
         }
-        else if (UsingShield == false)
+        else
         {
             ShieldObject.SetActive(false);
             WeaponHolderObject.SetActive(true);
         }
+
         if (ShieldRechargeTimer > 0)
         {
             ShieldRechargeTimer -= Time.deltaTime;
             ShieldObject.GetComponent<ShieldHP>().HP = ShieldObject.GetComponent<ShieldHP>().MaxHP;
-
         }
     }
 
-    ///Function to disable all guns and enable the first one.
+    /// Method to disable all guns and enable the first one.
     public void SetDefaultGun()
     {
         for (int i = 0; i < _totalWeapons; i++)
@@ -131,6 +117,8 @@ This means that is a game run on higher frames per second the update function wi
         CurrentGun = Weapons[0];
         CurrentWeaponIndex = 0;
     }
+
+    /// This is run after the scene has fully loaded. If the player is starting stage 1, the grappling hook is disabled.
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Scene currentScene = SceneManager.GetActiveScene();

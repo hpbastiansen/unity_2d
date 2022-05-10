@@ -22,13 +22,12 @@ namespace ES3Types
 			writer.WritePropertyByRef("CactusToken", instance.CactusToken);
 			writer.WriteProperty("CactusTokenActive", instance.CactusTokenActive, ES3Type_bool.Instance);
 			writer.WritePropertyByRef("RevloverToken", instance.RevloverToken);
-			writer.WriteProperty("RevloverTokenActive", instance.RevloverTokenActive, ES3Type_bool.Instance);
+			writer.WriteProperty("RevloverTokenActive", instance.RevolverTokenActive, ES3Type_bool.Instance);
 			writer.WritePropertyByRef("WormToken", instance.WormToken);
 			writer.WriteProperty("WormTokenActive", instance.WormTokenActive, ES3Type_bool.Instance);
 			writer.WriteProperty("TokenUIactive", instance.TokenUIactive, ES3Type_bool.Instance);
 			writer.WriteProperty("TokensOwned", instance.TokensOwned, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<UnityEngine.GameObject>)));
 			writer.WriteProperty("TokensActive", instance.TokensActive, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Boolean>)));
-			writer.WritePrivateFieldByRef("_myUIManager", instance);
 			writer.WriteProperty("ShortInfo", instance.ShortInfo, ES3Type_string.Instance);
 			writer.WriteProperty("DashInfo", instance.DashInfo, ES3Type_string.Instance);
 			writer.WriteProperty("ShieldInfo", instance.ShieldInfo, ES3Type_string.Instance);
@@ -96,7 +95,7 @@ namespace ES3Types
 						instance.RevloverToken = reader.Read<UnityEngine.GameObject>(ES3Type_GameObject.Instance);
 						break;
 					case "RevloverTokenActive":
-						instance.RevloverTokenActive = reader.Read<System.Boolean>(ES3Type_bool.Instance);
+						instance.RevolverTokenActive = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;
 					case "WormToken":
 						instance.WormToken = reader.Read<UnityEngine.GameObject>(ES3Type_GameObject.Instance);
@@ -113,9 +112,6 @@ namespace ES3Types
 					case "TokensActive":
 						instance.TokensActive = reader.Read<System.Collections.Generic.List<System.Boolean>>();
 						break;
-					case "_myUIManager":
-					reader.SetPrivateField("_myUIManager", reader.Read<UIManager>(), instance);
-					break;
 					case "ShortInfo":
 						instance.ShortInfo = reader.Read<System.String>(ES3Type_string.Instance);
 						break;

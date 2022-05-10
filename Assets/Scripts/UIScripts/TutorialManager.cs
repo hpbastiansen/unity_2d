@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// This script sets the Tutorial state. The tutorial is divided into steps which blocks the player's progress until completed.
 public class TutorialManager : MonoBehaviour
 {
     [Header("Step0")]
     public bool Step0;
     public GameObject Step0Block;
+
     [Header("Step1")]
     public bool Step1;
     public GameObject Step1Block;
@@ -35,7 +35,8 @@ public class TutorialManager : MonoBehaviour
 
     [Header("Step6")]
     public bool Step6;
-    // Start is called before the first frame update
+
+    /// Called before the first frame.
     void Start()
     {
         Step1 = false;
@@ -45,42 +46,57 @@ public class TutorialManager : MonoBehaviour
         Step5 = false;
         Step6 = false;
     }
+
+    /// Changes step 0 to done.
     public void Step0Done()
     {
         Step0 = true;
         Step0Block.SetActive(false);
     }
+
+    /// Changes step 1 to done.
     public void Step1Done()
     {
         Step1 = true;
         Step1Block.SetActive(false);
     }
+
+    /// Changes step 2 to done.
     public void Step2Done()
     {
         Step2 = true;
         Step2Block.SetActive(false);
     }
+
+    /// Changes step 3 to done.
     public void Step3Done()
     {
         Step3 = true;
         Step3Block.SetActive(false);
     }
+
+    /// Changes step 4 to done.
     public void Step4Done()
     {
         Step4 = true;
         Step4Block.SetActive(false);
     }
+
+    /// Changes step 5 to done.
     public void Step5Done()
     {
         Step5 = true;
         Step5Block.SetActive(false);
     }
+
+    /// Changes step 6 to done.
     public void Step6Done()
     {
         Step6 = true;
-        Object.FindObjectOfType<CheckPointManager>().IsTutorialDone = true;
+        FindObjectOfType<CheckPointManager>().IsTutorialDone = true;
     }
 
+    /// Called when the player counters a shot in the tutorial. Updates the light panel, increases the 'Shots countered' variable and checks if the step is complete.
     public void ShotCountered()
     {
         if (_shotsCountered >= 3) return;
@@ -89,6 +105,7 @@ public class TutorialManager : MonoBehaviour
         CheckShots();
     }
 
+    /// Called when the player blocks a shot in the tutorial. Updates the light panel, increases the 'Shots blocked' variable and checks if the step is complete.
     public void ShotBlocked()
     {
         if (_shotsBlocked >= 3) return;
@@ -97,11 +114,13 @@ public class TutorialManager : MonoBehaviour
         CheckShots();
     }
 
+    /// Checks if 3 shots have been countered and blocked. If so, open the door to let the player progress.
     private void CheckShots()
     {
         if (_shotsBlocked >= 3 && _shotsCountered >= 3) _enemyDoor.Triggered = true;
     }
 
+    /// Spawn an enemy at the position of the EnemySpawnPoint transform.
     public void SpawnEnemy()
     {
         Enemy = Instantiate(_enemyPrefab, GameObject.Find("EnemySpawnPoint").transform.position, Quaternion.identity);

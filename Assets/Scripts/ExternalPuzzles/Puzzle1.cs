@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Text.RegularExpressions;
 
+/// This script handles the external puzzles in stage 3. 
 public class Puzzle1 : MonoBehaviour
 {
     public bool Door1Open;
@@ -33,7 +32,8 @@ public class Puzzle1 : MonoBehaviour
     public bool IsBossHackDone;
     public bool FinaleStarted;
 
-    // Start is called before the first frame update
+    /// Called before the first frame.
+    /** In the Start method we set the Game Path and puzzle variables, and clean up any files remaining from previous attempts. */
     void Start()
     {
         Door1Animator.SetBool("IsOpen", Door1Open);
@@ -76,7 +76,8 @@ public class Puzzle1 : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    /// Called every frame.
+    /** In the Update method we check for the completion of every puzzle in the stage. */
     void Update()
     {
         Door1Animator.SetBool("IsOpen", Door1Open);
@@ -85,6 +86,7 @@ public class Puzzle1 : MonoBehaviour
         ThreeCDoorAnimator.SetBool("IsOpen", GeneratorCanBeStarted);
         FinalDoorAnimator.SetBool("IsOpen", IsLastDoorOpen);
 
+        // If all three lights of the final door puzzle is on, the door opens.
         if (TargetLight1.IsOn == true && TargetLight2.IsOn == true && TargetLight3.IsOn == true)
         {
             IsLastDoorOpen = true;
@@ -94,10 +96,7 @@ public class Puzzle1 : MonoBehaviour
             IsLastDoorOpen = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            OpenDoor1();
-        }
+        // If the 'Success.txt' file contains the word 'Open' we open the first door.
         if (System.IO.File.Exists(GamePath + "Success.txt"))
         {
             string lines = System.IO.File.ReadAllText(GamePath + "Success.txt");
@@ -115,6 +114,7 @@ public class Puzzle1 : MonoBehaviour
             Door1Open = false;
         }
 
+        // If the 'GeneratorOverride.txt' file contains the AccessOverrideCode and a power value, we turn the generator on.
         if (System.IO.File.Exists(GamePath + "Generator/" + "GeneratorOverride.txt"))
         {
             string[] lines1 = System.IO.File.ReadAllLines(GamePath + "Generator/" + "GeneratorOverride.txt");
@@ -144,6 +144,7 @@ public class Puzzle1 : MonoBehaviour
             GeneratorPowerValue = 0;
         }
 
+        // If the generator puzzle is done, we deactivate the Open Door dialogue trigger.
         if (GeneratorCanBeStarted)
         {
             AfterOpenDoorDiaTrigger.SetActive(false);
@@ -152,9 +153,10 @@ public class Puzzle1 : MonoBehaviour
         {
             AfterOpenDoorDiaTrigger.SetActive(true);
         }
+
+        // If all 'Position.txt' text files are in place, we set the final objective as completed.
         if (System.IO.File.Exists(GamePath + "WormPosition/POS1/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/POS2/" + "Position.txt") && System.IO.File.Exists(GamePath + "WormPosition/POS3/" + "Position.txt"))
         {
-
             IsBossHackDone = true;
             PostFinaleDia.SetActive(true);
             PreFinaleDia.SetActive(false);
@@ -167,6 +169,7 @@ public class Puzzle1 : MonoBehaviour
         }
     }
 
+    /// This method opens the door at the start of the stage.
     public void OpenDoor1()
     {
         Door1Open = true;
@@ -176,6 +179,8 @@ public class Puzzle1 : MonoBehaviour
         OpenDoorDiaTrigger.IsDone = true;
         GeneratorCanBeStarted = false;
     }
+
+    /// This method creates the 'RunMe.bat' file to help solve the first door puzzle.
     public void OpenFileExplorerP1()
     {
         if (System.IO.File.Exists(GamePath + "RunMe.bat"))
@@ -194,6 +199,7 @@ public class Puzzle1 : MonoBehaviour
         Application.OpenURL("file:///" + GamePath);
     }
 
+    /// This method starts the generator puzzle by creating and filling the 'Generator' folder.
     public void StartGeneratorSetup()
     {
         if (_startedOnGenerator == false)
@@ -223,6 +229,7 @@ public class Puzzle1 : MonoBehaviour
         }
     }
 
+    /// This method starts the final section of stage 3 by creating and filling the 'Position' folders, and starting the enemy spawner.
     public void StartFinaleSetup()
     {
         if (FinaleStarted == false)

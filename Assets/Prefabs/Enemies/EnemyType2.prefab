@@ -510,23 +510,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4921700f6cf7584188c82397ec64acb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirePoint: {fileID: 1749255070885784624}
-  Bullet: {fileID: 6053951966795587883, guid: e24541b492c87844d88618295d8dbfbc, type: 3}
+  _firePoint: {fileID: 1749255070885784624}
+  _bullet: {fileID: 6053951966795587883, guid: e24541b492c87844d88618295d8dbfbc, type: 3}
+  _muzzleFlashAnimation: {fileID: 1749255072211441590}
+  _muzzleAnimationName: bulletfire_weapon1
+  _shootSoundSource: {fileID: 4516964069791806994}
   Target: {fileID: 0}
   _damage: 6
   _bulletSpeed: 15
   _minVecticalSpread: 1
   _maxVerticalSpread: 2
-  _magazineAmmo: 5
   _reloadTime: 3
   _firerate: 1
-  CameraShakeStrength: 0.2
-  MuzzleFlashAnimation: {fileID: 1749255072211441590}
-  MuzzleAnimationName: bulletfire_weapon1
-  WhatToHit:
+  _magazineAmmo: 5
+  _cameraShakeStrength: 0.2
+  _whatToHit:
     serializedVersion: 2
     m_Bits: 11031
-  ShootSoundSource: {fileID: 4516964069791806994}
 --- !u!1 &1749255071703550278
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,7 +807,7 @@ MonoBehaviour:
   - {x: -0.40005636, y: 0.37428522, z: 0}
   m_ShapePathHash: -1429148193
   m_Mesh: {fileID: 0}
-  m_InstanceId: 368112
+  m_InstanceId: 39266
 --- !u!1 &1749255072304835763
 GameObject:
   m_ObjectHideFlags: 0

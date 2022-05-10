@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// This script creates a method that checks if the mouse is on a 'Ground' object or not.
 public class MousePositionOverCollider : MonoBehaviour
 {
     Camera cam;
+
+    /// Cast a ray from the camera to the mouse position. If the ray hits an object tagged with 'Ground', return true. Otherwise return false.
     public bool CheckForCollider()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -25,7 +26,6 @@ public class MousePositionOverCollider : MonoBehaviour
             {
                 return (false);
             }
-
         }
     }
 }

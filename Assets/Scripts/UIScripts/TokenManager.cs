@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
-///The TokenManger script handles most actions and variables surrounding the tokens.
+/// The TokenManger script handles most actions and variables surrounding the tokens.
 public class TokenManager : MonoBehaviour
 {
     public GameObject TokenUI;
@@ -13,14 +12,13 @@ public class TokenManager : MonoBehaviour
     public GameObject CactusToken;
     public bool CactusTokenActive;
     public GameObject RevloverToken;
-    public bool RevloverTokenActive;
+    public bool RevolverTokenActive;
     public GameObject WormToken;
     public bool WormTokenActive;
     public bool TokenUIactive;
     public List<GameObject> TokensOwned;
 
     public List<bool> TokensActive;
-    private UIManager _myUIManager;
     public string ShortInfo;
     public string DashInfo;
     public string ShieldInfo;
@@ -52,7 +50,6 @@ public class TokenManager : MonoBehaviour
     private PlayerHealth _playerHealth;
     public float ShieldLifeSteal;
     private ShieldHP _shieldHP;
-
     private string _weaponAccuracy;
 
     [Header("IGNORE")]
@@ -60,7 +57,6 @@ public class TokenManager : MonoBehaviour
     public bool UsingTokenMenu;
     private string _spacechar = " __ ";
     private UITest _checkUI;
-
 
     [Header("CactusToken")]
     public GameObject CactusSplinter;
@@ -71,8 +67,6 @@ public class TokenManager : MonoBehaviour
     [Header("WormToken")]
     public int ShrubsDestoyed;
 
-
-
     ///Awake is called when the script instance is being loaded.
     /**Awake is called either when an active GameObject that contains the script is initialized when a Scene loads, 
     or when a previously inactive GameObject is set to active, or after a GameObject created with Object.
@@ -80,24 +74,21 @@ public class TokenManager : MonoBehaviour
     /*! In this Awake we find and assign the necessary sctipt in the scene.*/
     private void Awake()
     {
-        PlayerMovement = Object.FindObjectOfType<Movement>();
-        _playerHealth = Object.FindObjectOfType<PlayerHealth>();
-        _shieldHP = Object.FindObjectOfType<ShieldHP>();
-        _myUIManager = GameObject.FindObjectOfType<UIManager>();
-        WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
-        _uiManager = Object.FindObjectOfType<UIManager>();
+        PlayerMovement = FindObjectOfType<Movement>();
+        _playerHealth = FindObjectOfType<PlayerHealth>();
+        _shieldHP = FindObjectOfType<ShieldHP>();
+        WeaponControllerScript = FindObjectOfType<WeaponController>();
+        _uiManager = FindObjectOfType<UIManager>();
         ReadyToGiveToken = true;
-
     }
-
 
     /// Start methods run once when enabled.
     /**Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.*/
-    /*! In the Start function we make sure the UI elements are disables.
-    We then add all the tokens that the player owns into a list. And then deactivates all of them and activates the default one.*/
+    /*! In the Start function we make sure the UI elements are disabled.
+    We add all the tokens that the player owns into a list, then deactivate all of them, and reactivate the default one.*/
     void Start()
     {
-        _checkUI = Object.FindObjectOfType<UITest>();
+        _checkUI = FindObjectOfType<UITest>();
         TokenUI = GameObject.Find("TokenUI");
         TokenUIactive = false;
         foreach (GameObject tokens in TokensOwned)
@@ -110,11 +101,10 @@ public class TokenManager : MonoBehaviour
         UsingTokenMenu = false;
     }
 
-    ///Update is called every frame.
-    /**The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
-This means that is a game run on higher frames per second the update function will also be called more often.*/
-    /*! In the Update function if statements set the TokenUI on/off based on _tokenUIactive variable. This also allows the player to true/false the variable.
-    If the TokenUI is enables the ingame timescale is set to 0, meaning everything is frozen in time. While if the TokenUI is disables everything goes back to normal time scale.*/
+    /// Update is called every frame.
+    /** The Update function is FPS dependent, meaning it will update as often as it possibly can based on a change of frames. 
+    This means that is a game run on higher frames per second the update function will also be called more often. */
+    /*! In the Update function if statements set the TokenUI on/off based on _tokenUIactive variable. This also allows the player to true/false the variable. */
     void Update()
     {
         if (TokenUIactive)
@@ -155,12 +145,9 @@ This means that is a game run on higher frames per second the update function wi
         MovementInfoText.text = MovementInfo.ToString();
 
         ShortInfoText.text = ShortInfo.ToString();
-
-
     }
 
-
-    ///The NextToken allows the player to show the next token the player owns.
+    /// The NextToken allows the player to show the next token the player owns.
     public void NextToken()
     {
         foreach (GameObject tokens in TokensOwned)
@@ -179,7 +166,7 @@ This means that is a game run on higher frames per second the update function wi
         TokensOwned[TokenIndex].SetActive(true);
     }
 
-    ///The PreviousToken allows the player to see the previous token the player owns.
+    /// The PreviousToken allows the player to see the previous token the player owns.
     public void PreviousToken()
     {
         foreach (GameObject tokens in TokensOwned)
@@ -197,57 +184,64 @@ This means that is a game run on higher frames per second the update function wi
         TokensOwned[TokenIndex].SetActive(true);
     }
 
+    /// Spawns 5 cactus splinters after dashing with the Cactus Token active.
     public IEnumerator CactusTokenDash()
     {
-        for (int i = 0; i < 5; i++)
+        for (int _i = 0; _i < 5; _i++)
         {
             if (PlayerMovement.IsDashing == true)
             {
                 yield return new WaitForSeconds(0.1f);
                 float _randomSpread = Random.Range(-1, 1);
-                GameObject thebullet = Instantiate(CactusSplinter, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
-                thebullet.transform.Rotate(0, 0, _randomSpread);
-                thebullet.GetComponent<CactusSplinter>().CameraShakeStrength = 0;
-                thebullet.GetComponent<CactusSplinter>().TimeToLive = 1f;
-                thebullet.GetComponent<CactusSplinter>().WhatToHit = CurrentWeapon.WhatToHit;
-                thebullet.GetComponent<CactusSplinter>().BulletSpeed = CustomDashSpeed * 1.5f;
-                thebullet.GetComponent<CactusSplinter>().Damage = 5;
-                thebullet.GetComponent<CactusSplinter>().IsHoming = false;
+                GameObject _bullet = Instantiate(CactusSplinter, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
+                _bullet.transform.Rotate(0, 0, _randomSpread);
+                _bullet.GetComponent<CactusSplinter>().CameraShakeStrength = 0;
+                _bullet.GetComponent<CactusSplinter>().TimeToLive = 1f;
+                _bullet.GetComponent<CactusSplinter>().WhatToHit = CurrentWeapon.WhatToHit;
+                _bullet.GetComponent<CactusSplinter>().BulletSpeed = CustomDashSpeed * 1.5f;
+                _bullet.GetComponent<CactusSplinter>().Damage = 5;
+                _bullet.GetComponent<CactusSplinter>().IsHoming = false;
             }
         }
     }
+
+    /// Spawns 3 homing cactus splinters after countering with the Cactus Token active.
     public IEnumerator CactusTokenCounter()
     {
-        for (int i = 0; i < 3; i++)
+        for (int _i = 0; _i < 3; _i++)
         {
             if (_playerHealth.IsBlocking == true)
             {
                 yield return new WaitForSeconds(0.1f);
                 float _randomSpread = Random.Range(-1, 1);
-                GameObject thebullet = Instantiate(CactusSplinter, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
-                thebullet.transform.Rotate(0, 0, _randomSpread);
-                thebullet.GetComponent<CactusSplinter>().CameraShakeStrength = 0;
-                thebullet.GetComponent<CactusSplinter>().TimeToLive = 10f;
-                thebullet.GetComponent<CactusSplinter>().WhatToHit = CurrentWeapon.WhatToHit;
-                thebullet.GetComponent<CactusSplinter>().BulletSpeed = 4f;
-                thebullet.GetComponent<CactusSplinter>().Damage = 5;
-                thebullet.GetComponent<CactusSplinter>().IsHoming = true;
+                GameObject _bullet = Instantiate(CactusSplinter, CurrentWeapon.FirePoint.position, PlayerMovement.ArmPivotGameObject.transform.rotation);
+                _bullet.transform.Rotate(0, 0, _randomSpread);
+                _bullet.GetComponent<CactusSplinter>().CameraShakeStrength = 0;
+                _bullet.GetComponent<CactusSplinter>().TimeToLive = 10f;
+                _bullet.GetComponent<CactusSplinter>().WhatToHit = CurrentWeapon.WhatToHit;
+                _bullet.GetComponent<CactusSplinter>().BulletSpeed = 4f;
+                _bullet.GetComponent<CactusSplinter>().Damage = 5;
+                _bullet.GetComponent<CactusSplinter>().IsHoming = true;
             }
         }
     }
+
+    /// Called on cactus destruction. If the player has destroyed 50 cacti, award the cactus token and show dialogue.
     public void AddCactusTokenInt()
     {
         CactiDestoyed += 1;
         if (CactiDestoyed == 50)
         {
             AddTokens(CactusToken);
-            OnEnableDialogueManager _dialogue = Object.FindObjectOfType<OnEnableDialogueManager>();
+            OnEnableDialogueManager _dialogue = FindObjectOfType<OnEnableDialogueManager>();
             _dialogue.Dialogues.SentencesToSpeak.Clear();
             _dialogue.Dialogues.SentencesToSpeak.Add("You earned the Cactus Token! Check it out in the Token Menu!");
             _dialogue.ActivateDialogue();
 
         }
     }
+
+    /// Called on shrub destruction. If the player has destroyed 50 shrubs, award the worm token and show dialogue.
     public void AddShrubsTokenInt()
     {
         ShrubsDestoyed += 1;
@@ -260,50 +254,58 @@ This means that is a game run on higher frames per second the update function wi
             _dialogue.ActivateDialogue();
         }
     }
+
+    /// Instantly reloads the player's weapon after dashing with the revolver token active.
     public void RevolverTokenDash()
     {
         CurrentWeapon.InstantReload();
         StopCoroutine(CurrentWeapon.ReloadClipTimer());
     }
+
+    /// Increase player's ammo count after countering with the revolver token active.
     public void RevolverTokenCounter()
     {
         CurrentWeapon.AddAmmo(1);
     }
+
+    /// Teleport the player to the cursor if dashing with the Worm Token active.
     public void WormTokenDash()
     {
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         PlayerMovement.transform.position = new Vector2(_mousePos.x, _mousePos.y);
     }
+
+    /// Debuffs all enemies after countering with the Worm Token active.
     public void WormTokenCounter()
     {
-        EnemyHealth[] hitCollidersS = FindObjectsOfType(typeof(EnemyHealth)) as EnemyHealth[];
-        //Collider2D[] hitCollidersS = Physics2D.OverlapCircleAll(_playerHealth.transform.position, 10f, 1 << LayerMask.NameToLayer("Enemy"));
-        foreach (var hitCollider in hitCollidersS)
+        EnemyHealth[] _hitColliders = FindObjectsOfType(typeof(EnemyHealth)) as EnemyHealth[];
+        foreach (EnemyHealth _hitCollider in _hitColliders)
         {
-            hitCollider.GetComponent<EnemyHealth>().Debuff();
+            _hitCollider.Debuff();
         }
     }
 
-    public void AddTokens(GameObject token)
+    /// Add the specified token to the player's owned tokens if not already owned.
+    public void AddTokens(GameObject _token)
     {
-        if (TokensOwned.Contains(token) == false)
+        if (TokensOwned.Contains(_token) == false)
         {
-            TokensOwned.Add(token);
+            TokensOwned.Add(_token);
         }
     }
 
     /*_________________FOR ENABLE/DISABLE OF THE TOKENS_________________*/
 
-    ///The ActivateDefaultToken function activates the defualt token, and deacitvates every other token. Then different variables to match it's unique trait.
+    /// The ActivateDefaultToken function activates the defualt token, and deactivates every other token. Then sets different variables to match its unique traits.
     public void ActivateDefaultToken()
     {
-        CurrentWeapon = Object.FindObjectOfType<WeaponController>().CurrentGun.GetComponent<Weapon>();
+        CurrentWeapon = FindObjectOfType<WeaponController>().CurrentGun.GetComponent<Weapon>();
         DefaultTokenActive = true;
         CactusTokenActive = false;
         WormTokenActive = false;
-        RevloverTokenActive = false;
+        RevolverTokenActive = false;
 
-        //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        // VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTION.
         ShortInfo = "Default token is obtained at the start of the game for free. The values in the token is the default values for all the variables. Other tokens can however change these.";
 
         CustomPlayerMoveSpeed = 5f;
@@ -344,15 +346,16 @@ This means that is a game run on higher frames per second the update function wi
 
         _weaponAccuracy = "decent";
     }
-    ///The ActivateCactusToken function activates the Cactus token, and deacitvates every other token. Then different variables to match it's unique trait.
+
+    /// The ActivateCactusToken function activates the Cactus token, and deactivates every other token. Then sets different variables to match its unique traits.
     public void ActivateCactusToken()
     {
         DefaultTokenActive = false;
         CactusTokenActive = true;
         WormTokenActive = false;
-        RevloverTokenActive = false;
+        RevolverTokenActive = false;
 
-        //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        // VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTION.
         ShortInfo = "When dashing projectiles shoot out in the direction of the momentum. Bullets split into 8 after traveling the maximum distance. When blocking succesfully it shoots out 3 thorns, which homes to the nearest enemy. " +
         "Shield gives the player touch damage.";
 
@@ -396,16 +399,16 @@ This means that is a game run on higher frames per second the update function wi
         _weaponAccuracy = "Perfect";
 
     }
-    ///The ActivateRevolverToken function activates the Revolver token, and deacitvates every other token. Then different variables to match it's unique trait.
 
+    /// The ActivateRevolverToken function activates the Revolver token, and deactivates every other token. Then sets different variables to match its unique traits.
     public void ActivateRevolverToken()
     {
         DefaultTokenActive = false;
         CactusTokenActive = false;
         WormTokenActive = false;
-        RevloverTokenActive = true;
+        RevolverTokenActive = true;
 
-        //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        // VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTION.
         ShortInfo = "The Revlover tokens allows the gun can to shoot 6 times in rapid succession. When dashing the your gun is reloaded. If you successfully counter/block another bullet it adds one more ammo to the current clip."
         + " Shield has however lower health.";
 
@@ -450,16 +453,15 @@ This means that is a game run on higher frames per second the update function wi
         _weaponAccuracy = "bad";
     }
 
-    ///The ActivateWormToken function activates the Worm token, and deacitvates every other token. Then different variables to match it's unique trait.
-
+    /// The ActivateWormToken function activates the Worm token, and deactivates every other token. Then sets different variables to match its unique traits.
     public void ActivateWormToken()
     {
         DefaultTokenActive = false;
         CactusTokenActive = false;
-        RevloverTokenActive = false;
+        RevolverTokenActive = false;
         WormTokenActive = true;
 
-        //VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTOIN.
+        // VARIABLES TO MAKE IT SPECIAL. IMPORTANT! WILL ONLY START TAKING EFFECT WHENEVER PLAYER ACTIVATES THE TOKEN! IS NOT CONNECTED TO AN UPDATE FUNCTION.
         ShortInfo = "Super fast dash! But can only dash if the cursor is not colliding with other objects! Bullets are now slow, homing bullets. The bullet will always seek the nearest enemy. So make sure they are not behind a wall! When countering or blocking with the shield enemies will be highlighted!";
 
         CustomPlayerMoveSpeed = 6f;

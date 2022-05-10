@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
+/// This script is used to set the light level in the whole stage by the Generator in stage 3.
 public class LightLevelForGenerator : MonoBehaviour
 {
     public Puzzle1 Puzzle1Script;
@@ -10,14 +9,16 @@ public class LightLevelForGenerator : MonoBehaviour
     public bool IsGobal;
     public bool IsGobalBackground;
     public bool NormalLight;
-    // Start is called before the first frame update
+
+    /// Called before the first frame.
     void Start()
     {
-        Puzzle1Script = Object.FindObjectOfType<Puzzle1>();
+        Puzzle1Script = FindObjectOfType<Puzzle1>();
         MyLight = GetComponent<Light2D>();
     }
 
-    // Update is called once per frame
+    /// Called every frame.
+    /** If the puzzle is complete, set the light level according to the GeneratorPowerValue, otherwise the light is turned off. */
     void Update()
     {
         if (NormalLight)

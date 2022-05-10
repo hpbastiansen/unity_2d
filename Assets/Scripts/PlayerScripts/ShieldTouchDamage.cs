@@ -1,45 +1,44 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// This script enables the shield to deal touch damage if the player has the cactus token active.
 public class ShieldTouchDamage : MonoBehaviour
 {
     private TokenManager _tokenManager;
     public LayerMask WhatToHit;
     public float Damage;
     public float ShieldTouchDamageCooldownTimer;
+    private bool _onCooldown;
 
-    // Start is called before the first frame update
+    /// Called before the first frame.
     void Start()
     {
-        _tokenManager = Object.FindObjectOfType<TokenManager>();
-        ShieldTouchDamageCooldownTimer = 0;
+        _tokenManager = FindObjectOfType<TokenManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    /// Called on a collider entering the trigger on the gameobject.
+    /** If the collider is on one of the layers specified, try to get their EnemyHealth component. 
+        If it exists and the player is using the cactus token and the cooldown is over, deal damage to the enemy and start the cooldown timer. */
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        if (_onCooldown) return;
         if ((WhatToHit & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
             EnemyHealth _enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
 
-            if (_enemyHealth != null && _tokenManager.CactusTokenActive == true && ShieldTouchDamageCooldownTimer <= 0)
+            if (_enemyHealth != null && _tokenManager.CactusTokenActive == true)
             {
                 _enemyHealth.TakeDamage(Damage);
                 StartCoroutine(Cooldowner());
             }
         }
-
     }
+
+    /// Wait for the cooldown, then set _onCooldown to false.
     private IEnumerator Cooldowner()
     {
-        ShieldTouchDamageCooldownTimer = 2;
-        yield return new WaitForSeconds(2f);
-        ShieldTouchDamageCooldownTimer = 0;
+        _onCooldown = true;
+        yield return new WaitForSeconds(ShieldTouchDamageCooldownTimer);
+        _onCooldown = false;
     }
 }

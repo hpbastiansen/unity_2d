@@ -192,7 +192,7 @@ MonoBehaviour:
   - {x: -0.40005636, y: 0.37428522, z: 0}
   m_ShapePathHash: -1429148193
   m_Mesh: {fileID: 0}
-  m_InstanceId: 516254
+  m_InstanceId: 66874
 --- !u!1 &195961055208341641
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +363,6 @@ GameObject:
   - component: {fileID: 320407801506108257}
   - component: {fileID: 320407801506108258}
   - component: {fileID: 320407801506108259}
-  - component: {fileID: 7303100956546515071}
   m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
@@ -452,18 +451,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7303100956546515071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320407801506108317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2ed0f0b5e14a1488b6bb4b985ebf68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &320407801685301472
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,23 +941,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4921700f6cf7584188c82397ec64acb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirePoint: {fileID: 795284494}
-  Bullet: {fileID: 6053951966795587883, guid: e24541b492c87844d88618295d8dbfbc, type: 3}
+  _firePoint: {fileID: 795284494}
+  _bullet: {fileID: 6053951966795587883, guid: e24541b492c87844d88618295d8dbfbc, type: 3}
+  _muzzleFlashAnimation: {fileID: 559866566}
+  _muzzleAnimationName: bulletfire_weapon1
+  _shootSoundSource: {fileID: 73334822832635633}
   Target: {fileID: 0}
   _damage: 12
   _bulletSpeed: 15
   _minVecticalSpread: 1
   _maxVerticalSpread: 2
-  _magazineAmmo: 10
   _reloadTime: 5
   _firerate: 1.5
-  CameraShakeStrength: 0.2
-  MuzzleFlashAnimation: {fileID: 559866566}
-  MuzzleAnimationName: bulletfire_weapon1
-  WhatToHit:
+  _magazineAmmo: 10
+  _cameraShakeStrength: 0.2
+  _whatToHit:
     serializedVersion: 2
     m_Bits: 11031
-  ShootSoundSource: {fileID: 73334822832635633}
 --- !u!1 &327716593111051014
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("W1C1", "W1C1Scenename", "W1C2", "W1C2Scenename", "W1C3", "W1C3Scenename", "W1C4", "W1C4Scenename", "W1C5", "W1C5Scenename", "W1C6", "W1C6Scenename", "W1Scenes", "W2Scenes", "W3Scenes", "AmmoAndHealth", "Value")]
+	[ES3PropertiesAttribute("W1C1", "W1C1Scenename", "W1C2", "W1C2Scenename", "W1C3", "W1C3Scenename", "W1C4", "W1C4Scenename", "W1C5", "W1C5Scenename", "W1C6", "W1C6Scenename", "W1Scenes", "W2Scenes", "W3Scenes")]
 	public class ES3UserType_CheckPointManager : ES3ComponentType
 	{
 		public static ES3Type Instance = null;
@@ -31,8 +31,6 @@ namespace ES3Types
 			writer.WriteProperty("W1Scenes", instance.W1Scenes, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.String>)));
 			writer.WriteProperty("W2Scenes", instance.W2Scenes, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.String>)));
 			writer.WriteProperty("W3Scenes", instance.W3Scenes, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.String>)));
-			writer.WritePropertyByRef("AmmoAndHealth", instance.AmmoAndHealth);
-			writer.WriteProperty("Value", instance.Value, ES3Type_int.Instance);
 		}
 
 		protected override void ReadComponent<T>(ES3Reader reader, object obj)
@@ -87,12 +85,6 @@ namespace ES3Types
 						break;
 					case "W3Scenes":
 						instance.W3Scenes = reader.Read<System.Collections.Generic.List<System.String>>();
-						break;
-					case "AmmoAndHealth":
-						instance.AmmoAndHealth = reader.Read<HealthAndAmmoForStage>();
-						break;
-					case "Value":
-						instance.Value = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
 					default:
 						reader.Skip();

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// Manager responsible for the first stage. Used for giving the player the grappling hook upon reaching it.
 public class Stage1Manager : MonoBehaviour
 {
     public bool GottenGrapplingHook;
@@ -10,15 +9,17 @@ public class Stage1Manager : MonoBehaviour
     public GameObject GrapplingHook;
     public WeaponController WeaponControllerScript;
 
-
-    // Start is called before the first frame update
+    /// Called before the first frame.
+    /** Prepares the stage, disabling the end trigger until the player gets the grappling hook. */
     void Start()
     {
         EndScene.SetActive(false);
         HoleDiaTrigger.SetActive(false);
-        WeaponControllerScript = Object.FindObjectOfType<WeaponController>();
+        WeaponControllerScript = FindObjectOfType<WeaponController>();
         GrapplingHook.SetActive(true);
     }
+
+    /// Allows the player to use the grappling hook. Enables the ending trigger of the stage.
     public void GiveGrapplingHook()
     {
         GottenGrapplingHook = true;

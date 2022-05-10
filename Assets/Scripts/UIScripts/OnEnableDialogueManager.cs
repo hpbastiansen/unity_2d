@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// This script prepares the dialogue that is shown.
 public class OnEnableDialogueManager : MonoBehaviour
 {
     public DialogueTrigger DialogueTriggerObject;
