@@ -30,16 +30,11 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp-firstpass
-    - AstarPathfindingProject
     - Assembly-CSharp
-    - Cinemachine
-    - PsdPlugin
-    - AstarPathfindingProjectEditor
-    - PackageToolsEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
   addAllPrefabsToManager: 1
   logDebugInfo: 0
-  logWarnings: 0
+  logWarnings: 1
   logErrors: 1
